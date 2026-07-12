@@ -17,6 +17,7 @@ config.yml
 config/settings_data.json
 
 # Node
+.DS_Store
 node_modules/
 
 
@@ -26,3 +27,12 @@ config/master.key
 
 # File Saves
 safe/
+
+# --- Page-build pipeline (local tooling, not part of the theme) ---
+CLAUDE.md
+GUIDE-PATCHES.md
+_conventions/
+CWC_Shopify_Section_Guide.md
+_sections-queue/
+_reference-components/
+.claude/

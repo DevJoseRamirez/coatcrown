@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "ph_hero": {
+      "type": "CWC_placeholder",
+      "settings": {
+        "label": "01 — Hero split"
+      }
+    },
+    "ph_benefits": {
+      "type": "CWC_placeholder",
+      "settings": {
+        "label": "02 — Benefits grid"
+      }
+    },
+    "ph_testimonials": {
+      "type": "CWC_placeholder",
+      "settings": {
+        "label": "03 — Testimonial carousel"
+      }
+    }
+  },
+  "order": [
+    "ph_hero",
+    "ph_benefits",
+    "ph_testimonials"
+  ]
+}

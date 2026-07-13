@@ -1,0 +1,256 @@
+{% style %}
+  #cwc_mission-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --heading-color: {{ section.settings.heading_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --star-color: {{ section.settings.star_color | default: '#F7CD33' }};
+    --button-bg: {{ section.settings.button_bg_color | default: '#E69418' }};
+    --button-text: {{ section.settings.button_text_color | default: '#ffffff' }};
+    --padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 80 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 80 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_mission.css' | asset_url | stylesheet_tag }}
+
+{%- capture star_svg -%}
+  <svg class="cwc_mission__star" xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="currentColor" aria-hidden="true">
+    <path d="M7.49963 11.7285L3.86408 13.8687C3.70347 13.9686 3.53557 14.0114 3.36036 13.9971C3.18515 13.9829 3.03185 13.9258 2.90044 13.8259C2.76904 13.726 2.66683 13.6013 2.59383 13.4518C2.52083 13.3023 2.50623 13.1345 2.55003 12.9484L3.51367 8.90338L0.294239 6.18528C0.148233 6.05686 0.0571255 5.91047 0.020916 5.7461C-0.0152934 5.58173 -0.00448903 5.42136 0.0533293 5.26498C0.111148 5.1086 0.198751 4.98018 0.31614 4.87974C0.433528 4.77929 0.594135 4.71508 0.797959 4.68711L5.04673 4.32327L6.68929 0.513656C6.7623 0.342438 6.8756 0.214023 7.0292 0.128414C7.18279 0.0428046 7.3396 0 7.49963 0C7.65965 0 7.81646 0.0428046 7.97006 0.128414C8.12366 0.214023 8.23696 0.342438 8.30996 0.513656L9.95253 4.32327L14.2013 4.68711C14.4057 4.71565 14.5663 4.77986 14.6831 4.87974C14.7999 4.97961 14.8875 5.10803 14.9459 5.26498C15.0043 5.42193 15.0154 5.58259 14.9792 5.74696C14.943 5.91133 14.8516 6.05744 14.705 6.18528L11.4856 8.90338L12.4492 12.9484C12.493 13.1339 12.4784 13.3017 12.4054 13.4518C12.3324 13.6019 12.2302 13.7266 12.0988 13.8259C11.9674 13.9252 11.8141 13.9823 11.6389 13.9971C11.4637 14.012 11.2958 13.9692 11.1352 13.8687L7.49963 11.7285Z"/>
+  </svg>
+{%- endcapture -%}
+
+<section id="cwc_mission-{{ section.id }}" class="cwc_mission">
+  <div class="cwc_mission__container">
+
+    <div class="cwc_mission__image-col">
+      {% if section.settings.mission_image != blank %}
+        <img
+          class="cwc_mission__image"
+          src="{{ section.settings.mission_image | image_url: width: 800 }}"
+          alt="{{ section.settings.alt_text | default: section.settings.mission_image.alt | default: 'Our mission' | escape }}"
+          loading="lazy"
+          width="800"
+          height="800"
+        >
+      {% else %}
+        <div class="cwc_mission__placeholder">
+          <span>Add image</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="cwc_mission__content-col">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_mission__title cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_mission__lead cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.body_text != blank %}
+        <div class="cwc_mission__body cwc-rte">
+          {{ section.settings.body_text }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.signature != blank %}
+        <div class="cwc_mission__signature">{{ section.settings.signature }}</div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <div class="cwc_mission__button-wrapper">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_mission__btn">
+            <span>{{ section.settings.button_label }}</span>
+            <svg class="cwc_mission__btn-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        </div>
+      {% endif %}
+
+      {% if section.settings.rating_stars > 0 or section.settings.rating_text != blank %}
+        <div class="cwc_mission__rating">
+          {% if section.settings.rating_stars > 0 %}
+            <div class="cwc_mission__stars">
+              {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+            </div>
+          {% endif %}
+          {% if section.settings.rating_text != blank %}
+            <div class="cwc_mission__rating-text cwc-rte">{{ section.settings.rating_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Mission",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Our Mission, Led By <strong>Nora Mitchell</strong>, Founded With Love For Pets</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Lead Text",
+      "default": "<p>At ReNu, our mission is simple: <strong>to make grooming calmer, kinder, and better for every pet.</strong> Founded by Nora, a passionate pet parent, ReNu was created to solve the daily struggles we all face — shedding, stress, and grooming battles that make bath time harder than it should be.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body Text",
+      "default": "<p>With the help of trusted veterinary partners like Dr. Renu Ramesh, Nora turned this mission into a product that truly works: a grooming tool that relaxes pets, improves coat health, and strengthens the bond between you and your best friend.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature",
+      "default": "Nora Mitchell ❤️"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Rating Stars",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "info": "Set to 0 to hide."
+    },
+    {
+      "type": "richtext",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image",
+      "label": "Mission Image",
+      "info": "Displayed at a 1:1 ratio."
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Image Alt Text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#F7CD33"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#E69418"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Mission",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

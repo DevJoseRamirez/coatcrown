@@ -1,0 +1,143 @@
+{% style %}
+  #cwc_trust-bar-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#142C70' }};
+    --padding-top: {{ section.settings.padding_top | default: 12 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 12 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 12 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 12 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_trust-bar.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_trust-bar-{{ section.id }}" class="cwc_trust-bar">
+  <div class="cwc_trust-bar__container">
+    <div class="cwc_trust-bar__marquee">
+
+      {% for block in section.blocks %}
+        {% if block.settings.trust_icon != blank or block.settings.text != blank %}
+          <div class="cwc_trust-bar__item" {{ block.shopify_attributes }}>
+            {% if block.settings.trust_icon != blank %}
+              <div class="cwc_trust-bar__icon">
+                <img
+                  src="{{ block.settings.trust_icon | image_url: width: 48 }}"
+                  alt="{{ block.settings.trust_icon.alt | default: block.settings.text | escape }}"
+                  loading="lazy"
+                  width="24"
+                  height="24"
+                >
+              </div>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {% comment %} Duplicate items for the seamless mobile marquee loop {% endcomment %}
+      {% for block in section.blocks %}
+        {% if block.settings.trust_icon != blank or block.settings.text != blank %}
+          <div class="cwc_trust-bar__item cwc_trust-bar__item--clone" aria-hidden="true">
+            {% if block.settings.trust_icon != blank %}
+              <div class="cwc_trust-bar__icon">
+                <img
+                  src="{{ block.settings.trust_icon | image_url: width: 48 }}"
+                  alt=""
+                  loading="lazy"
+                  width="24"
+                  height="24"
+                >
+              </div>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Trust Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "trust_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Trust point"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "CWC Trust Bar",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "trust_item", "settings": { "text": "Free Shipping On Orders Above $55" } },
+        { "type": "trust_item", "settings": { "text": "Safe & Secure Checkout" } },
+        { "type": "trust_item", "settings": { "text": "365 Day Money Back Guarantee" } },
+        { "type": "trust_item", "settings": { "text": "Loved By 45,576+ Pet Parents" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

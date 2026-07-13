@@ -9,683 +9,257 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Premium At-Home Pet Grooming Made Easy</p>",
-            "width": "100%",
-            "max_width": "none",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 100
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
+    "cwc_hero_banner_a1B2c3": {
+      "type": "CWC_hero-banner",
       "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/hf_20260608_023104_cfff7507-f254-4d98-9732-08283442a186.png",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "rating_stars": 5,
+        "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
+        "heading": "<p>The Grooming Upgrade Your Pet <strong>Actually Enjoys</strong></p>",
+        "subtext": "<p>No more stress, shedding battles, or messy routines. Our calming pet-care system turns grooming into a soothing, bonding experience.</p>",
+        "usp_1": "<p><strong>Deep cleaning action</strong> without irritating skin</p>",
+        "usp_2": "<p>Creates calming, <strong>stress-free grooming moments</strong></p>",
+        "usp_3": "<p><strong>Makes coat smoother</strong>, softer, noticeably healthier</p>",
+        "button_label": "Shop Best Sellers",
+        "button_link": "",
+        "testimonial_quote": "<p>\"I never thought grooming could be enjoyable for my anxious terrier, but the ReNu brush is a game-changer! It's gentle, effective, and Lola loves it!\"</p>",
+        "testimonial_author": "Linda S",
+        "testimonial_stars": 5,
+        "testimonial_verified_text": "Verified Customer",
+        "bg_color": "#f3ede3",
+        "text_color": "#ffffff",
+        "bold_color": "#ffffff",
+        "overlay_color": "#355f88",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "card_bg_color": "#fff9f9",
+        "min_height": 800,
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
-      "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
-        }
-      },
-      "name": "Featured collection",
+    "cwc_as_seen_in_D4e5F6": {
+      "type": "CWC_as-seen-in",
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "bg_color": "#ecf4ff",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
-    "section_YNxCpJ": {
-      "type": "section",
-      "blocks": {
-        "group_tmgAyF": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-5",
-            "background_media": "image",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-2",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
-          },
-          "blocks": {
-            "spacer_9FQght": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "text_ArcJfR": {
-              "type": "text",
-              "settings": {
-                "text": "<h3>New arrivals</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_Cw8kBb": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "spacer_9FQght",
-            "text_ArcJfR",
-            "button_Cw8kBb"
-          ]
-        },
-        "group_dbEGYd": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-5",
-            "background_media": "image",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-1",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
-          },
-          "blocks": {
-            "spacer_BTg6yq": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "text_KXRtQb": {
-              "type": "text",
-              "settings": {
-                "text": "<h3>Bestsellers</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_PX3Xfq": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "spacer_BTg6yq",
-            "text_KXRtQb",
-            "button_PX3Xfq"
-          ]
-        }
-      },
-      "block_order": [
-        "group_tmgAyF",
-        "group_dbEGYd"
-      ],
-      "name": "t:names.split_showcase",
+    "cwc_featured_collection_G7h8I9": {
+      "type": "CWC_featured-collection",
       "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
-        "section_width": "full-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "heading": "<p>Explore Pet Parent's <strong>Top Picks</strong></p>",
+        "subtext": "<p>Join over 15,000+ happy owners upgrading their grooming routine.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#1f3d6e",
+        "bold_color": "#142c70",
+        "card_bg_color": "#eaf6ff",
+        "accent_color": "#142c70",
+        "badge_color": "#e38a0a",
+        "star_color": "#f7cd33",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
-    "collection_list_n7PtJA": {
-      "type": "collection-list",
-      "blocks": {
-        "group_eDCNeK": {
-          "type": "group",
-          "name": "t:names.header",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_iwcw9n": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h3>Shop by collection</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_iwcw9n"
-          ]
-        },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-start",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection_title_WeQLWE": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": true,
-                "background_color": "#ffffff",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 4,
-                "padding-inline-start": 8,
-                "padding-inline-end": 8
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_WeQLWE"
-          ]
-        }
-      },
-      "block_order": [
-        "group_eDCNeK"
-      ],
-      "name": "t:names.collections_grid",
+    "cwc_mission_J1k2L3": {
+      "type": "CWC_mission",
       "settings": {
-        "collection_list": [],
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 3,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "heading": "<p>Our Mission, Led By <strong>Nora Mitchell</strong>, Founded With Love For Pets</p>",
+        "subtext": "<p>At ReNu, our mission is simple: <strong>to make grooming calmer, kinder, and better for every pet.</strong> Founded by Nora, a passionate pet parent, ReNu was created to solve the daily struggles we all face — shedding, stress, and grooming battles that make bath time harder than it should be.</p>",
+        "body_text": "<p>With the help of trusted veterinary partners like Dr. Renu Ramesh, Nora turned this mission into a product that truly works: a grooming tool that relaxes pets, improves coat health, and strengthens the bond between you and your best friend.</p>",
+        "signature": "Nora Mitchell ❤️",
+        "button_label": "Shop Best Sellers",
+        "button_link": "",
+        "rating_stars": 5,
+        "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
+        "alt_text": "",
+        "bg_color": "#ecf4ff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e69418",
+        "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cwc_usp_bar_M4n5O6": {
+      "type": "CWC_usp-bar",
+      "settings": {
+        "bg_color": "#ecf4ff",
+        "text_color": "#111111",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "cwc_why_P7q8R9": {
+      "type": "CWC_why",
+      "settings": {
+        "heading": "<p>Why ReNu Costs More Than <strong>Basic Brushes</strong></p>",
+        "subtext": "<p>It's not just a brush. It's a professional grooming tool that pays for itself in just two sessions.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "card_bg_color": "#ecf4ff",
+        "icon_bg_color": "#142c70",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cwc_steps_S1t2U3": {
+      "type": "CWC_steps",
+      "settings": {
+        "heading": "<p>3 Easy Steps To A <strong>Fur-Free Home</strong></p>",
+        "subtext": "<p>Experience the grooming transformation.</p>",
+        "button_label": "Shop Best Sellers",
+        "button_link": "",
+        "rating_stars": 5,
+        "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "badge_color": "#142c70",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e69418",
+        "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cwc_home_reviews_V4w5X6": {
+      "type": "CWC_home-reviews",
+      "settings": {
+        "top_rating_stars": 5,
+        "top_rating_text": "<p>4.8/5 from thousands of satisfied customers</p>",
+        "heading": "<p>People Everywhere Are <strong>Loving It</strong></p>",
+        "subtext": "<p>See why users are loving ReNu products</p>",
+        "bg_color": "#ecf4ff",
+        "text_color": "#333333",
+        "heading_color": "#1f3d6e",
+        "bold_color": "#1f3d6e",
+        "card_bg_color": "#ffffff",
+        "star_color": "#fbbf24",
+        "nav_color": "#1f3d6e",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cwc_video_text_Y7z8A9": {
+      "type": "CWC_video-text",
+      "settings": {
+        "heading": "<p>Smoother Sessions. Softer Coats. <strong>Happier Pets</strong></p>",
+        "subtext": "<p>Experience the grooming transformation.</p>",
+        "stat_1_percent": 95,
+        "stat_1_text": "<p>Said their pet became noticeably calmer and more relaxed during grooming after just one use.</p>",
+        "stat_2_percent": 86,
+        "stat_2_text": "<p>Reported faster, smoother grooming sessions with far less mess and fewer tangles.</p>",
+        "stat_3_percent": 83,
+        "stat_3_text": "<p>Noticed a softer, shinier coat and a visible reduction in shedding within the first week.</p>",
+        "button_label": "Shop Best Sellers",
+        "button_link": "",
+        "rating_stars": 5,
+        "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "stat_track_color": "#ecf4ff",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "cwc_trust_bar_B1c2D3": {
+      "type": "CWC_trust-bar",
+      "settings": {
+        "bg_color": "#ecf4ff",
+        "text_color": "#142c70",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "cwc_home_faq_E4f5G6": {
+      "type": "CWC_home-faq",
+      "settings": {
+        "heading": "<p>Frequently Asked <strong>Questions</strong></p>",
+        "subtext": "<p>Need more information? You can find it here.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "active_bg_color": "#ecf4ff",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "cwc_hero_product_H7i8J9": {
+      "type": "CWC_hero-product",
+      "settings": {
+        "rating_stars": 5,
+        "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> satisfied customers</p>",
+        "heading": "<p>Treat Your Four-Legged Pal To The <strong>Ultimate Spa Day</strong></p>",
+        "subtext": "<p>Show your pet how much you care by turning grooming into bonding. Plus, look after your wallet with up to 25% off.</p>",
+        "usp_1": "<p><strong>Less shedding</strong> instantly, more relaxed pets</p>",
+        "usp_2": "<p><strong>Smooth grooming</strong> every time with less mess</p>",
+        "usp_3": "<p><strong>Softer, shinier coats</strong> after just a week</p>",
+        "button_label": "Shop Best Sellers",
+        "button_link": "",
+        "testimonial_quote": "<p>\"I never thought grooming could be enjoyable for my anxious terrier, but the ReNu brush is a game-changer! It's gentle, effective, and Lola loves it!\"</p>",
+        "testimonial_author": "Linda S",
+        "testimonial_stars": 5,
+        "testimonial_verified_text": "Verified Customer",
+        "alt_text": "",
+        "bg_color": "#ecf4ff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "star_color": "#f7cd33",
+        "card_bg_color": "#ffffff",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cwc_sign_up_banner_K1l2M3": {
+      "type": "CWC_sign-up-banner",
+      "settings": {
+        "heading": "<p>Join Our Newsletter & Get 15% OFF Your First Order!</p>",
+        "email_placeholder": "Email Address...",
+        "button_label": "Subscribe Now",
+        "note_text": "<p>Your information is safe and secure with us</p>",
+        "bg_color": "#ecf4ff",
+        "text_color": "#ffffff",
+        "heading_color": "#142c70",
+        "bold_color": "#ffffff",
+        "overlay_color": "#000000",
+        "input_bg_color": "#ecf4ff",
+        "button_bg_color": "#142c70",
+        "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H",
-    "section_YNxCpJ",
-    "collection_list_n7PtJA"
+    "cwc_hero_banner_a1B2c3",
+    "cwc_as_seen_in_D4e5F6",
+    "cwc_featured_collection_G7h8I9",
+    "cwc_mission_J1k2L3",
+    "cwc_usp_bar_M4n5O6",
+    "cwc_why_P7q8R9",
+    "cwc_steps_S1t2U3",
+    "cwc_home_reviews_V4w5X6",
+    "cwc_video_text_Y7z8A9",
+    "cwc_trust_bar_B1c2D3",
+    "cwc_home_faq_E4f5G6",
+    "cwc_hero_product_H7i8J9",
+    "cwc_sign_up_banner_K1l2M3"
   ]
 }

@@ -1,0 +1,115 @@
+/* ==============================
+   CWC As Seen In
+   ============================== */
+
+/* === Section Wrapper === */
+.cwc_as-seen-in {
+  background-color: var(--section-bg);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+  overflow: hidden;
+}
+
+.cwc_as-seen-in__container {
+  max-width: 1084px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Logo Row === */
+.cwc_as-seen-in__track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Clone track is only used for the mobile marquee loop */
+.cwc_as-seen-in__track--clone {
+  display: none;
+}
+
+.cwc_as-seen-in__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 88px;
+  flex: 0 1 auto;
+}
+
+.cwc_as-seen-in__link {
+  display: block;
+  width: 100%;
+}
+
+.cwc_as-seen-in__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+/* ==============================
+   Tablet Responsive
+   ============================== */
+@media screen and (max-width: 991px) {
+  .cwc_as-seen-in__container {
+    padding: 0 1.25rem;
+  }
+}
+
+/* ==============================
+   Mobile Responsive — auto-scroll marquee
+   ============================== */
+@media screen and (max-width: 768px) {
+  .cwc_as-seen-in {
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  .cwc_as-seen-in__container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .cwc_as-seen-in__marquee {
+    display: flex;
+    width: max-content;
+  }
+
+  .cwc_as-seen-in__track {
+    width: max-content;
+    justify-content: flex-start;
+    gap: 40px;
+    padding-right: 40px;
+    animation: cwc-as-seen-in-scroll 20s linear infinite;
+  }
+
+  .cwc_as-seen-in__track--clone {
+    display: flex;
+  }
+
+  .cwc_as-seen-in__item {
+    flex: 0 0 auto;
+  }
+}
+
+@keyframes cwc-as-seen-in-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cwc_as-seen-in__track {
+    animation: none;
+  }
+}

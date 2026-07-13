@@ -1,0 +1,135 @@
+{% style %}
+  #cwc_as-seen-in-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --padding-top: {{ section.settings.padding_top | default: 20 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 20 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 20 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 20 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_as-seen-in.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_as-seen-in-{{ section.id }}" class="cwc_as-seen-in">
+  <div class="cwc_as-seen-in__container">
+    <div class="cwc_as-seen-in__marquee">
+
+      <ul class="cwc_as-seen-in__track">
+        {% for block in section.blocks %}
+          {% if block.settings.logo_image != blank %}
+            <li class="cwc_as-seen-in__item" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="cwc_as-seen-in__link">
+              {% endif %}
+              <img
+                class="cwc_as-seen-in__image"
+                src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                alt="{{ block.settings.logo_image.alt | default: 'Featured in logo' | escape }}"
+                loading="lazy"
+                width="{{ block.settings.logo_image.width }}"
+                height="{{ block.settings.logo_image.height }}"
+              >
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% comment %} Duplicate track for the seamless mobile marquee loop {% endcomment %}
+      <ul class="cwc_as-seen-in__track cwc_as-seen-in__track--clone" aria-hidden="true">
+        {% for block in section.blocks %}
+          {% if block.settings.logo_image != blank %}
+            <li class="cwc_as-seen-in__item">
+              <img
+                class="cwc_as-seen-in__image"
+                src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                alt=""
+                loading="lazy"
+                width="{{ block.settings.logo_image.width }}"
+                height="{{ block.settings.logo_image.height }}"
+              >
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC As Seen In",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. Wraps the logo in a link."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "CWC As Seen In",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

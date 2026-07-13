@@ -1,0 +1,217 @@
+/* ==============================
+   CWC Why
+   ============================== */
+
+/* === Section Wrapper === */
+.cwc_why {
+  background-color: var(--section-bg);
+  color: var(--text-color);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+
+.cwc_why__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Section Header === */
+.cwc_why__content {
+  max-width: 770px;
+  margin: 0 auto 60px;
+  width: 100%;
+}
+
+.cwc_why__content-heading {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.cwc_why__content-heading p {
+  margin: 0;
+  color: var(--heading-color);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: capitalize;
+}
+
+.cwc_why__content-heading > * strong {
+  color: var(--highlight-color);
+}
+
+.cwc_why__content-subtext {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.cwc_why__content-subtext p {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+/* === Grid === */
+.cwc_why__grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 23px;
+}
+
+/* === Card === */
+.cwc_why__card {
+  flex: 1;
+  max-width: 373px;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.cwc_why__icon-wrapper {
+  width: 145px;
+  height: 145px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background-color: var(--icon-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cwc_why__icon {
+  width: 70px;
+  height: 70px;
+}
+
+.cwc_why__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cwc_why__card-title {
+  margin: 0;
+  color: var(--heading-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cwc_why__card-text p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--text-color);
+}
+
+/* === First-card price box === */
+.cwc_why__price-box {
+  width: 100%;
+  max-width: 228px;
+  padding: 8px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.66);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cwc_why__price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.cwc_why__price-val {
+  font-weight: 700;
+}
+
+.cwc_why__price-val--up {
+  color: #ff0d0d;
+}
+
+.cwc_why__price-val--down {
+  color: #00a83a;
+}
+
+.cwc_why__footer-text p {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  color: var(--text-color);
+}
+
+/* ==============================
+   Tablet Responsive
+   ============================== */
+@media screen and (max-width: 991px) {
+  .cwc_why__container {
+    padding: 0 1.25rem;
+  }
+
+  .cwc_why__content-heading p {
+    font-size: 2.25rem;
+  }
+
+  .cwc_why__card {
+    padding: 28px 32px;
+  }
+}
+
+/* ==============================
+   Mobile Responsive — stack cards
+   ============================== */
+@media screen and (max-width: 768px) {
+  .cwc_why {
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  .cwc_why__container {
+    padding: 0 1rem;
+  }
+
+  .cwc_why__content {
+    margin-bottom: 28px;
+  }
+
+  .cwc_why__content-heading p {
+    font-size: 2rem;
+  }
+
+  .cwc_why__content-subtext p {
+    font-size: 1rem;
+  }
+
+  .cwc_why__grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cwc_why__card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cwc_why__icon-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .cwc_why__icon {
+    width: 50px;
+    height: 50px;
+  }
+}

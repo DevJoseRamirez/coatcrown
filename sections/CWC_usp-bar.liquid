@@ -1,0 +1,119 @@
+{% style %}
+  #cwc_usp-bar-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --padding-top: {{ section.settings.padding_top | default: 20 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 20 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 20 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 20 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_usp-bar.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_usp-bar-{{ section.id }}" class="cwc_usp-bar">
+  <div class="cwc_usp-bar__container">
+    {% for block in section.blocks %}
+      {% if block.settings.usp_icon != blank or block.settings.text != blank %}
+        <div class="cwc_usp-bar__item" {{ block.shopify_attributes }}>
+          {% if block.settings.usp_icon != blank %}
+            <div class="cwc_usp-bar__icon">
+              <img
+                src="{{ block.settings.usp_icon | image_url: width: 200 }}"
+                alt="{{ block.settings.usp_icon.alt | default: block.settings.text | escape }}"
+                loading="lazy"
+                width="100"
+                height="100"
+              >
+            </div>
+          {% endif %}
+          {% if block.settings.text != blank %}
+            <span class="cwc_usp-bar__text">{{ block.settings.text }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC USP Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp_item",
+      "name": "USP Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "usp_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Benefit"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "CWC USP Bar",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "usp_item", "settings": { "text": "Stress-Free for Everyone" } },
+        { "type": "usp_item", "settings": { "text": "Vet Verified" } },
+        { "type": "usp_item", "settings": { "text": "Instant Relief" } },
+        { "type": "usp_item", "settings": { "text": "Safe for All Pets" } },
+        { "type": "usp_item", "settings": { "text": "Third-Party Lab Tested" } },
+        { "type": "usp_item", "settings": { "text": "Extensive Research" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

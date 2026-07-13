@@ -1,0 +1,284 @@
+{% style %}
+  #cwc_why-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --heading-color: {{ section.settings.heading_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --card-bg: {{ section.settings.card_bg_color | default: '#ECF4FF' }};
+    --icon-bg: {{ section.settings.icon_bg_color | default: '#142C70' }};
+    --padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 80 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 80 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_why.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_why-{{ section.id }}" class="cwc_why">
+  <div class="cwc_why__container">
+
+    {% comment %} Section Header {% endcomment %}
+    <div class="cwc_why__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_why__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_why__content-subtext cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Cards {% endcomment %}
+    {% if section.blocks.size > 0 %}
+      <div class="cwc_why__grid">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'why_card' %}
+              <div class="cwc_why__card" {{ block.shopify_attributes }}>
+
+                {% if block.settings.card_icon != blank %}
+                  <div class="cwc_why__icon-wrapper">
+                    <div class="cwc_why__icon">
+                      <img
+                        src="{{ block.settings.card_icon | image_url: width: 140 }}"
+                        alt="{{ block.settings.card_icon.alt | default: block.settings.title | escape }}"
+                        loading="lazy"
+                        width="70"
+                        height="70"
+                      >
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if block.settings.title != blank %}
+                  <div class="cwc_why__card-title">{{ block.settings.title }}</div>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="cwc_why__card-text cwc-rte">{{ block.settings.text }}</div>
+                {% endif %}
+
+                {% comment %} First-card extras: price box + footer {% endcomment %}
+                {% if forloop.first %}
+                  {% if block.settings.price_label_1 != blank or block.settings.price_label_2 != blank %}
+                    <div class="cwc_why__price-box">
+                      {% if block.settings.price_label_1 != blank or block.settings.price_value_1 != blank %}
+                        <div class="cwc_why__price-row">
+                          <span>{{ block.settings.price_label_1 }}</span>
+                          <span class="cwc_why__price-val cwc_why__price-val--up">{{ block.settings.price_value_1 }}</span>
+                        </div>
+                      {% endif %}
+                      {% if block.settings.price_label_2 != blank or block.settings.price_value_2 != blank %}
+                        <div class="cwc_why__price-row">
+                          <span>{{ block.settings.price_label_2 }}</span>
+                          <span class="cwc_why__price-val cwc_why__price-val--down">{{ block.settings.price_value_2 }}</span>
+                        </div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.footer_text != blank %}
+                    <div class="cwc_why__footer-text cwc-rte">{{ block.settings.footer_text }}</div>
+                  {% endif %}
+                {% endif %}
+
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Why",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Why ReNu Costs More Than <strong>Basic Brushes</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>It's not just a brush. It's a professional grooming tool that pays for itself in just two sessions.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Card Colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon Circle Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "why_card",
+      "name": "Why Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "card_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Describe this reason in a sentence or two.</p>"
+        },
+        {
+          "type": "header",
+          "content": "First Card Extras (Optional)"
+        },
+        {
+          "type": "paragraph",
+          "content": "These fields only display on the first card."
+        },
+        {
+          "type": "text",
+          "id": "price_label_1",
+          "label": "Price Row 1 Label"
+        },
+        {
+          "type": "text",
+          "id": "price_value_1",
+          "label": "Price Row 1 Value",
+          "info": "Shown in red (cost)."
+        },
+        {
+          "type": "text",
+          "id": "price_label_2",
+          "label": "Price Row 2 Label"
+        },
+        {
+          "type": "text",
+          "id": "price_value_2",
+          "label": "Price Row 2 Value",
+          "info": "Shown in green (savings)."
+        },
+        {
+          "type": "richtext",
+          "id": "footer_text",
+          "label": "Footer Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CWC Why",
+      "category": "CWC Custom",
+      "blocks": [
+        {
+          "type": "why_card",
+          "settings": {
+            "title": "Save $600/Year",
+            "text": "<p>Professional grooming averages $75 per visit.</p>",
+            "price_label_1": "8 Visits/year",
+            "price_value_1": "$600",
+            "price_label_2": "1 ReNu Brush",
+            "price_value_2": "$45",
+            "footer_text": "<p>Skip just one appointment, and ReNu pays for itself.</p>"
+          }
+        },
+        {
+          "type": "why_card",
+          "settings": {
+            "title": "Real Technology",
+            "text": "<p>Ordinary brushes are just static plastic. ReNu uses ultrasonic mist technology to hydrate the coat, loosen dander, and prevent static shock. It treats the fur, it doesn't just pull it.</p>"
+          }
+        },
+        {
+          "type": "why_card",
+          "settings": {
+            "title": "Built to Last Years",
+            "text": "<p>Cheap knockoffs use scratchy metal tines that rust and hard plastic that cracks. We use soft medical-grade silicone and a durable rechargeable battery designed for years of daily bonding.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

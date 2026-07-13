@@ -1,0 +1,82 @@
+{% style %}
+  #cwc_placeholder-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#e9ecef' }};
+    --text-color: {{ section.settings.text_color | default: '#6c757d' }};
+  }
+{% endstyle %}
+
+<section id="cwc_placeholder-{{ section.id }}" class="cwc_placeholder">
+  <div class="cwc_placeholder__container">
+    <p class="cwc_placeholder__label">
+      {{ section.settings.label | default: 'Placeholder section' }}
+    </p>
+    {% if section.settings.note != blank %}
+      <p class="cwc_placeholder__note">{{ section.settings.note }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .cwc_placeholder {
+    background-color: var(--section-bg);
+    color: var(--text-color);
+    padding: 4rem 0;
+    border-top: 2px dashed #adb5bd;
+    border-bottom: 2px dashed #adb5bd;
+  }
+  .cwc_placeholder__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .cwc_placeholder__label {
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .cwc_placeholder__note {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "CWC Placeholder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Section Label",
+      "default": "Placeholder section"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "info": "Optional note shown under the label"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#e9ecef"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#6c757d"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Placeholder",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,331 @@
+{% style %}
+  #cwc_video-text-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --heading-color: {{ section.settings.heading_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --stat-track: {{ section.settings.stat_track_color | default: '#ECF4FF' }};
+    --star-color: {{ section.settings.star_color | default: '#F7CD33' }};
+    --button-bg: {{ section.settings.button_bg_color | default: '#E38A0A' }};
+    --button-text: {{ section.settings.button_text_color | default: '#ffffff' }};
+    --padding-top: {{ section.settings.padding_top | default: 100 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 100 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 100 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 100 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_video-text.css' | asset_url | stylesheet_tag }}
+
+{%- capture star_svg -%}
+  <svg class="cwc_video-text__star" xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="currentColor" aria-hidden="true">
+    <path d="M7.49963 11.7285L3.86408 13.8687C3.70347 13.9686 3.53557 14.0114 3.36036 13.9971C3.18515 13.9829 3.03185 13.9258 2.90044 13.8259C2.76904 13.726 2.66683 13.6013 2.59383 13.4518C2.52083 13.3023 2.50623 13.1345 2.55003 12.9484L3.51367 8.90338L0.294239 6.18528C0.148233 6.05686 0.0571255 5.91047 0.020916 5.7461C-0.0152934 5.58173 -0.00448903 5.42136 0.0533293 5.26498C0.111148 5.1086 0.198751 4.98018 0.31614 4.87974C0.433528 4.77929 0.594135 4.71508 0.797959 4.68711L5.04673 4.32327L6.68929 0.513656C6.7623 0.342438 6.8756 0.214023 7.0292 0.128414C7.18279 0.0428046 7.3396 0 7.49963 0C7.65965 0 7.81646 0.0428046 7.97006 0.128414C8.12366 0.214023 8.23696 0.342438 8.30996 0.513656L9.95253 4.32327L14.2013 4.68711C14.4057 4.71565 14.5663 4.77986 14.6831 4.87974C14.7999 4.97961 14.8875 5.10803 14.9459 5.26498C15.0043 5.42193 15.0154 5.58259 14.9792 5.74696C14.943 5.91133 14.8516 6.05744 14.705 6.18528L11.4856 8.90338L12.4492 12.9484C12.493 13.1339 12.4784 13.3017 12.4054 13.4518C12.3324 13.6019 12.2302 13.7266 12.0988 13.8259C11.9674 13.9252 11.8141 13.9823 11.6389 13.9971C11.4637 14.012 11.2958 13.9692 11.1352 13.8687L7.49963 11.7285Z"/>
+  </svg>
+{%- endcapture -%}
+
+{%- capture play_svg -%}
+  <svg width="75" height="79" viewBox="0 0 75 79" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="37.3208" cy="39.3251" rx="30.064" ry="32.0683" fill="white"></ellipse>
+    <path d="M37.3213 3.62891C56.1459 3.62917 71.0137 19.8348 71.0137 39.3252C71.0136 58.8156 56.1458 75.0212 37.3213 75.0215C18.4965 75.0215 3.62895 58.8157 3.62889 39.3252C3.62889 19.8346 18.4964 3.62891 37.3213 3.62891Z" stroke="white" stroke-opacity="0.5" stroke-width="7.25682"></path>
+    <path d="M49.1164 37.5583C50.4313 38.3681 50.4313 40.2795 49.1164 41.0892L33.1511 50.9213C31.7697 51.772 29.9905 50.7782 29.9905 49.1558L29.9905 29.4917C29.9905 27.8694 31.7697 26.8755 33.1511 27.7263L49.1164 37.5583Z" fill="#111111"></path>
+  </svg>
+{%- endcapture -%}
+
+<section id="cwc_video-text-{{ section.id }}" class="cwc_video-text">
+  <div class="cwc_video-text__container">
+
+    {% comment %} Videos {% endcomment %}
+    <div class="cwc_video-text__videos">
+      {% for slot in (1..2) %}
+        {% if slot == 1 %}
+          {% assign video = section.settings.video_left %}
+        {% else %}
+          {% assign video = section.settings.video_right %}
+        {% endif %}
+        <div class="cwc_video-text__video-inner">
+          {% if video != blank %}
+            <video class="cwc_video-text__video" preload="metadata" playsinline
+              {% if video.preview_image != blank %}poster="{{ video.preview_image | image_url: width: 600 }}"{% endif %}>
+              {% for source in video.sources %}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {% endfor %}
+            </video>
+            <button class="cwc_video-text__play-btn" type="button" aria-label="Play video">
+              {{ play_svg }}
+            </button>
+          {% else %}
+            <div class="cwc_video-text__placeholder"><span>Add video</span></div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% comment %} Content {% endcomment %}
+    <div class="cwc_video-text__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_video-text__heading cwc-rte">{{ section.settings.heading }}</div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_video-text__subheading cwc-rte">{{ section.settings.subtext }}</div>
+      {% endif %}
+
+      {% assign has_stats = false %}
+      {% for i in (1..3) %}
+        {% assign txt_key = 'stat_' | append: i | append: '_text' %}
+        {% if section.settings[txt_key] != blank %}{% assign has_stats = true %}{% endif %}
+      {% endfor %}
+
+      {% if has_stats %}
+        <div class="cwc_video-text__stats">
+          {% for i in (1..3) %}
+            {% assign pct_key = 'stat_' | append: i | append: '_percent' %}
+            {% assign txt_key = 'stat_' | append: i | append: '_text' %}
+            {% assign stat_pct = section.settings[pct_key] %}
+            {% assign stat_txt = section.settings[txt_key] %}
+            {% if stat_txt != blank %}
+              <div class="cwc_video-text__stat">
+                <div class="cwc_video-text__circle" style="--percent: {{ stat_pct }}">
+                  <span>{{ stat_pct }}%</span>
+                </div>
+                <div class="cwc_video-text__stat-text cwc-rte">{{ stat_txt }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_video-text__button">
+          <span>{{ section.settings.button_label }}</span>
+          <svg class="cwc_video-text__button-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if section.settings.rating_stars > 0 or section.settings.rating_text != blank %}
+        <div class="cwc_video-text__rating">
+          {% if section.settings.rating_stars > 0 %}
+            <div class="cwc_video-text__stars">
+              {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+            </div>
+          {% endif %}
+          {% if section.settings.rating_text != blank %}
+            <div class="cwc_video-text__rating-text cwc-rte">{{ section.settings.rating_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<script src="{{ 'CWC_video-text.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "CWC Video Text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Smoother Sessions. Softer Coats. <strong>Happier Pets</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>Experience the grooming transformation.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Videos"
+    },
+    {
+      "type": "video",
+      "id": "video_left",
+      "label": "Left Video"
+    },
+    {
+      "type": "video",
+      "id": "video_right",
+      "label": "Right Video"
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "range",
+      "id": "stat_1_percent",
+      "label": "Stat 1 Percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 95
+    },
+    {
+      "type": "richtext",
+      "id": "stat_1_text",
+      "label": "Stat 1 Text",
+      "default": "<p>Said their pet became noticeably calmer and more relaxed during grooming after just one use.</p>"
+    },
+    {
+      "type": "range",
+      "id": "stat_2_percent",
+      "label": "Stat 2 Percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 86
+    },
+    {
+      "type": "richtext",
+      "id": "stat_2_text",
+      "label": "Stat 2 Text",
+      "default": "<p>Reported faster, smoother grooming sessions with far less mess and fewer tangles.</p>"
+    },
+    {
+      "type": "range",
+      "id": "stat_3_percent",
+      "label": "Stat 3 Percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 83
+    },
+    {
+      "type": "richtext",
+      "id": "stat_3_text",
+      "label": "Stat 3 Text",
+      "default": "<p>Noticed a softer, shinier coat and a visible reduction in shedding within the first week.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Rating Stars",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "info": "Set to 0 to hide."
+    },
+    {
+      "type": "richtext",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading & Stat Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "stat_track_color",
+      "label": "Stat Ring Track Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#F7CD33"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#E38A0A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Video Text",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,222 @@
+{% style %}
+  #cwc_sign-up-banner-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#ffffff' }};
+    --heading-color: {{ section.settings.heading_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#ffffff' }};
+    --overlay-color: {{ section.settings.overlay_color | default: '#000000' }};
+    --input-bg: {{ section.settings.input_bg_color | default: '#ECF4FF' }};
+    --button-bg: {{ section.settings.button_bg_color | default: '#142C70' }};
+    --button-text: {{ section.settings.button_text_color | default: '#ffffff' }};
+    --padding-top: {{ section.settings.padding_top | default: 92 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 92 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 92 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 92 | times: 0.5 }}px;
+    {% if section.settings.banner_image != blank %}
+      --banner-image: url('{{ section.settings.banner_image | image_url: width: 1600 }}');
+    {% endif %}
+    {% if section.settings.banner_image_mobile != blank %}
+      --banner-image-mobile: url('{{ section.settings.banner_image_mobile | image_url: width: 900 }}');
+    {% elsif section.settings.banner_image != blank %}
+      --banner-image-mobile: url('{{ section.settings.banner_image | image_url: width: 900 }}');
+    {% endif %}
+  }
+{% endstyle %}
+
+{{ 'CWC_sign-up-banner.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_sign-up-banner-{{ section.id }}" class="cwc_sign-up-banner">
+  <div class="cwc_sign-up-banner__bg">
+    <div class="cwc_sign-up-banner__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_sign-up-banner__heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% form 'customer', class: 'cwc_sign-up-banner__form' %}
+        {% if form.posted_successfully? %}
+          <p class="cwc_sign-up-banner__success">Thanks for subscribing!</p>
+        {% else %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="cwc_sign-up-banner__email-wrap">
+            <input
+              type="email"
+              name="contact[email]"
+              class="cwc_sign-up-banner__input"
+              placeholder="{{ section.settings.email_placeholder | default: 'Email Address...' | escape }}"
+              required
+            >
+          </div>
+          <button type="submit" class="cwc_sign-up-banner__submit">
+            {{ section.settings.button_label | default: 'Subscribe Now' }}
+            <svg
+              width="22"
+              height="15"
+              viewBox="0 0 22 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M1 6.36426C0.447715 6.36426 0 6.81197 0 7.36426C0 7.91654 0.447715 8.36426 1 8.36426V7.36426V6.36426ZM21.7071 8.07136C22.0976 7.68084 22.0976 7.04768 21.7071 6.65715L15.3431 0.29319C14.9526 -0.0973344 14.3195 -0.0973344 13.9289 0.29319C13.5384 0.683714 13.5384 1.31688 13.9289 1.7074L19.5858 7.36426L13.9289 13.0211C13.5384 13.4116 13.5384 14.0448 13.9289 14.4353C14.3195 14.8259 14.9526 14.8259 15.3431 14.4353L21.7071 8.07136ZM1 7.36426V8.36426H21V7.36426V6.36426H1V7.36426Z" fill="currentColor"></path>
+            </svg>
+          </button>
+        {% endif %}
+      {% endform %}
+
+      {% if section.settings.note_text != blank %}
+        <div class="cwc_sign-up-banner__note cwc-rte">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path d="M12 7.16634C11.7267 7.16634 11.5 6.93967 11.5 6.66634V5.33301C11.5 3.23301 10.9067 1.83301 8 1.83301C5.09333 1.83301 4.5 3.23301 4.5 5.33301V6.66634C4.5 6.93967 4.27333 7.16634 4 7.16634C3.72667 7.16634 3.5 6.93967 3.5 6.66634V5.33301C3.5 3.39967 3.96667 0.833008 8 0.833008C12.0333 0.833008 12.5 3.39967 12.5 5.33301V6.66634C12.5 6.93967 12.2733 7.16634 12 7.16634Z"/>
+            <path d="M11.3333 15.167H4.66667C1.72667 15.167 0.833336 14.2737 0.833336 11.3337V10.0003C0.833336 7.06033 1.72667 6.16699 4.66667 6.16699H11.3333C14.2733 6.16699 15.1667 7.06033 15.1667 10.0003V11.3337C15.1667 14.2737 14.2733 15.167 11.3333 15.167ZM4.66667 7.16699C2.28 7.16699 1.83334 7.62033 1.83334 10.0003V11.3337C1.83334 13.7137 2.28 14.167 4.66667 14.167H11.3333C13.72 14.167 14.1667 13.7137 14.1667 11.3337V10.0003C14.1667 7.62033 13.72 7.16699 11.3333 7.16699H4.66667Z"/>
+          </svg>
+          {{ section.settings.note_text }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Sign Up Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Join Our Newsletter & Get 15% OFF Your First Order!</p>"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Email Address..."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Subscribe Now"
+    },
+    {
+      "type": "richtext",
+      "id": "note_text",
+      "label": "Reassurance Note",
+      "default": "<p>Your information is safe and secure with us</p>"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Banner Image (Mobile)",
+      "info": "Falls back to the desktop image if empty."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Content Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Mobile Heading Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "input_bg_color",
+      "label": "Input Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 140,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 140,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Sign Up Banner",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,304 @@
+{% style %}
+  #cwc_home-reviews-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#333333' }};
+    --heading-color: {{ section.settings.heading_color | default: '#1F3D6E' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#1F3D6E' }};
+    --card-bg: {{ section.settings.card_bg_color | default: '#ffffff' }};
+    --star-color: {{ section.settings.star_color | default: '#FBBF24' }};
+    --nav-bg: {{ section.settings.nav_color | default: '#1F3D6E' }};
+    --padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 80 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 80 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_home-reviews.css' | asset_url | stylesheet_tag }}
+
+{%- capture star_svg -%}
+  <svg class="cwc_home-reviews__star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+  </svg>
+{%- endcapture -%}
+
+<section id="cwc_home-reviews-{{ section.id }}" class="cwc_home-reviews">
+  <div class="cwc_home-reviews__container">
+
+    {% comment %} Section Header {% endcomment %}
+    <div class="cwc_home-reviews__content">
+      {% if section.settings.top_rating_stars > 0 or section.settings.top_rating_text != blank %}
+        <div class="cwc_home-reviews__top-rating">
+          {% if section.settings.top_rating_stars > 0 %}
+            <div class="cwc_home-reviews__top-stars">
+              {% for i in (1..section.settings.top_rating_stars) %}{{ star_svg }}{% endfor %}
+            </div>
+          {% endif %}
+          {% if section.settings.top_rating_text != blank %}
+            <div class="cwc_home-reviews__top-rating-text cwc-rte">{{ section.settings.top_rating_text }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="cwc_home-reviews__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_home-reviews__content-subtext cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Carousel {% endcomment %}
+    {% if section.blocks.size > 0 %}
+      <div class="cwc_home-reviews__slider-wrapper">
+
+        <button
+          type="button"
+          class="cwc_home-reviews__nav-btn cwc_home-reviews__nav-btn--prev"
+          data-cwc-prev
+          aria-label="Previous"
+        >
+          <svg width="17" height="18" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14.5 7.375L1 7.375M1 7.375L7.375 1M1 7.375L7.375 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+
+        <div class="cwc_home-reviews__track" data-cwc-track>
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'testimonial_card' %}
+                <div class="cwc_home-reviews__card" {{ block.shopify_attributes }}>
+
+                  <div class="cwc_home-reviews__card-image">
+                    {% if block.settings.review_image != blank %}
+                      <img
+                        src="{{ block.settings.review_image | image_url: width: 600 }}"
+                        alt="{{ block.settings.review_image.alt | default: block.settings.author_name | escape }}"
+                        loading="lazy"
+                        width="600"
+                        height="800"
+                      >
+                    {% else %}
+                      <div class="cwc_home-reviews__placeholder"><span>Add image</span></div>
+                    {% endif %}
+                  </div>
+
+                  <div class="cwc_home-reviews__card-content">
+                    {% if block.settings.quote != blank %}
+                      <div class="cwc_home-reviews__quote cwc-rte">{{ block.settings.quote }}</div>
+                    {% endif %}
+
+                    <div class="cwc_home-reviews__footer">
+                      <div class="cwc_home-reviews__author-info">
+                        {% if block.settings.author_name != blank %}
+                          <span class="cwc_home-reviews__author-name">{{ block.settings.author_name }}</span>
+                        {% endif %}
+                        {% if block.settings.verified_text != blank %}
+                          <span class="cwc_home-reviews__verified">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.70711 4.29289C9.09763 4.68342 9.09763 5.31658 8.70711 5.70711L5.70711 8.70711C5.31658 9.09763 4.68342 9.09763 4.29289 8.70711L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L5 6.58579L7.29289 4.29289C7.68342 3.90237 8.31658 3.90237 8.70711 4.29289Z"/>
+                            </svg>
+                            {{ block.settings.verified_text }}
+                          </span>
+                        {% endif %}
+                      </div>
+
+                      {% if block.settings.rating > 0 %}
+                        <div class="cwc_home-reviews__card-stars">
+                          {% for i in (1..block.settings.rating) %}{{ star_svg }}{% endfor %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+
+        <button
+          type="button"
+          class="cwc_home-reviews__nav-btn cwc_home-reviews__nav-btn--next"
+          data-cwc-next
+          aria-label="Next"
+        >
+          <svg width="17" height="18" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 7.375L14.5 7.375M14.5 7.375L8.125 1M14.5 7.375L8.125 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<script src="{{ 'CWC_home-reviews.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "CWC Home Reviews",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "range",
+      "id": "top_rating_stars",
+      "label": "Top Rating Stars",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "info": "Set to 0 to hide."
+    },
+    {
+      "type": "richtext",
+      "id": "top_rating_text",
+      "label": "Top Rating Text",
+      "default": "<p>4.8/5 from thousands of satisfied customers</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>People Everywhere Are <strong>Loving It</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>See why users are loving ReNu products</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Quote Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1F3D6E"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#1F3D6E"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#FBBF24"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Arrow Button Color",
+      "default": "#1F3D6E"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial_card",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "review_image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Share what a happy customer said about the product.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Customer Name"
+        },
+        {
+          "type": "text",
+          "id": "verified_text",
+          "label": "Verified Badge Text",
+          "default": "Verified Buyer"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star Rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "info": "Set to 0 to hide."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "CWC Home Reviews",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "testimonial_card" },
+        { "type": "testimonial_card" },
+        { "type": "testimonial_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

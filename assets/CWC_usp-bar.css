@@ -38,6 +38,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* testing  */
+  border: #142c70 solid 1px;
+  border-radius: 100%;
+  padding: 1rem;
 }
 
 .cwc_usp-bar__icon img {

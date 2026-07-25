@@ -33,7 +33,6 @@
 
 <section id="cwc_video-text-{{ section.id }}" class="cwc_video-text">
   <div class="cwc_video-text__container">
-
     {% comment %} Videos {% endcomment %}
     <div class="cwc_video-text__videos">
       {% for slot in (1..2) %}
@@ -44,8 +43,14 @@
         {% endif %}
         <div class="cwc_video-text__video-inner">
           {% if video != blank %}
-            <video class="cwc_video-text__video" preload="metadata" playsinline
-              {% if video.preview_image != blank %}poster="{{ video.preview_image | image_url: width: 600 }}"{% endif %}>
+            <video
+              class="cwc_video-text__video"
+              preload="metadata"
+              playsinline
+              {% if video.preview_image != blank %}
+                poster="{{ video.preview_image | image_url: width: 600 }}"
+              {% endif %}
+            >
               {% for source in video.sources %}
                 <source src="{{ source.url }}" type="{{ source.mime_type }}">
               {% endfor %}
@@ -98,7 +103,15 @@
       {% if section.settings.button_label != blank %}
         <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_video-text__button">
           <span>{{ section.settings.button_label }}</span>
-          <svg class="cwc_video-text__button-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <svg
+            class="cwc_video-text__button-arrow"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
             <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </a>
@@ -108,7 +121,7 @@
         <div class="cwc_video-text__rating">
           {% if section.settings.rating_stars > 0 %}
             <div class="cwc_video-text__stars">
-              {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+              {% render 'CWC_stars_block' %}
             </div>
           {% endif %}
           {% if section.settings.rating_text != blank %}
@@ -117,7 +130,6 @@
         </div>
       {% endif %}
     </div>
-
   </div>
 </section>
 

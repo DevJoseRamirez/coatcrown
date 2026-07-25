@@ -36,3 +36,5 @@ CWC_Shopify_Section_Guide.md
 _sections-queue/
 _reference-components/
 .claude/
+# --- Section build pipeline (local tooling) ---
+.shopify/

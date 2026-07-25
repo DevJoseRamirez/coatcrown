@@ -1,7 +1,7 @@
 {% style %}
   #cwc_trust-bar-{{ section.id }} {
-    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
-    --text-color: {{ section.settings.text_color | default: '#142C70' }};
+    --section-bg: {{ section.settings.bg_color | default: '#142c70' }};
+    --text-color: {{ section.settings.text_color | default: '#ffffff' }};
     --padding-top: {{ section.settings.padding_top | default: 12 }}px;
     --padding-bottom: {{ section.settings.padding_bottom | default: 12 }}px;
     --padding-top-mobile: {{ section.settings.padding_top | default: 12 | times: 0.5 }}px;
@@ -14,9 +14,8 @@
 <section id="cwc_trust-bar-{{ section.id }}" class="cwc_trust-bar">
   <div class="cwc_trust-bar__container">
     <div class="cwc_trust-bar__marquee">
-
-      {% for block in section.blocks %}
-        {% if block.settings.trust_icon != blank or block.settings.text != blank %}
+      <div class="cwc_trust-bar__group">
+        {% for block in section.blocks %}
           <div class="cwc_trust-bar__item" {{ block.shopify_attributes }}>
             {% if block.settings.trust_icon != blank %}
               <div class="cwc_trust-bar__icon">
@@ -33,13 +32,13 @@
               <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
             {% endif %}
           </div>
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      </div>
 
-      {% comment %} Duplicate items for the seamless mobile marquee loop {% endcomment %}
-      {% for block in section.blocks %}
-        {% if block.settings.trust_icon != blank or block.settings.text != blank %}
-          <div class="cwc_trust-bar__item cwc_trust-bar__item--clone" aria-hidden="true">
+      {% comment %} Duplicate group for the seamless marquee loop {% endcomment %}
+      <div class="cwc_trust-bar__group" aria-hidden="true">
+        {% for block in section.blocks %}
+          <div class="cwc_trust-bar__item">
             {% if block.settings.trust_icon != blank %}
               <div class="cwc_trust-bar__icon">
                 <img
@@ -55,9 +54,8 @@
               <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
             {% endif %}
           </div>
-        {% endif %}
-      {% endfor %}
-
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
@@ -74,13 +72,13 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#ECF4FF"
+      "default": "#142c70"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
-      "default": "#142C70"
+      "default": "#ffffff"
     },
     {
       "type": "header",

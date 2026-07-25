@@ -24,14 +24,13 @@
 
 <section id="cwc_home-reviews-{{ section.id }}" class="cwc_home-reviews">
   <div class="cwc_home-reviews__container">
-
     {% comment %} Section Header {% endcomment %}
     <div class="cwc_home-reviews__content">
       {% if section.settings.top_rating_stars > 0 or section.settings.top_rating_text != blank %}
         <div class="cwc_home-reviews__top-rating">
           {% if section.settings.top_rating_stars > 0 %}
             <div class="cwc_home-reviews__top-stars">
-              {% for i in (1..section.settings.top_rating_stars) %}{{ star_svg }}{% endfor %}
+              {% render 'CWC_stars_block' %}
             </div>
           {% endif %}
           {% if section.settings.top_rating_text != blank %}
@@ -56,14 +55,20 @@
     {% comment %} Carousel {% endcomment %}
     {% if section.blocks.size > 0 %}
       <div class="cwc_home-reviews__slider-wrapper">
-
         <button
           type="button"
           class="cwc_home-reviews__nav-btn cwc_home-reviews__nav-btn--prev"
           data-cwc-prev
           aria-label="Previous"
         >
-          <svg width="17" height="18" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            width="17"
+            height="18"
+            viewBox="0 0 16 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path d="M14.5 7.375L1 7.375M1 7.375L7.375 1M1 7.375L7.375 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </button>
@@ -73,7 +78,6 @@
             {% case block.type %}
               {% when 'testimonial_card' %}
                 <div class="cwc_home-reviews__card" {{ block.shopify_attributes }}>
-
                   <div class="cwc_home-reviews__card-image">
                     {% if block.settings.review_image != blank %}
                       <img
@@ -100,7 +104,14 @@
                         {% endif %}
                         {% if block.settings.verified_text != blank %}
                           <span class="cwc_home-reviews__verified">
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 12 12"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                              aria-hidden="true"
+                            >
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.70711 4.29289C9.09763 4.68342 9.09763 5.31658 8.70711 5.70711L5.70711 8.70711C5.31658 9.09763 4.68342 9.09763 4.29289 8.70711L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L5 6.58579L7.29289 4.29289C7.68342 3.90237 8.31658 3.90237 8.70711 4.29289Z"/>
                             </svg>
                             {{ block.settings.verified_text }}
@@ -110,12 +121,11 @@
 
                       {% if block.settings.rating > 0 %}
                         <div class="cwc_home-reviews__card-stars">
-                          {% for i in (1..block.settings.rating) %}{{ star_svg }}{% endfor %}
+                          {% render 'CWC_stars_block' %}
                         </div>
                       {% endif %}
                     </div>
                   </div>
-
                 </div>
             {% endcase %}
           {% endfor %}
@@ -127,14 +137,19 @@
           data-cwc-next
           aria-label="Next"
         >
-          <svg width="17" height="18" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            width="17"
+            height="18"
+            viewBox="0 0 16 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path d="M1 7.375L14.5 7.375M14.5 7.375L8.125 1M14.5 7.375L8.125 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </button>
-
       </div>
     {% endif %}
-
   </div>
 </section>
 
@@ -294,9 +309,48 @@
       "name": "CWC Home Reviews",
       "category": "CWC Custom",
       "blocks": [
-        { "type": "testimonial_card" },
-        { "type": "testimonial_card" },
-        { "type": "testimonial_card" }
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>My golden sheds constantly, and this is the first tool that actually keeps the fur off my couch. Grooming is finally calm.</p>",
+            "author_name": "Sarah M."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Bath time used to be a battle. Now my pup actually relaxes while I brush. The mist makes such a difference.</p>",
+            "author_name": "James T."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Worth every penny. Two sessions in and his coat is noticeably softer and shinier. Highly recommend.</p>",
+            "author_name": "Priya K."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>I have two cats and a dog and this works on all of them. Less shedding, less stress, less mess everywhere.</p>",
+            "author_name": "Marcus L."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>The number of loose hairs it pulls in one session is unreal. My vacuum finally gets a break.</p>",
+            "author_name": "Emily R."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Gentle enough for my senior dog and he genuinely enjoys it now. Best grooming purchase I've made.</p>",
+            "author_name": "David C."
+          }
+        }
       ]
     }
   ]

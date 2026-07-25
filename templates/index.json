@@ -21,6 +21,7 @@
         "usp_3": "<p><strong>Makes coat smoother</strong>, softer, noticeably healthier</p>",
         "button_label": "Shop Best Sellers",
         "button_link": "",
+        "testimonial_image": "shopify://shop_images/Screenshotfrom2026-07-1308-44-23.png",
         "testimonial_quote": "<p>\"I never thought grooming could be enjoyable for my anxious terrier, but the ReNu brush is a game-changer! It's gentle, effective, and Lola loves it!\"</p>",
         "testimonial_author": "Linda S",
         "testimonial_stars": 5,
@@ -33,13 +34,59 @@
         "button_bg_color": "#e38a0a",
         "button_text_color": "#ffffff",
         "card_bg_color": "#fff9f9",
+        "image": "shopify://shop_images/hf_20260608_023104_cfff7507-f254-4d98-9732-08283442a186.png",
+        "image_mobile": "shopify://shop_images/Screenshotfrom2026-07-1308-44-23.png",
         "min_height": 800,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "cwc_as_seen_in_D4e5F6": {
       "type": "CWC_as-seen-in",
+      "blocks": {
+        "logo_zAWCcP": {
+          "type": "logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/featured-logo-01.png",
+            "link": ""
+          }
+        },
+        "logo_TGPaWK": {
+          "type": "logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/featured-logo-04.png",
+            "link": ""
+          }
+        },
+        "logo_KRQxeE": {
+          "type": "logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/featured-logo-03.png",
+            "link": ""
+          }
+        },
+        "logo_xnzyLT": {
+          "type": "logo",
+          "settings": {
+            "logo_image": "shopify://shop_images/featured-logo-02.png",
+            "link": ""
+          }
+        },
+        "logo_8i37wn": {
+          "type": "logo",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_zAWCcP",
+        "logo_TGPaWK",
+        "logo_KRQxeE",
+        "logo_xnzyLT",
+        "logo_8i37wn"
+      ],
       "settings": {
         "bg_color": "#ecf4ff",
         "padding_top": 20,
@@ -51,6 +98,9 @@
       "settings": {
         "heading": "<p>Explore Pet Parent's <strong>Top Picks</strong></p>",
         "subtext": "<p>Join over 15,000+ happy owners upgrading their grooming routine.</p>",
+        "collection": "best-sellers",
+        "default_rating": 5,
+        "default_review_text": "412 Reviews",
         "bg_color": "#ffffff",
         "text_color": "#1f3d6e",
         "bold_color": "#142c70",
@@ -73,6 +123,7 @@
         "button_link": "",
         "rating_stars": 5,
         "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
+        "mission_image": "shopify://shop_images/image_19_1.png",
         "alt_text": "",
         "bg_color": "#ecf4ff",
         "text_color": "#111111",
@@ -85,17 +136,116 @@
         "padding_bottom": 80
       }
     },
-    "cwc_usp_bar_M4n5O6": {
+    "cwc_usp_bar_3PWHeX": {
       "type": "CWC_usp-bar",
+      "blocks": {
+        "usp_item_PFDNNr": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Stress-Free for Everyone"
+          }
+        },
+        "usp_item_U8GGWN": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Vet Verified"
+          }
+        },
+        "usp_item_radUXQ": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Instant Relief"
+          }
+        },
+        "usp_item_p4mVim": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Safe for All Pets"
+          }
+        },
+        "usp_item_HqkMBM": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Third-Party Lab Tested"
+          }
+        },
+        "usp_item_w9WVJK": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Extensive Research"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_PFDNNr",
+        "usp_item_U8GGWN",
+        "usp_item_radUXQ",
+        "usp_item_p4mVim",
+        "usp_item_HqkMBM",
+        "usp_item_w9WVJK"
+      ],
+      "name": "CWC USP Bar",
       "settings": {
         "bg_color": "#ecf4ff",
         "text_color": "#111111",
         "padding_top": 20,
-        "padding_bottom": 20
+        "padding_bottom": 40
       }
     },
     "cwc_why_P7q8R9": {
       "type": "CWC_why",
+      "blocks": {
+        "why_card_1": {
+          "type": "why_card",
+          "settings": {
+            "card_icon": "shopify://shop_images/Mask_group_2.png",
+            "title": "Save $600/Year",
+            "text": "<p>Professional grooming averages $75 per visit.</p>",
+            "price_label_1": "8 Visits/year",
+            "price_value_1": "$600",
+            "price_label_2": "1 ReNu Brush",
+            "price_value_2": "$45",
+            "footer_text": "<p>Skip just one appointment, and ReNu pays for itself.</p>"
+          }
+        },
+        "why_card_2": {
+          "type": "why_card",
+          "settings": {
+            "card_icon": "shopify://shop_images/Mask_group_2.png",
+            "title": "Real Technology",
+            "text": "<p>Ordinary brushes are just static plastic. ReNu uses ultrasonic mist technology to hydrate the coat, loosen dander, and prevent static shock. It treats the fur, it doesn't just pull it.</p>",
+            "price_label_1": "",
+            "price_value_1": "",
+            "price_label_2": "",
+            "price_value_2": "",
+            "footer_text": ""
+          }
+        },
+        "why_card_3": {
+          "type": "why_card",
+          "settings": {
+            "card_icon": "shopify://shop_images/Mask_group_2.png",
+            "title": "Built to Last Years",
+            "text": "<p>Cheap knockoffs use scratchy metal tines that rust and hard plastic that cracks. We use soft medical-grade silicone and a durable rechargeable battery designed for years of daily bonding.</p>",
+            "price_label_1": "",
+            "price_value_1": "",
+            "price_label_2": "",
+            "price_value_2": "",
+            "footer_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "why_card_1",
+        "why_card_2",
+        "why_card_3"
+      ],
       "settings": {
         "heading": "<p>Why ReNu Costs More Than <strong>Basic Brushes</strong></p>",
         "subtext": "<p>It's not just a brush. It's a professional grooming tool that pays for itself in just two sessions.</p>",
@@ -109,8 +259,40 @@
         "padding_bottom": 80
       }
     },
-    "cwc_steps_S1t2U3": {
+    "cwc_steps_AjRDDz": {
       "type": "CWC_steps",
+      "blocks": {
+        "step_card_cwhjUr": {
+          "type": "step_card",
+          "settings": {
+            "step_image": "shopify://shop_images/image_15.png",
+            "title": "Fill",
+            "text": "<p>Add FreshFur Cleansing Mist and water to the brush reservoir.</p>"
+          }
+        },
+        "step_card_f8DjxK": {
+          "type": "step_card",
+          "settings": {
+            "step_image": "shopify://shop_images/image_16.png",
+            "title": "Mist & Brush",
+            "text": "<p>Turn on the brush and release a gentle mist while brushing through your pet's coat.</p>"
+          }
+        },
+        "step_card_KqMUdL": {
+          "type": "step_card",
+          "settings": {
+            "step_image": "shopify://shop_images/image_17.png",
+            "title": "Instantly See Results",
+            "text": "<p>Empty collected hair as needed. No rinsing required — towel dry if desired.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_card_cwhjUr",
+        "step_card_f8DjxK",
+        "step_card_KqMUdL"
+      ],
+      "name": "CWC Steps",
       "settings": {
         "heading": "<p>3 Easy Steps To A <strong>Fur-Free Home</strong></p>",
         "subtext": "<p>Experience the grooming transformation.</p>",
@@ -130,8 +312,73 @@
         "padding_bottom": 80
       }
     },
-    "cwc_home_reviews_V4w5X6": {
+    "cwc_home_reviews_Cbawbc": {
       "type": "CWC_home-reviews",
+      "blocks": {
+        "testimonial_card_FrPhLy": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>My golden sheds constantly, and this is the first tool that actually keeps the fur off my couch. Grooming is finally calm.</p>",
+            "author_name": "Sarah M.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "testimonial_card_AnRq7E": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Bath time used to be a battle. Now my pup actually relaxes while I brush. The mist makes such a difference.</p>",
+            "author_name": "James T.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "testimonial_card_UpLgPc": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Worth every penny. Two sessions in and his coat is noticeably softer and shinier. Highly recommend.</p>",
+            "author_name": "Priya K.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "testimonial_card_UEgA3k": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>I have two cats and a dog and this works on all of them. Less shedding, less stress, less mess everywhere.</p>",
+            "author_name": "Marcus L.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "testimonial_card_jnVKyk": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>The number of loose hairs it pulls in one session is unreal. My vacuum finally gets a break.</p>",
+            "author_name": "Emily R.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "testimonial_card_P8fpCw": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>Gentle enough for my senior dog and he genuinely enjoys it now. Best grooming purchase I've made.</p>",
+            "author_name": "David C.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_card_FrPhLy",
+        "testimonial_card_AnRq7E",
+        "testimonial_card_UpLgPc",
+        "testimonial_card_UEgA3k",
+        "testimonial_card_jnVKyk",
+        "testimonial_card_P8fpCw"
+      ],
+      "name": "CWC Home Reviews",
       "settings": {
         "top_rating_stars": 5,
         "top_rating_text": "<p>4.8/5 from thousands of satisfied customers</p>",
@@ -153,6 +400,8 @@
       "settings": {
         "heading": "<p>Smoother Sessions. Softer Coats. <strong>Happier Pets</strong></p>",
         "subtext": "<p>Experience the grooming transformation.</p>",
+        "video_left": "shopify://files/videos/Omni-X-ugc-3-min.mp4",
+        "video_right": "shopify://files/videos/Omni-X-ugc-2-min.mp4",
         "stat_1_percent": 95,
         "stat_1_text": "<p>Said their pet became noticeably calmer and more relaxed during grooming after just one use.</p>",
         "stat_2_percent": 86,
@@ -177,6 +426,38 @@
     },
     "cwc_trust_bar_B1c2D3": {
       "type": "CWC_trust-bar",
+      "blocks": {
+        "trust_item_1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Shipping On All Orders"
+          }
+        },
+        "trust_item_2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Safe & Secure Checkout"
+          }
+        },
+        "trust_item_3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "365 Day Money Back Guarantee"
+          }
+        },
+        "trust_item_4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Loved By 50,000+ Pet Parents"
+          }
+        }
+      },
+      "block_order": [
+        "trust_item_1",
+        "trust_item_2",
+        "trust_item_3",
+        "trust_item_4"
+      ],
       "settings": {
         "bg_color": "#ecf4ff",
         "text_color": "#142c70",
@@ -186,6 +467,58 @@
     },
     "cwc_home_faq_E4f5G6": {
       "type": "CWC_home-faq",
+      "blocks": {
+        "faq_item_1": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Will this help with my pet's shedding or coat issues?",
+            "text": "<p>Our grooming products are proudly crafted in Denver, Colorado, in a GMP-certified facility that adheres to the highest safety and quality standards.</p>"
+          }
+        },
+        "faq_item_2": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is it safe to use on sensitive skin?",
+            "text": "<p>FreshFur is designed to be gentle for everyday use. Most pets tolerate it well, but every pet is different. If your pet has known sensitivities, we recommend starting with a small area first and adjusting use based on your pet's comfort.</p>"
+          }
+        },
+        "faq_item_3": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How quickly will I see results?",
+            "text": "<p>You'll notice results right away as you brush — loose fur, dirt, and debris lift away instantly. Results may vary depending on coat type and how dirty your pet is, but most customers see a difference during the first use.</p>"
+          }
+        },
+        "faq_item_4": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How do I use the brush and solution?",
+            "text": "<p>Add FreshFur Cleansing Mist and water to the brush reservoir, turn on the brush and gently mist while brushing through the coat, then remove collected hair as needed — no rinsing required. Detailed instructions are included on the packaging.</p>"
+          }
+        },
+        "faq_item_5": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Do I need to use it every time I bathe my pet?",
+            "text": "<p>No. FreshFur is designed for everyday cleanups between baths. It helps keep your pet fresh without the hassle of frequent bathing.</p>"
+          }
+        },
+        "faq_item_6": {
+          "type": "faq_item",
+          "settings": {
+            "title": "What if my pet doesn't like it at first?",
+            "text": "<p>Many pets actually relax — and even fall asleep — while being brushed with FreshFur. The gentle misting combined with slow brushing helps create a calmer experience. As with anything new, start slowly and let your pet get comfortable over a few sessions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_1",
+        "faq_item_2",
+        "faq_item_3",
+        "faq_item_4",
+        "faq_item_5",
+        "faq_item_6"
+      ],
       "settings": {
         "heading": "<p>Frequently Asked <strong>Questions</strong></p>",
         "subtext": "<p>Need more information? You can find it here.</p>",
@@ -210,10 +543,12 @@
         "usp_3": "<p><strong>Softer, shinier coats</strong> after just a week</p>",
         "button_label": "Shop Best Sellers",
         "button_link": "",
+        "testimonial_image": "shopify://shop_images/Screenshotfrom2026-07-1308-44-23.png",
         "testimonial_quote": "<p>\"I never thought grooming could be enjoyable for my anxious terrier, but the ReNu brush is a game-changer! It's gentle, effective, and Lola loves it!\"</p>",
         "testimonial_author": "Linda S",
         "testimonial_stars": 5,
         "testimonial_verified_text": "Verified Customer",
+        "product_image": "shopify://shop_images/image_15.png",
         "alt_text": "",
         "bg_color": "#ecf4ff",
         "text_color": "#111111",
@@ -234,6 +569,7 @@
         "email_placeholder": "Email Address...",
         "button_label": "Subscribe Now",
         "note_text": "<p>Your information is safe and secure with us</p>",
+        "banner_image": "shopify://shop_images/hf_20260608_023104_cfff7507-f254-4d98-9732-08283442a186.png",
         "bg_color": "#ecf4ff",
         "text_color": "#ffffff",
         "heading_color": "#142c70",
@@ -252,10 +588,10 @@
     "cwc_as_seen_in_D4e5F6",
     "cwc_featured_collection_G7h8I9",
     "cwc_mission_J1k2L3",
-    "cwc_usp_bar_M4n5O6",
+    "cwc_usp_bar_3PWHeX",
     "cwc_why_P7q8R9",
-    "cwc_steps_S1t2U3",
-    "cwc_home_reviews_V4w5X6",
+    "cwc_steps_AjRDDz",
+    "cwc_home_reviews_Cbawbc",
     "cwc_video_text_Y7z8A9",
     "cwc_trust_bar_B1c2D3",
     "cwc_home_faq_E4f5G6",

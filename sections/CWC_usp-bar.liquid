@@ -14,24 +14,22 @@
 <section id="cwc_usp-bar-{{ section.id }}" class="cwc_usp-bar">
   <div class="cwc_usp-bar__container">
     {% for block in section.blocks %}
-      {% if block.settings.usp_icon != blank or block.settings.text != blank %}
-        <div class="cwc_usp-bar__item" {{ block.shopify_attributes }}>
-          {% if block.settings.usp_icon != blank %}
-            <div class="cwc_usp-bar__icon">
-              <img
-                src="{{ block.settings.usp_icon | image_url: width: 200 }}"
-                alt="{{ block.settings.usp_icon.alt | default: block.settings.text | escape }}"
-                loading="lazy"
-                width="100"
-                height="100"
-              >
-            </div>
-          {% endif %}
-          {% if block.settings.text != blank %}
-            <span class="cwc_usp-bar__text">{{ block.settings.text }}</span>
-          {% endif %}
-        </div>
-      {% endif %}
+      <div class="cwc_usp-bar__item" {{ block.shopify_attributes }}>
+        {% if block.settings.usp_icon != blank %}
+          <div class="cwc_usp-bar__icon">
+            <img
+              src="{{ block.settings.usp_icon | image_url: width: 84 }}"
+              alt="{{ block.settings.usp_icon.alt | default: block.settings.text | escape }}"
+              loading="lazy"
+              width="100"
+              height="100"
+            >
+          </div>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <span class="cwc_usp-bar__text">{{ block.settings.text }}</span>
+        {% endif %}
+      </div>
     {% endfor %}
   </div>
 </section>
@@ -110,8 +108,8 @@
         { "type": "usp_item", "settings": { "text": "Vet Verified" } },
         { "type": "usp_item", "settings": { "text": "Instant Relief" } },
         { "type": "usp_item", "settings": { "text": "Safe for All Pets" } },
-        { "type": "usp_item", "settings": { "text": "Third-Party Lab Tested" } },
-        { "type": "usp_item", "settings": { "text": "Extensive Research" } }
+        { "type": "usp_item", "settings": { "text": "Made For Dogs Of All Coat Types" } },
+        { "type": "usp_item", "settings": { "text": "Thoughtfully Designed" } }
       ]
     }
   ]

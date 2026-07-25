@@ -37,7 +37,7 @@
   text-transform: capitalize;
 }
 
-.cwc_why__content-heading > * strong {
+.cwc_why__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -202,6 +202,7 @@
   .cwc_why__card {
     width: 100%;
     max-width: 100%;
+    padding: 28px 52px;
   }
 
   .cwc_why__icon-wrapper {

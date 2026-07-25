@@ -23,11 +23,9 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(
-    270deg,
-    transparent 44%,
-    color-mix(in srgb, var(--overlay-color) 55%, transparent) 62%
-  );
+  background: linear-gradient(270deg,
+      transparent 44%,
+      color-mix(in srgb, var(--overlay-color) 55%, transparent) 62%);
 }
 
 /* === Content === */
@@ -52,7 +50,7 @@
   text-transform: capitalize;
 }
 
-.cwc_sign-up-banner__heading > * strong {
+.cwc_sign-up-banner__heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -103,6 +101,12 @@
 
 .cwc_sign-up-banner__submit svg {
   flex-shrink: 0;
+}
+
+/* When the form only shows the thank-you message, drop the light input box
+   so the message sits on the banner with the same readable content color */
+.cwc_sign-up-banner__form:has(.cwc_sign-up-banner__success) {
+  background: transparent;
 }
 
 .cwc_sign-up-banner__success {
@@ -157,11 +161,9 @@
   }
 
   .cwc_sign-up-banner__bg::before {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 34%,
-      #ffffff 55%
-    );
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0) 34%,
+        #ffffff 55%);
   }
 
   .cwc_sign-up-banner__content {
@@ -170,6 +172,9 @@
     padding: var(--padding-top-mobile) 27px var(--padding-bottom-mobile);
     text-align: center;
     color: #111111;
+    /* testign */
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .cwc_sign-up-banner__heading {
@@ -189,6 +194,7 @@
   .cwc_sign-up-banner__input {
     padding: 21px 18px;
     font-size: 0.875rem;
+    background: #ecf4ff !important;
   }
 
   .cwc_sign-up-banner__submit {

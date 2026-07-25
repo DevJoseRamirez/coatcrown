@@ -12,17 +12,34 @@
   display: flex;
   align-items: center;
   color: var(--text-color);
+  /* testing */
   background:
     linear-gradient(270deg, rgba(0, 0, 0, 0) 30%, var(--overlay-color) 60%),
     var(--banner-image, none) right center / 60% 110% no-repeat,
     var(--section-bg);
+  /* testing */
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 800px;
+  position: relative;
+  overflow: hidden;
+  background-size: auto;
 }
 
 .cwc_hero-banner__container {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
   width: 100%;
+  /* testing */
+  /*  
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 800px;
+  position: relative;
+  overflow: hidden;
+  background-size: auto;
+  */
 }
 
 /* === Content Column === */
@@ -32,6 +49,15 @@
   max-width: 640px;
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  /* testing */
+  padding: 60px 4% 60px 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 816px;
+  z-index: 2;
+  color: #ffffff;
   gap: 24px;
 }
 
@@ -67,7 +93,7 @@
   text-transform: capitalize;
 }
 
-.cwc_hero-banner__heading > * strong {
+.cwc_hero-banner__heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -76,6 +102,7 @@
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.2;
+  line-height: 1.4;
 }
 
 /* === USP List === */
@@ -168,6 +195,7 @@
   color: #111111;
   font-size: 1rem;
   line-height: 1.2;
+  font-weight: 500;
 }
 
 .cwc_hero-banner__author {
@@ -228,13 +256,18 @@
       var(--section-bg);
   }
 
+  .cwc_hero-banner__rating-text p {
+    font-size: .8rem;
+  }
+
   .cwc_hero-banner__container {
     padding: 30px 1rem;
   }
 
   .cwc_hero-banner__content {
     max-width: 100%;
-    gap: 16px;
+    gap: 14Fpx;
+    padding: 0px;
   }
 
   .cwc_hero-banner__heading p {
@@ -243,10 +276,29 @@
 
   .cwc_hero-banner__description p {
     font-size: 1rem;
+    font-size: .9rem;
+    line-height: 1.4;
+  }
+
+  .cwc_hero-banner__usp-list {
+    gap: 8px;
+  }
+
+  .cwc_hero-banner__button-wrapper {
+    margin-top: 0px;
+  }
+
+  .cwc_hero-banner__stars {
+    gap: 1px;
+  }
+
+  .cwc_hero-banner__star {
+    height: 12px;
   }
 
   .cwc_hero-banner__usp-text p {
     font-size: 0.875rem;
+    font-size: .85rem;
   }
 
   .cwc_hero-banner__usp-icon {
@@ -259,6 +311,8 @@
     min-width: 0;
     justify-content: center;
     gap: 10px;
+    /*  */
+    padding: 20px 26px;
   }
 
   .cwc_hero-banner__testimonial {
@@ -274,14 +328,15 @@
 
   .cwc_hero-banner__quote p {
     font-size: 0.75rem;
+    font-weight: 400;
   }
 
   .cwc_hero-banner__author {
     font-size: 0.6875rem;
   }
 
-  .cwc_hero-banner__t-stars .cwc_hero-banner__star {
-    width: 10px;
+  .cwc_hero-banner__t-stars .cwc_stars_block {
     height: 10px;
+    width: auto;
   }
 }

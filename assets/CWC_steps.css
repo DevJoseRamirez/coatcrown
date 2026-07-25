@@ -38,7 +38,7 @@
   text-transform: capitalize;
 }
 
-.cwc_steps__content-heading > * strong {
+.cwc_steps__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -89,19 +89,6 @@
   border-radius: 20px;
 }
 
-.cwc_steps__placeholder {
-  width: 100%;
-  height: 100%;
-  border-radius: 20px;
-  background: #f5f5f5;
-  border: 2px dashed #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #999;
-  font-size: 0.9rem;
-}
-
 .cwc_steps__number-badge {
   position: absolute;
   bottom: -18px;
@@ -118,6 +105,12 @@
   justify-content: center;
   font-size: 1.0625rem;
   font-weight: 700;
+}
+
+/* Standalone badge when a step has no image */
+.cwc_steps__number-badge--top {
+  position: static;
+  transform: none;
 }
 
 /* === Step text === */
@@ -189,6 +182,13 @@
   color: var(--star-color);
 }
 
+.cwc_steps__stars .cwc_steps__star {
+  height: .8rem;
+  width: .8rem;
+  gap: 1px;
+}
+
+
 .cwc_steps__rating-text p {
   margin: 0;
   font-size: 1rem;
@@ -217,6 +217,10 @@
    Mobile Responsive — stack steps
    ============================== */
 @media screen and (max-width: 768px) {
+  .cwc_steps__rating-text p {
+    font-size: .8rem;
+  }
+
   .cwc_steps {
     padding-top: var(--padding-top-mobile);
     padding-bottom: var(--padding-bottom-mobile);

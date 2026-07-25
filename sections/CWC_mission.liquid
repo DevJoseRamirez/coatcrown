@@ -24,7 +24,6 @@
 
 <section id="cwc_mission-{{ section.id }}" class="cwc_mission">
   <div class="cwc_mission__container">
-
     <div class="cwc_mission__image-col">
       {% if section.settings.mission_image != blank %}
         <img
@@ -69,7 +68,15 @@
         <div class="cwc_mission__button-wrapper">
           <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_mission__btn">
             <span>{{ section.settings.button_label }}</span>
-            <svg class="cwc_mission__btn-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <svg
+              class="cwc_mission__btn-arrow"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
               <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </a>
@@ -80,7 +87,7 @@
         <div class="cwc_mission__rating">
           {% if section.settings.rating_stars > 0 %}
             <div class="cwc_mission__stars">
-              {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+              {% render 'CWC_stars_block' %}
             </div>
           {% endif %}
           {% if section.settings.rating_text != blank %}
@@ -89,7 +96,6 @@
         </div>
       {% endif %}
     </div>
-
   </div>
 </section>
 

@@ -51,6 +51,7 @@
   width: 100%;
   height: auto;
   max-height: 80px;
+  max-height: 54px;
   object-fit: contain;
 }
 
@@ -67,6 +68,11 @@
    Mobile Responsive — auto-scroll marquee
    ============================== */
 @media screen and (max-width: 768px) {
+
+  .cwc_as-seen-in__image {
+    max-height: 36px;
+  }
+
   .cwc_as-seen-in {
     padding-top: var(--padding-top-mobile);
     padding-bottom: var(--padding-bottom-mobile);
@@ -103,6 +109,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-100%);
   }

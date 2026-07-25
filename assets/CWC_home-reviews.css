@@ -59,7 +59,7 @@
   line-height: 1.1;
 }
 
-.cwc_home-reviews__content-heading > * strong {
+.cwc_home-reviews__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -252,6 +252,21 @@
    Mobile Responsive — 1.2 cards in view, no nav
    ============================== */
 @media screen and (max-width: 768px) {
+
+  .cwc_home-reviews__top-stars {
+    gap: 1px;
+  }
+
+  .cwc_home-reviews__top-rating-text p {
+    font-size: .8rem;
+    text-align: left;
+  }
+
+
+  .cwc_home-reviews__card-stars {
+    gap: 1px;
+  }
+
   .cwc_home-reviews {
     padding-top: var(--padding-top-mobile);
     padding-bottom: var(--padding-bottom-mobile);

@@ -32,7 +32,7 @@
   color: inherit;
 }
 
-.cwc_featured-collection__content-heading > * strong {
+.cwc_featured-collection__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -129,7 +129,7 @@
 }
 
 .cwc_featured-collection__card-image {
-  background-color: var(--card-bg);
+  /* background-color: var(--card-bg); */
   border-radius: 24px;
   display: flex;
   align-items: center;
@@ -147,8 +147,9 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  object-fit: contain;
+  object-fit: cover;
   mix-blend-mode: multiply;
+  border-radius: 12px;
 }
 
 .cwc_featured-collection__placeholder {
@@ -168,6 +169,7 @@
   text-align: center;
   gap: 20px;
   padding: 0 10px;
+  flex: 1 1 auto;
 }
 
 .cwc_featured-collection__card-reviews {
@@ -189,9 +191,13 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.2;
   text-transform: capitalize;
   color: var(--text-color);
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cwc_featured-collection__card-title a {
@@ -234,6 +240,7 @@
 .cwc_featured-collection__form {
   display: block;
   width: 100%;
+  margin-top: auto;
 }
 
 .cwc_featured-collection__atc.button,
@@ -244,6 +251,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   padding: 14px 22px;
   border-radius: 6px;
@@ -311,11 +319,12 @@
 
   .cwc_featured-collection__slider-wrapper {
     padding: 0 20px;
+    padding: 0 1rem;
   }
 
   .cwc_featured-collection__track {
     gap: 16px;
-    padding: 0 0 60px;
+    padding: 0 0 80px;
   }
 
   .cwc_featured-collection__card {
@@ -323,27 +332,37 @@
     max-width: 100%;
     gap: 0;
     padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.16);
+    border: 1px solid rgb(0 0 0 / 9%);
     border-radius: 8px;
+    padding: 1.25rem 1rem;
+    gap: 1rem;
   }
 
   .cwc_featured-collection__card-image {
     padding: 10px 5px 16px;
+    padding: 0px;
   }
 
   .cwc_featured-collection__card-content {
     align-items: flex-start;
     text-align: left;
     gap: 10px;
+    padding: 0px;
   }
 
   .cwc_featured-collection__card-reviews {
     justify-content: flex-start;
   }
 
+  .cwc_featured-collection__card-title {
+    justify-content: flex-start;
+    min-height: 0;
+  }
+
   .cwc_featured-collection__card-price {
     justify-content: flex-start;
     gap: 4px;
+    gap: 8px;
   }
 
   .cwc_featured-collection__price-compare,
@@ -358,11 +377,12 @@
   .cwc_featured-collection__atc,
   .cwc_featured-collection__atc.button {
     max-width: none;
+    padding: 12px 22px;
   }
 
   .cwc_featured-collection__nav-btn {
     top: auto;
-    bottom: 15px;
+    bottom: 5px;
     transform: none;
   }
 

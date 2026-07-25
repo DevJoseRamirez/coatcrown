@@ -30,7 +30,7 @@
 
 .cwc_video-text__video-inner {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 9 / 16;
   border-radius: 14px;
   overflow: hidden;
   background-color: #f4f4f4;
@@ -88,7 +88,7 @@
   text-transform: capitalize;
 }
 
-.cwc_video-text__heading > * strong {
+.cwc_video-text__heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -203,6 +203,7 @@
 
 .cwc_video-text__rating-text p {
   margin: 0;
+  font-size: .8rem;
 }
 
 .cwc_video-text__rating-text strong {
@@ -258,6 +259,10 @@
 
   .cwc_video-text__subheading p {
     font-size: 1rem;
+  }
+
+  .cwc_video-text__stat {
+    gap: 24px;
   }
 
   .cwc_video-text__stats {

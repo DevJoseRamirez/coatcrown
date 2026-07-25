@@ -25,7 +25,6 @@
 
 <section id="cwc_steps-{{ section.id }}" class="cwc_steps">
   <div class="cwc_steps__container">
-
     {% comment %} Section Header {% endcomment %}
     <div class="cwc_steps__content">
       {% if section.settings.heading != blank %}
@@ -48,8 +47,8 @@
           {% case block.type %}
             {% when 'step_card' %}
               <div class="cwc_steps__item" {{ block.shopify_attributes }}>
-                <div class="cwc_steps__image-wrapper">
-                  {% if block.settings.step_image != blank %}
+                {% if block.settings.step_image != blank %}
+                  <div class="cwc_steps__image-wrapper">
                     <img
                       class="cwc_steps__image"
                       src="{{ block.settings.step_image | image_url: width: 600 }}"
@@ -58,11 +57,11 @@
                       width="600"
                       height="600"
                     >
-                  {% else %}
-                    <div class="cwc_steps__placeholder"><span>Add image</span></div>
-                  {% endif %}
-                  <div class="cwc_steps__number-badge">{{ forloop.index }}</div>
-                </div>
+                    <div class="cwc_steps__number-badge">{{ forloop.index }}</div>
+                  </div>
+                {% else %}
+                  <div class="cwc_steps__number-badge cwc_steps__number-badge--top">{{ forloop.index }}</div>
+                {% endif %}
 
                 {% if block.settings.title != blank %}
                   <div class="cwc_steps__step-title">{{ block.settings.title }}</div>
@@ -78,12 +77,23 @@
     {% endif %}
 
     {% comment %} Footer: button + rating {% endcomment %}
-    {% if section.settings.button_label != blank or section.settings.rating_stars > 0 or section.settings.rating_text != blank %}
+    {% if section.settings.button_label != blank
+      or section.settings.rating_stars > 0
+      or section.settings.rating_text != blank
+    %}
       <div class="cwc_steps__footer">
         {% if section.settings.button_label != blank %}
           <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_steps__btn">
             <span>{{ section.settings.button_label }}</span>
-            <svg class="cwc_steps__btn-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <svg
+              class="cwc_steps__btn-arrow"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
               <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </a>
@@ -93,7 +103,7 @@
           <div class="cwc_steps__rating">
             {% if section.settings.rating_stars > 0 %}
               <div class="cwc_steps__stars">
-                {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+                {% render 'CWC_stars_block' %}
               </div>
             {% endif %}
             {% if section.settings.rating_text != blank %}
@@ -103,7 +113,6 @@
         {% endif %}
       </div>
     {% endif %}
-
   </div>
 </section>
 

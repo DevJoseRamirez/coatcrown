@@ -35,13 +35,12 @@
 <section id="cwc_hero-banner-{{ section.id }}" class="cwc_hero-banner">
   <div class="cwc_hero-banner__container">
     <div class="cwc_hero-banner__content">
-
       {% comment %} Rating {% endcomment %}
       {% if section.settings.rating_stars > 0 or section.settings.rating_text != blank %}
         <div class="cwc_hero-banner__rating">
           {% if section.settings.rating_stars > 0 %}
             <div class="cwc_hero-banner__stars">
-              {% for i in (1..section.settings.rating_stars) %}{{ star_svg }}{% endfor %}
+              {% render 'CWC_stars_block' %}
             </div>
           {% endif %}
           {% if section.settings.rating_text != blank %}
@@ -74,7 +73,15 @@
             {% assign usp_value = section.settings[usp_key] %}
             {% if usp_value != blank %}
               <div class="cwc_hero-banner__usp-item">
-                <svg class="cwc_hero-banner__usp-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true">
+                <svg
+                  class="cwc_hero-banner__usp-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
                   <path d="M12.3654 19.3668L20.5904 11.1418L18.957 9.5085L12.3654 16.1002L9.04036 12.7752L7.40703 14.4085L12.3654 19.3668ZM13.9987 25.6668C12.3848 25.6668 10.8681 25.3606 9.4487 24.7481C8.02925 24.1356 6.79453 23.3043 5.74453 22.2543C4.69453 21.2043 3.86328 19.9696 3.25078 18.5502C2.63828 17.1307 2.33203 15.6141 2.33203 14.0002C2.33203 12.3863 2.63828 10.8696 3.25078 9.45016C3.86328 8.03072 4.69453 6.796 5.74453 5.746C6.79453 4.696 8.02925 3.86475 9.4487 3.25225C10.8681 2.63975 12.3848 2.3335 13.9987 2.3335C15.6126 2.3335 17.1293 2.63975 18.5487 3.25225C19.9681 3.86475 21.2029 4.696 22.2529 5.746C23.3029 6.796 24.1341 8.03072 24.7466 9.45016C25.3591 10.8696 25.6654 12.3863 25.6654 14.0002C25.6654 15.6141 25.3591 17.1307 24.7466 18.5502C24.1341 19.9696 23.3029 21.2043 22.2529 22.2543C21.2029 23.3043 19.9681 24.1356 18.5487 24.7481C17.1293 25.3606 15.6126 25.6668 13.9987 25.6668Z"/>
                 </svg>
                 <div class="cwc_hero-banner__usp-text cwc-rte">{{ usp_value }}</div>
@@ -89,7 +96,15 @@
         <div class="cwc_hero-banner__button-wrapper">
           <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_hero-banner__btn">
             {{ section.settings.button_label }}
-            <svg class="cwc_hero-banner__btn-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <svg
+              class="cwc_hero-banner__btn-arrow"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
               <path d="M1 8L15 8M15 8L8.38889 1M15 8L8.38889 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
           </a>
@@ -97,7 +112,10 @@
       {% endif %}
 
       {% comment %} Featured Testimonial {% endcomment %}
-      {% if section.settings.testimonial_quote != blank or section.settings.testimonial_author != blank or section.settings.testimonial_image != blank %}
+      {% if section.settings.testimonial_quote != blank
+        or section.settings.testimonial_author != blank
+        or section.settings.testimonial_image != blank
+      %}
         <div class="cwc_hero-banner__testimonial">
           {% if section.settings.testimonial_image != blank %}
             <img
@@ -120,7 +138,7 @@
             <div class="cwc_hero-banner__author">
               {% if section.settings.testimonial_stars > 0 %}
                 <div class="cwc_hero-banner__t-stars">
-                  {% for i in (1..section.settings.testimonial_stars) %}{{ star_svg }}{% endfor %}
+                  {% render 'CWC_stars_block' %}
                 </div>
               {% endif %}
 
@@ -130,7 +148,14 @@
 
               {% if section.settings.testimonial_verified_text != blank %}
                 <span class="cwc_hero-banner__verified-badge">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
                     <path d="M6.69773 15.3319C7.58522 16.2262 8.4093 16.2192 9.29709 15.3319L10.3817 14.254C10.4944 14.1485 10.593 14.1061 10.7409 14.1061H12.2625C13.5233 14.1061 14.1078 13.5286 14.1078 12.261V10.7396C14.1078 10.5917 14.1502 10.4932 14.2557 10.3805L15.3265 9.29567C16.2281 8.40829 16.2209 7.58431 15.3265 6.69693L14.2557 5.61211C14.1502 5.50694 14.1078 5.40116 14.1078 5.26022V3.73187C14.1078 2.47817 13.5302 1.88678 12.2625 1.88678H10.7409C10.593 1.88678 10.4944 1.85132 10.3817 1.74555L9.29679 0.668245C8.4093 -0.226351 7.58522 -0.219139 6.69773 0.668245L5.61279 1.74585C5.5076 1.85132 5.40181 1.88648 5.26085 1.88648H3.73232C2.47156 1.88648 1.88701 2.46405 1.88701 3.73157V5.26022C1.88701 5.40116 1.85155 5.50664 1.74576 5.61241L0.668325 6.69723C-0.226378 7.58431 -0.219165 8.40829 0.668325 9.29597L1.74606 10.3805C1.85155 10.4932 1.88671 10.5917 1.88671 10.7396V12.261C1.88671 13.5216 2.47156 14.1061 3.73201 14.1061H5.26085C5.40181 14.1061 5.5073 14.1485 5.61309 14.254L6.69773 15.3319ZM6.81043 11.5425C6.59224 11.5425 6.45129 11.4722 6.3455 11.3523L3.99288 8.73944C3.89423 8.62886 3.83922 8.48615 3.8381 8.33797C3.8381 8.00682 4.09146 7.76041 4.4509 7.76041C4.64084 7.76041 4.7818 7.82381 4.90862 7.95754L6.77497 10.0214L10.4028 4.91495C10.5437 4.71061 10.6847 4.62646 10.9311 4.62646C11.2761 4.62646 11.5229 4.87979 11.5229 5.21094C11.5229 5.33054 11.4736 5.47148 11.396 5.58417L7.28949 11.3244C7.1837 11.4581 7.02201 11.5425 6.81043 11.5425Z"/>
                   </svg>
                   {{ section.settings.testimonial_verified_text }}
@@ -140,7 +165,6 @@
           </div>
         </div>
       {% endif %}
-
     </div>
   </div>
 </section>
@@ -344,7 +368,7 @@
       "max": 120,
       "step": 10,
       "unit": "px",
-      "default": 60
+      "default": 0
     },
     {
       "type": "range",
@@ -354,7 +378,7 @@
       "max": 120,
       "step": 10,
       "unit": "px",
-      "default": 60
+      "default": 0
     }
   ],
   "presets": [

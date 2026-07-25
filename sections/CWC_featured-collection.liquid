@@ -40,7 +40,8 @@
   </div>
 
   {% comment %} Carousel {% endcomment %}
-  {% if section.blocks.size > 0 %}
+  {% assign card_collection = section.settings.collection %}
+  {% if card_collection != blank and card_collection.products.size > 0 %}
     <div class="cwc_featured-collection__slider-wrapper">
 
       <button
@@ -55,34 +56,9 @@
       </button>
 
       <div class="cwc_featured-collection__track" data-cwc-track>
-        {% for block in section.blocks %}
-          {% assign card_product = block.settings.product %}
-
+        {% for card_product in card_collection.products limit: 12 %}
           {% liquid
-            if block.settings.image != blank
-              assign card_image = block.settings.image
-            elsif card_product != blank and card_product.featured_image != blank
-              assign card_image = card_product.featured_image
-            else
-              assign card_image = nil
-            endif
-
-            if block.settings.title != blank
-              assign card_title = block.settings.title
-            elsif card_product != blank
-              assign card_title = card_product.title
-            else
-              assign card_title = 'Product title'
-            endif
-
-            if block.settings.link != blank
-              assign card_link = block.settings.link
-            elsif card_product != blank
-              assign card_link = card_product.url
-            else
-              assign card_link = nil
-            endif
-
+            assign card_image = card_product.featured_image
             assign card_variant = card_product.selected_or_first_available_variant
             if card_variant != blank
               assign final_price = card_variant.price
@@ -91,97 +67,97 @@
               assign final_price = card_product.price
               assign compare_price = card_product.compare_at_price
             endif
+
+            assign rating_value = section.settings.default_rating
+            if card_product.metafields.reviews.rating != blank
+              assign rating_value = card_product.metafields.reviews.rating.value.rating | round
+            endif
+
+            assign review_text = section.settings.default_review_text
+            if card_product.metafields.reviews.rating_count != blank
+              assign review_text = card_product.metafields.reviews.rating_count | append: ' reviews'
+            endif
           %}
 
-          <div class="cwc_featured-collection__card" {{ block.shopify_attributes }}>
+          <div class="cwc_featured-collection__card">
 
             {% comment %} Image {% endcomment %}
             <div class="cwc_featured-collection__card-image">
-              {% if card_link != blank %}<a href="{{ card_link }}" class="cwc_featured-collection__card-image-link">{% endif %}
+              <a href="{{ card_product.url }}" class="cwc_featured-collection__card-image-link">
                 {% if card_image != blank %}
                   <img
                     class="cwc_featured-collection__card-img"
                     src="{{ card_image | image_url: width: 600 }}"
-                    alt="{{ card_image.alt | default: card_title | escape }}"
+                    alt="{{ card_image.alt | default: card_product.title | escape }}"
                     loading="lazy"
                     width="413"
                     height="413"
                   >
                 {% else %}
                   <div class="cwc_featured-collection__placeholder">
-                    <span>Select a product</span>
+                    <span>No image</span>
                   </div>
                 {% endif %}
-              {% if card_link != blank %}</a>{% endif %}
+              </a>
             </div>
 
             {% comment %} Content {% endcomment %}
             <div class="cwc_featured-collection__card-content">
 
-              {% if block.settings.rating > 0 or block.settings.review_count != blank %}
-                <div class="cwc_featured-collection__card-reviews">
-                  {% if block.settings.rating > 0 %}
-                    <div class="cwc_featured-collection__stars">
-                      {% for i in (1..block.settings.rating) %}{{ star_svg }}{% endfor %}
-                    </div>
-                  {% endif %}
-                  {% if block.settings.review_count != blank %}
-                    <span class="cwc_featured-collection__review-count">{{ block.settings.review_count }}</span>
-                  {% endif %}
+              <div class="cwc_featured-collection__card-reviews">
+                <div class="cwc_featured-collection__stars">
+                  {% render 'CWC_stars_block' %}
                 </div>
-              {% endif %}
-
-              <div class="cwc_featured-collection__card-title">
-                {% if card_link != blank %}
-                  <a href="{{ card_link }}">{{ card_title }}</a>
-                {% else %}
-                  {{ card_title }}
+                {% if review_text != blank %}
+                  <span class="cwc_featured-collection__review-count">{{ review_text }}</span>
                 {% endif %}
               </div>
 
-              {% if card_product != blank %}
-                <div class="cwc_featured-collection__card-price">
-                  {% if compare_price > final_price %}
-                    <span class="cwc_featured-collection__price-compare">{{ compare_price | money }}</span>
-                  {% endif %}
-                  <span class="cwc_featured-collection__price-final">{{ final_price | money }}</span>
-                  {% if compare_price > final_price %}
-                    {% assign save_pct = compare_price | minus: final_price | times: 100 | divided_by: compare_price %}
-                    <span class="cwc_featured-collection__badge-save">SAVE <strong>{{ save_pct }}%</strong></span>
-                  {% endif %}
-                </div>
+              <div class="cwc_featured-collection__card-title">
+                <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+              </div>
 
-                {% comment %} Native add-to-cart — triggers the theme cart drawer {% endcomment %}
-                {% assign form_id = 'CWC-ProductForm-' | append: section.id | append: '-' | append: block.id %}
-                <product-form-component
-                  data-section-id="{{ section.id }}"
-                  data-product-id="{{ card_product.id }}"
-                  on:submit="/handleSubmit"
-                  class="cwc_featured-collection__form"
-                >
-                  <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
-                  {%- form 'product', card_product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                    <input
-                      type="hidden"
-                      name="id"
-                      ref="variantId"
-                      value="{{ card_variant.id }}"
-                      {% if card_variant.available == false %}disabled{% endif %}
-                    >
-                    <input
-                      type="hidden"
-                      name="quantity"
-                      value="{% if card_variant.quantity_rule.min %}{{ card_variant.quantity_rule.min }}{% else %}1{% endif %}"
-                    >
-                    {% render 'add-to-cart-button',
-                      add_to_cart_text: 'Add to Cart',
-                      class: 'cwc_featured-collection__atc',
-                      can_add_to_cart: card_variant.available,
-                      product: card_product
-                    %}
-                  {%- endform -%}
-                </product-form-component>
-              {% endif %}
+              <div class="cwc_featured-collection__card-price">
+                {% if compare_price > final_price %}
+                  <span class="cwc_featured-collection__price-compare">{{ compare_price | money }}</span>
+                {% endif %}
+                <span class="cwc_featured-collection__price-final">{{ final_price | money }}</span>
+                {% if compare_price > final_price %}
+                  {% assign save_pct = compare_price | minus: final_price | times: 100 | divided_by: compare_price %}
+                  <span class="cwc_featured-collection__badge-save">SAVE <strong>{{ save_pct }}%</strong></span>
+                {% endif %}
+              </div>
+
+              {% comment %} Native add-to-cart — triggers the theme cart drawer {% endcomment %}
+              {% assign form_id = 'CWC-ProductForm-' | append: section.id | append: '-' | append: card_product.id %}
+              <product-form-component
+                data-section-id="{{ section.id }}"
+                data-product-id="{{ card_product.id }}"
+                on:submit="/handleSubmit"
+                class="cwc_featured-collection__form"
+              >
+                <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+                {%- form 'product', card_product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  <input
+                    type="hidden"
+                    name="id"
+                    ref="variantId"
+                    value="{{ card_variant.id }}"
+                    {% if card_variant.available == false %}disabled{% endif %}
+                  >
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    value="{% if card_variant.quantity_rule.min %}{{ card_variant.quantity_rule.min }}{% else %}1{% endif %}"
+                  >
+                  {% render 'add-to-cart-button',
+                    add_to_cart_text: 'Add to Cart',
+                    class: 'cwc_featured-collection__atc',
+                    can_add_to_cart: card_variant.available,
+                    product: card_product
+                  %}
+                {%- endform -%}
+              </product-form-component>
 
             </div>
           </div>
@@ -225,6 +201,33 @@
       "id": "subtext",
       "label": "Section Subtext",
       "default": "<p>Join over 15,000+ happy owners upgrading their grooming routine.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Shows up to 12 products from this collection."
+    },
+    {
+      "type": "range",
+      "id": "default_rating",
+      "label": "Default Star Rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "info": "Shown on every card. Overridden per product by the reviews.rating metafield when it exists."
+    },
+    {
+      "type": "text",
+      "id": "default_review_text",
+      "label": "Default Review Text",
+      "default": "412 Reviews",
+      "info": "Shown on every card. Overridden per product by the reviews.rating_count metafield when it exists."
     },
     {
       "type": "header",
@@ -302,65 +305,10 @@
       "default": 60
     }
   ],
-  "blocks": [
-    {
-      "type": "product_card",
-      "name": "Product Card",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Product",
-          "info": "Provides image, title, link, price, and Add to Cart."
-        },
-        {
-          "type": "range",
-          "id": "rating",
-          "label": "Star Rating",
-          "min": 0,
-          "max": 5,
-          "step": 1,
-          "default": 5,
-          "info": "Set to 0 to hide stars."
-        },
-        {
-          "type": "text",
-          "id": "review_count",
-          "label": "Review Count",
-          "default": "412 reviews"
-        },
-        {
-          "type": "header",
-          "content": "Overrides (Optional)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Product Image Override"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title Override"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link Override"
-        }
-      ]
-    }
-  ],
-  "max_blocks": 12,
   "presets": [
     {
       "name": "CWC Featured Collection",
-      "category": "CWC Custom",
-      "blocks": [
-        { "type": "product_card" },
-        { "type": "product_card" },
-        { "type": "product_card" }
-      ]
+      "category": "CWC Custom"
     }
   ]
 }

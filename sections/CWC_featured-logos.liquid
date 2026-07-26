@@ -1,0 +1,206 @@
+{% style %}
+  #cwc_featured-logos-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --logo-height: {{ section.settings.logo_height | default: 40 }}px;
+    --logo-height-mobile: {{ section.settings.logo_height | default: 40 | times: 0.75 }}px;
+    --logo-gap: {{ section.settings.logo_gap | default: 64 }}px;
+    --scroll-speed: {{ section.settings.scroll_speed | default: 30 }}s;
+    --padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 40 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 40 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_featured-logos.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_featured-logos-{{ section.id }}" class="cwc_featured-logos">
+  <div class="cwc_featured-logos__container">
+
+    {% comment %} Section Header {% endcomment %}
+    <div class="cwc_featured-logos__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_featured-logos__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% comment %} Logo marquee — two identical groups scroll as one {% endcomment %}
+  {% if section.blocks.size > 0 %}
+    <div class="cwc_featured-logos__marquee">
+      <div class="cwc_featured-logos__group">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'logo' %}
+              <div class="cwc_featured-logos__item" {{ block.shopify_attributes }}>
+                {% if block.settings.logo_image != blank %}
+                  <img
+                    class="cwc_featured-logos__image"
+                    src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                    alt="{{ block.settings.logo_image.alt | default: 'Featured logo' | escape }}"
+                    loading="lazy"
+                    width="150"
+                    height="40"
+                  >
+                {% else %}
+                  <span class="cwc_featured-logos__empty">Add logo</span>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+      <div class="cwc_featured-logos__group" aria-hidden="true">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'logo' %}
+              <div class="cwc_featured-logos__item">
+                {% if block.settings.logo_image != blank %}
+                  <img
+                    class="cwc_featured-logos__image"
+                    src="{{ block.settings.logo_image | image_url: width: 300 }}"
+                    alt=""
+                    loading="lazy"
+                    width="150"
+                    height="40"
+                  >
+                {% else %}
+                  <span class="cwc_featured-logos__empty">Add logo</span>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "CWC Featured Logos",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Proudly Featured in:</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Marquee"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo Height",
+      "min": 20,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_gap",
+      "label": "Gap Between Logos",
+      "min": 16,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll Duration",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 30,
+      "info": "Higher is slower."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "CWC Featured Logos",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

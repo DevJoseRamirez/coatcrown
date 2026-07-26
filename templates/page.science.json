@@ -1,0 +1,433 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "CWC_hero-banner",
+      "settings": {
+        "caption": "Veterinary Skin Science Innovation",
+        "rating_stars": 0,
+        "rating_text": "",
+        "heading": "<p>Where Botanical Science Meets Veterinary Medicine</p>",
+        "subtext": "<p>Advanced ultrasonic nebulization delivers clinically formulated botanicals directly to the skin barrier — helping soothe atopic dermatitis, neutralize allergens, and restore optimal coat health.</p>",
+        "usp_1": "<p><strong>Ultrasonic Mist Technology</strong> for deep skin-level hydration</p>",
+        "usp_2": "<p><strong>Clinically Formulated Botanicals</strong> to soothe irritation & itching</p>",
+        "usp_3": "<p>Supports the <strong>Natural Lipid Barrier</strong> for healthier coat protection</p>",
+        "button_label": "Start The Coat Health Protocol",
+        "button_link": "/collections/all",
+        "testimonial_image": "shopify://shop_images/hf_20260608_023104_cfff7507-f254-4d98-9732-08283442a186.png",
+        "testimonial_quote": "<p>\"I never thought grooming could be enjoyable for my anxious terrier, but the ReNu brush is a game-changer! It's gentle, effective, and Lola loves it!\"</p>",
+        "testimonial_author": "Linda S",
+        "testimonial_stars": 5,
+        "testimonial_verified_text": "Verified Customer",
+        "bg_color": "#1c3a5e",
+        "text_color": "#ffffff",
+        "bold_color": "#ffffff",
+        "overlay_color": "#1c3a5e",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "card_bg_color": "#fff9f9",
+        "image": "shopify://shop_images/image_2.png",
+        "min_height": 800,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "usp_bar": {
+      "type": "CWC_usp-bar",
+      "blocks": {
+        "usp_1": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Vet Verified"
+          }
+        },
+        "usp_2": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "pH Balanced"
+          }
+        },
+        "usp_3": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Clinical Grade"
+          }
+        },
+        "usp_4": {
+          "type": "usp_item",
+          "settings": {
+            "usp_icon": "shopify://shop_images/Mask_group_1.png",
+            "text": "Lab Tested"
+          }
+        }
+      },
+      "block_order": [
+        "usp_1",
+        "usp_2",
+        "usp_3",
+        "usp_4"
+      ],
+      "settings": {
+        "bg_color": "#ecf4ff",
+        "text_color": "#142c70",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "formula_cards": {
+      "type": "CWC_formula-cards",
+      "blocks": {
+        "card_oatmeal": {
+          "type": "card",
+          "settings": {
+            "title": "Colloidal Oatmeal (Avena Sativa)",
+            "text": "<p>Colloidal Oatmeal is rich in bioactive lipids, saponins, and avenanthramides. It reduces inflammation, forms a protective skin barrier, locks in hydration, and supports an acidic pH to defend against bacteria.</p>",
+            "benefits_label": "Key Benefits",
+            "benefit_1": "Locks essential moisture",
+            "benefit_2": "Reduces inflammation",
+            "benefit_3": "Supports microbial defense",
+            "benefit_4": "Reinforces skin barrier",
+            "benefit_5": ""
+          }
+        },
+        "card_aloe": {
+          "type": "card",
+          "settings": {
+            "title": "Aloe Vera Extract",
+            "text": "<p>Aloe Vera Extract is a biologically active hydrator that deeply penetrates the skin, provides long-lasting moisture, soothes severe itching, and accelerates skin recovery after irritation or environmental stress.</p>",
+            "benefits_label": "Key Benefits",
+            "benefit_1": "Deep hydration support",
+            "benefit_2": "Relieves itching & irritation",
+            "benefit_3": "Promotes skin recovery",
+            "benefit_4": "Cooling therapeutic effect",
+            "benefit_5": ""
+          }
+        },
+        "card_chamomile": {
+          "type": "card",
+          "settings": {
+            "title": "Chamomile Extract",
+            "text": "<p>Naturally rich in apigenin and flavonoids, chamomile provides clinically recognized anti-inflammatory and calming effects. It helps reduce redness, soothe hypersensitive skin, and support long-term dermatological balance.</p>",
+            "benefits_label": "Key Benefits",
+            "benefit_1": "Anti-inflammatory action",
+            "benefit_2": "Calms sensitive skin",
+            "benefit_3": "Reduces redness response",
+            "benefit_4": "Supports skin equilibrium",
+            "benefit_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_oatmeal",
+        "card_aloe",
+        "card_chamomile"
+      ],
+      "settings": {
+        "heading": "<p>The Therapeutic Botanical Formula</p>",
+        "subtext": "<p>Not water. A clinical formula for healthier skin and coat.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#142c70",
+        "bold_color": "#142c70",
+        "card_bg_color": "#ecf4ff",
+        "card_title_color": "#142c70",
+        "icon_color": "#142c70",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "expertise_video": {
+      "type": "CWC_expertise-video",
+      "settings": {
+        "heading": "<p>Veterinary Expertise You Can Trust</p>",
+        "subtext": "<p>Grooming isn't cosmetic—it's clinical prevention. Severe matting can restrict blood flow, damage soft tissue, and lead to chronic skin conditions.</p>",
+        "quote_1": "\"Veterinarian recommended for canine atopic dermatitis and severe pruritus.\"",
+        "quote_2": "\"Neglected grooming can cause restricted lymphatic drainage and tissue damage.\"",
+        "quote_3": "\"The ReNu system is a preventative therapy, not just a grooming tool.\"",
+        "bullet_1": "Clinically backed veterinary advice",
+        "bullet_2": "Medical consequences of neglected grooming",
+        "bullet_3": "ReNu = preventative dermatology solution",
+        "bg_color": "#ecf4ff",
+        "text_color": "#142c70",
+        "bold_color": "#142c70",
+        "quote_bg_color": "#dde4f0",
+        "icon_color": "#142c70",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "safety_grid": {
+      "type": "CWC_feature-grid",
+      "blocks": {
+        "feature_antimicrobial": {
+          "type": "feature",
+          "settings": {
+            "title": "Antimicrobial Design",
+            "text": "Protects against mold & bacteria"
+          }
+        },
+        "feature_reservoir": {
+          "type": "feature",
+          "settings": {
+            "title": "Detachable Reservoir",
+            "text": "Easy to remove & refill"
+          }
+        },
+        "feature_silicone": {
+          "type": "feature",
+          "settings": {
+            "title": "Clinical-Grade Silicone",
+            "text": "BPA-free & safe for extended use"
+          }
+        },
+        "feature_dishwasher": {
+          "type": "feature",
+          "settings": {
+            "title": "Dishwasher Safe Components",
+            "text": "Ensures thorough sterilization"
+          }
+        }
+      },
+      "block_order": [
+        "feature_antimicrobial",
+        "feature_reservoir",
+        "feature_silicone",
+        "feature_dishwasher"
+      ],
+      "settings": {
+        "heading": "<p>Engineered For Safety & Hygiene</p>",
+        "subtext": "<p>Every component of the ReNu brush is designed to protect your pet and prevent microbial growth. Medical-grade materials, detachable parts, and clear cleaning protocols ensure clinical safety.</p>",
+        "button_label": "",
+        "button_link": "",
+        "image_position": "right",
+        "bg_color": "#ffffff",
+        "text_color": "#142c70",
+        "bold_color": "#142c70",
+        "icon_border_color": "#e38a0a",
+        "item_text_color": "#c77a1a",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "transparency_grid": {
+      "type": "CWC_feature-grid",
+      "blocks": {
+        "feature_lab_tested": {
+          "type": "feature",
+          "settings": {
+            "title": "Lab Tested",
+            "text": "Ingredient purity verified"
+          }
+        },
+        "feature_coa": {
+          "type": "feature",
+          "settings": {
+            "title": "Certificate of Analysis",
+            "text": "Every batch documented"
+          }
+        },
+        "feature_pdfs": {
+          "type": "feature",
+          "settings": {
+            "title": "Downloadable PDFs",
+            "text": "Full transparency for inspection"
+          }
+        },
+        "feature_third_party": {
+          "type": "feature",
+          "settings": {
+            "title": "Third-Party Validation",
+            "text": "Independent verification"
+          }
+        }
+      },
+      "block_order": [
+        "feature_lab_tested",
+        "feature_coa",
+        "feature_pdfs",
+        "feature_third_party"
+      ],
+      "settings": {
+        "heading": "<p>Complete Transparency You Can Verify</p>",
+        "subtext": "<p>All our ingredients are third-party tested, with full Certificates of Analysis and lab results publicly available. Nothing hidden.</p>",
+        "button_label": "Download Lab Results PDF",
+        "button_link": "#",
+        "image_position": "left",
+        "bg_color": "#ecf4ff",
+        "text_color": "#142c70",
+        "bold_color": "#142c70",
+        "icon_border_color": "#e38a0a",
+        "item_text_color": "#c77a1a",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "faq": {
+      "type": "CWC_home-faq",
+      "blocks": {
+        "faq_shedding": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Will this help with my pet's shedding or coat issues?",
+            "text": "<p>Our grooming products are proudly crafted in Denver, Colorado, in a GMP-certified facility that adheres to the highest safety and quality standards.</p>"
+          }
+        },
+        "faq_sensitive": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is it safe to use on sensitive skin?",
+            "text": "<p>FreshFur is designed to be gentle for everyday use. Most pets tolerate it well, but every pet is different. If your pet has known sensitivities, we recommend starting with a small area first and adjusting use based on your pet's comfort.</p>"
+          }
+        },
+        "faq_results": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How quickly will I see results?",
+            "text": "<p>You'll notice results right away as you brush — loose fur, dirt, and debris lift away instantly. Results may vary depending on coat type and how dirty your pet is, but most customers see a difference during the first use.</p>"
+          }
+        },
+        "faq_usage": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How do I use the brush and solution?",
+            "text": "<p>Add FreshFur Cleansing Mist and water to the brush reservoir, turn on the brush and gently mist while brushing through the coat, then remove collected hair as needed — no rinsing required. Detailed instructions are included on the packaging.</p>"
+          }
+        },
+        "faq_bathing": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Do I need to use it every time I bathe my pet?",
+            "text": "<p>No. FreshFur is designed for everyday cleanups between baths. It helps keep your pet fresh without the hassle of frequent bathing.</p>"
+          }
+        },
+        "faq_dislike": {
+          "type": "faq_item",
+          "settings": {
+            "title": "What if my pet doesn't like it at first?",
+            "text": "<p>Many pets actually relax — and even fall asleep — while being brushed with FreshFur. The gentle misting combined with slow brushing helps create a calmer experience. As with anything new, start slowly and let your pet get comfortable over a few sessions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_shedding",
+        "faq_sensitive",
+        "faq_results",
+        "faq_usage",
+        "faq_bathing",
+        "faq_dislike"
+      ],
+      "settings": {
+        "heading": "<p>Frequently Asked Questions</p>",
+        "subtext": "<p>Need more information? You can find it here.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "active_bg_color": "#ecf4ff",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    },
+    "hero_protocol": {
+      "type": "CWC_hero-banner",
+      "settings": {
+        "caption": "",
+        "rating_stars": 0,
+        "rating_text": "",
+        "heading": "<p>FreshFur Coat Maintenance Protocol</p>",
+        "subtext": "<p>A clinically guided regimen combining your ReNu brush and therapeutic mist to maintain optimal skin and coat health.</p>",
+        "usp_1": "<p><strong>Continuous dermatological support</strong></p>",
+        "usp_2": "<p><strong>Prevents atopic dermatitis & severe pruritus</strong></p>",
+        "usp_3": "<p><strong>Clinically validated botanicals delivered daily</strong></p>",
+        "button_label": "Start My Health Protocol",
+        "button_link": "/collections/all",
+        "testimonial_quote": "",
+        "testimonial_author": "",
+        "testimonial_stars": 0,
+        "testimonial_verified_text": "",
+        "bg_color": "#1c3a5e",
+        "text_color": "#ffffff",
+        "bold_color": "#ffffff",
+        "overlay_color": "#1c3a5e",
+        "star_color": "#f7cd33",
+        "button_bg_color": "#e38a0a",
+        "button_text_color": "#ffffff",
+        "card_bg_color": "#fff9f9",
+        "image": "shopify://shop_images/image_2.png",
+        "min_height": 520,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "trust_bar": {
+      "type": "CWC_trust-bar",
+      "blocks": {
+        "trust_shipping": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Shipping On Orders Above $55"
+          }
+        },
+        "trust_checkout": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Safe & Secure Checkout"
+          }
+        },
+        "trust_guarantee": {
+          "type": "trust_item",
+          "settings": {
+            "text": "365 Day Money Back Guarantee"
+          }
+        },
+        "trust_loved": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Loved By 45,576+ Pet Parents"
+          }
+        }
+      },
+      "block_order": [
+        "trust_shipping",
+        "trust_checkout",
+        "trust_guarantee",
+        "trust_loved"
+      ],
+      "settings": {
+        "bg_color": "#e38a0a",
+        "text_color": "#ffffff",
+        "font_size": 14,
+        "show_separator": false,
+        "separator_character": "✦",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "usp_bar",
+    "formula_cards",
+    "expertise_video",
+    "safety_grid",
+    "transparency_grid",
+    "faq",
+    "hero_protocol",
+    "trust_bar"
+  ]
+}

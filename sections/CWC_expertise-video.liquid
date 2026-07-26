@@ -1,0 +1,253 @@
+{% style %}
+  #cwc_expertise-video-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
+    --text-color: {{ section.settings.text_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --quote-bg: {{ section.settings.quote_bg_color | default: '#DDE4F0' }};
+    --icon-color: {{ section.settings.icon_color | default: '#142C70' }};
+    --padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 80 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 80 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_expertise-video.css' | asset_url | stylesheet_tag }}
+
+{%- capture check_svg -%}
+  <svg class="cwc_expertise-video__bullet-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true">
+    <path d="M12.3654 19.3668L20.5904 11.1418L18.957 9.5085L12.3654 16.1002L9.04036 12.7752L7.40703 14.4085L12.3654 19.3668ZM13.9987 25.6668C12.3848 25.6668 10.8681 25.3606 9.4487 24.7481C8.02925 24.1356 6.79453 23.3043 5.74453 22.2543C4.69453 21.2043 3.86328 19.9696 3.25078 18.5502C2.63828 17.1307 2.33203 15.6141 2.33203 14.0002C2.33203 12.3863 2.63828 10.8696 3.25078 9.45016C3.86328 8.03072 4.69453 6.796 5.74453 5.746C6.79453 4.696 8.02925 3.86475 9.4487 3.25225C10.8681 2.63975 12.3848 2.3335 13.9987 2.3335C15.6126 2.3335 17.1293 2.63975 18.5487 3.25225C19.9681 3.86475 21.2029 4.696 22.2529 5.746C23.3029 6.796 24.1341 8.03072 24.7466 9.45016C25.3591 10.8696 25.6654 12.3863 25.6654 14.0002C25.6654 15.6141 25.3591 17.1307 24.7466 18.5502C24.1341 19.9696 23.3029 21.2043 22.2529 22.2543C21.2029 23.3043 19.9681 24.1356 18.5487 24.7481C17.1293 25.3606 15.6126 25.6668 13.9987 25.6668Z"/>
+  </svg>
+{%- endcapture -%}
+
+{%- capture play_svg -%}
+  <svg width="64" height="64" viewBox="0 0 75 79" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="37.3208" cy="39.3251" rx="30.064" ry="32.0683" fill="white"></ellipse>
+    <path d="M37.3213 3.62891C56.1459 3.62917 71.0137 19.8348 71.0137 39.3252C71.0136 58.8156 56.1458 75.0212 37.3213 75.0215C18.4965 75.0215 3.62895 58.8157 3.62889 39.3252C3.62889 19.8346 18.4964 3.62891 37.3213 3.62891Z" stroke="white" stroke-opacity="0.5" stroke-width="7.25682"></path>
+    <path d="M49.1164 37.5583C50.4313 38.3681 50.4313 40.2795 49.1164 41.0892L33.1511 50.9213C31.7697 51.772 29.9905 50.7782 29.9905 49.1558L29.9905 29.4917C29.9905 27.8694 31.7697 26.8755 33.1511 27.7263L49.1164 37.5583Z" fill="#142C70"></path>
+  </svg>
+{%- endcapture -%}
+
+<section id="cwc_expertise-video-{{ section.id }}" class="cwc_expertise-video">
+  <div class="cwc_expertise-video__container">
+    <div class="cwc_expertise-video__wrapper">
+
+      {% comment %} Video {% endcomment %}
+      <div class="cwc_expertise-video__media">
+        {% if section.settings.video != blank %}
+          <video
+            class="cwc_expertise-video__video"
+            preload="metadata"
+            playsinline
+            {% if section.settings.poster != blank %}
+              poster="{{ section.settings.poster | image_url: width: 700 }}"
+            {% elsif section.settings.video.preview_image != blank %}
+              poster="{{ section.settings.video.preview_image | image_url: width: 700 }}"
+            {% endif %}
+          >
+            {% for source in section.settings.video.sources %}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {% endfor %}
+          </video>
+          <button class="cwc_expertise-video__play-btn" type="button" aria-label="Play video">
+            {{ play_svg }}
+          </button>
+        {% else %}
+          <div class="cwc_expertise-video__placeholder">
+            <span>Add video</span>
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} Content {% endcomment %}
+      <div class="cwc_expertise-video__content">
+        {% if section.settings.heading != blank %}
+          <div class="cwc_expertise-video__content-heading cwc-rte">
+            {{ section.settings.heading }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.subtext != blank %}
+          <div class="cwc_expertise-video__content-subtext cwc-rte">
+            {{ section.settings.subtext }}
+          </div>
+        {% endif %}
+
+        {% comment %} Highlighted quotes {% endcomment %}
+        <div class="cwc_expertise-video__quotes">
+          {% for i in (1..3) %}
+            {% assign quote_key = 'quote_' | append: i %}
+            {% assign quote_value = section.settings[quote_key] %}
+            {% if quote_value != blank %}
+              <p class="cwc_expertise-video__quote">{{ quote_value }}</p>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% comment %} Bullets {% endcomment %}
+        <ul class="cwc_expertise-video__bullets">
+          {% for i in (1..3) %}
+            {% assign bullet_key = 'bullet_' | append: i %}
+            {% assign bullet_value = section.settings[bullet_key] %}
+            {% if bullet_value != blank %}
+              <li class="cwc_expertise-video__bullet">
+                {{ check_svg }}
+                <span class="cwc_expertise-video__bullet-text">{{ bullet_value }}</span>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'CWC_expertise-video.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "CWC Expertise Video",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Veterinary Expertise You <strong>Can Trust</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>Grooming isn't cosmetic — it's clinical prevention.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Highlighted Quotes"
+    },
+    {
+      "type": "text",
+      "id": "quote_1",
+      "label": "Quote 1",
+      "default": "\"First highlighted quote goes here.\""
+    },
+    {
+      "type": "text",
+      "id": "quote_2",
+      "label": "Quote 2",
+      "default": "\"Second highlighted quote goes here.\""
+    },
+    {
+      "type": "text",
+      "id": "quote_3",
+      "label": "Quote 3",
+      "info": "Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Bullets"
+    },
+    {
+      "type": "text",
+      "id": "bullet_1",
+      "label": "Bullet 1",
+      "default": "First supporting point"
+    },
+    {
+      "type": "text",
+      "id": "bullet_2",
+      "label": "Bullet 2",
+      "default": "Second supporting point"
+    },
+    {
+      "type": "text",
+      "id": "bullet_3",
+      "label": "Bullet 3",
+      "info": "Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Video Poster Image",
+      "info": "Falls back to the video's own preview image."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "quote_bg_color",
+      "label": "Quote Background Color",
+      "default": "#DDE4F0"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Bullet Icon Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Expertise Video",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

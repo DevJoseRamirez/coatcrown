@@ -1,0 +1,243 @@
+{% style %}
+  #cwc_benefits-list-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --heading-color: {{ section.settings.heading_color | default: '#111111' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --icon-color: {{ section.settings.icon_color | default: '#142C70' }};
+    --image-radius: {{ section.settings.image_radius | default: 12 }}px;
+    --padding-top: {{ section.settings.padding_top | default: 60 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 60 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 60 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_benefits-list.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_benefits-list-{{ section.id }}" class="cwc_benefits-list">
+  <div class="cwc_benefits-list__container">
+
+    {% comment %} Section Header {% endcomment %}
+    <div class="cwc_benefits-list__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_benefits-list__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_benefits-list__content-subtext cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Body: list + image {% endcomment %}
+    <div class="cwc_benefits-list__body cwc_benefits-list__body--image-{{ section.settings.image_position | default: 'right' }}">
+
+      {% if section.blocks.size > 0 %}
+        <div class="cwc_benefits-list__list">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'benefit' %}
+                <div class="cwc_benefits-list__item" {{ block.shopify_attributes }}>
+                  {% if block.settings.title != blank %}
+                    <div class="cwc_benefits-list__item-head">
+                      {% if block.settings.icon != blank %}
+                        <img
+                          class="cwc_benefits-list__icon"
+                          src="{{ block.settings.icon | image_url: width: 64 }}"
+                          alt="{{ block.settings.icon.alt | default: block.settings.title | escape }}"
+                          loading="lazy"
+                          width="22"
+                          height="22"
+                        >
+                      {% endif %}
+                      <h3 class="cwc_benefits-list__item-title">{{ block.settings.title }}</h3>
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.text != blank %}
+                    <div class="cwc_benefits-list__item-text cwc-rte">{{ block.settings.text }}</div>
+                  {% endif %}
+                </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="cwc_benefits-list__media">
+        {% if section.settings.image != blank %}
+          <img
+            src="{{ section.settings.image | image_url: width: 1000 }}"
+            alt="{{ section.settings.alt_text | default: section.settings.image.alt | default: 'Product in use' | escape }}"
+            loading="lazy"
+            width="500"
+            height="500"
+          >
+        {% else %}
+          <div class="cwc_benefits-list__placeholder"><span>Add section image</span></div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Benefits List",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Why Thousands of Dog Owners <strong>Trust Our Brush</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>It's the easiest waterless way to bathe your pet without tubs, rinsing, or stress.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section Image"
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Image Alt Text"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image Corner Radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Accent Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Bathe Your Dog Without Water"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add the supporting description for this benefit here.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CWC Benefits List",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}

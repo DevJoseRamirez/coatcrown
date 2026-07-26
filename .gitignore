@@ -38,3 +38,5 @@ _reference-components/
 .claude/
 # --- Section build pipeline (local tooling) ---
 .shopify/
+
+_captures/

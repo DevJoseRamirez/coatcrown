@@ -1,0 +1,241 @@
+/* ==============================
+   CWC Feature Grid
+   ============================== */
+
+/* === Section Wrapper === */
+.cwc_feature-grid {
+  background-color: var(--section-bg);
+  color: var(--text-color);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+
+.cwc_feature-grid__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Media is first in the DOM so it stacks on top on mobile.
+   Default (image right) reverses the row; the modifier restores source order. */
+.cwc_feature-grid__wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 4rem;
+}
+
+.cwc_feature-grid--image-left .cwc_feature-grid__wrapper {
+  flex-direction: row;
+}
+
+/* === Media === */
+.cwc_feature-grid__media {
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+
+.cwc_feature-grid__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+.cwc_feature-grid__placeholder {
+  aspect-ratio: 4 / 3;
+  background: #f5f5f5;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* === Content === */
+.cwc_feature-grid__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.cwc_feature-grid__content-heading {
+  margin-bottom: 1.25rem;
+}
+
+.cwc_feature-grid__content-heading h1,
+.cwc_feature-grid__content-heading h2,
+.cwc_feature-grid__content-heading h3,
+.cwc_feature-grid__content-heading p {
+  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 1.2;
+  margin: 0;
+  color: inherit;
+}
+
+.cwc_feature-grid__content-heading > * strong {
+  color: var(--highlight-color);
+}
+
+.cwc_feature-grid__content-subtext {
+  margin-bottom: 2rem;
+}
+
+.cwc_feature-grid__content-subtext p {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  margin: 0;
+  color: #343434;
+}
+
+/* === Feature Items === */
+.cwc_feature-grid__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.cwc_feature-grid__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+
+.cwc_feature-grid__item-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border: 1px solid var(--icon-border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cwc_feature-grid__item-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cwc_feature-grid__item-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 0.25rem;
+  color: var(--text-color);
+}
+
+.cwc_feature-grid__item-text {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--item-text-color);
+}
+
+/* === Button === */
+.cwc_feature-grid__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 340px;
+  margin-top: 2rem;
+  padding: 18px 26px;
+  border-radius: 6px;
+  text-decoration: none;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: 1.2px;
+  transition: opacity 0.2s ease;
+}
+
+.cwc_feature-grid__button:hover {
+  opacity: 0.9;
+}
+
+.cwc_feature-grid__button-arrow {
+  flex-shrink: 0;
+}
+
+/* ==============================
+   Tablet Responsive
+   ============================== */
+@media screen and (max-width: 991px) {
+  .cwc_feature-grid__container {
+    padding: 0 1.25rem;
+  }
+
+  .cwc_feature-grid__wrapper,
+  .cwc_feature-grid--image-left .cwc_feature-grid__wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .cwc_feature-grid__media {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .cwc_feature-grid__content-heading h1,
+  .cwc_feature-grid__content-heading h2,
+  .cwc_feature-grid__content-heading h3,
+  .cwc_feature-grid__content-heading p {
+    font-size: 1.875rem;
+  }
+}
+
+/* ==============================
+   Mobile Responsive
+   ============================== */
+@media screen and (max-width: 768px) {
+  .cwc_feature-grid {
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  .cwc_feature-grid__container {
+    padding: 0 1rem;
+  }
+
+  .cwc_feature-grid__content-heading {
+    margin-bottom: 0.75rem;
+  }
+
+  .cwc_feature-grid__content-heading h1,
+  .cwc_feature-grid__content-heading h2,
+  .cwc_feature-grid__content-heading h3,
+  .cwc_feature-grid__content-heading p {
+    font-size: 1.625rem;
+  }
+
+  .cwc_feature-grid__content-subtext {
+    margin-bottom: 1.5rem;
+  }
+
+  .cwc_feature-grid__content-subtext p {
+    font-size: 1rem;
+  }
+
+  .cwc_feature-grid__grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .cwc_feature-grid__button {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 1.5rem;
+  }
+}

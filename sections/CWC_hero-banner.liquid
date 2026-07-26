@@ -35,6 +35,11 @@
 <section id="cwc_hero-banner-{{ section.id }}" class="cwc_hero-banner">
   <div class="cwc_hero-banner__container">
     <div class="cwc_hero-banner__content">
+      {% comment %} Caption {% endcomment %}
+      {% if section.settings.caption != blank %}
+        <span class="cwc_hero-banner__caption">{{ section.settings.caption }}</span>
+      {% endif %}
+
       {% comment %} Rating {% endcomment %}
       {% if section.settings.rating_stars > 0 or section.settings.rating_text != blank %}
         <div class="cwc_hero-banner__rating">
@@ -176,6 +181,12 @@
     {
       "type": "header",
       "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "info": "Small outlined label above the heading. Leave blank to hide."
     },
     {
       "type": "range",

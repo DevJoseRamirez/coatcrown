@@ -1,0 +1,182 @@
+{% style %}
+  #cwc_review-summary-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#111111' }};
+    --heading-color: {{ section.settings.heading_color | default: '#111111' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --rating-color: {{ section.settings.rating_color | default: '#111111' }};
+    --button-bg: {{ section.settings.button_bg_color | default: '#142C70' }};
+    --button-text: {{ section.settings.button_text_color | default: '#ffffff' }};
+    --padding-top: {{ section.settings.padding_top | default: 60 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 60 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 60 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_review-summary.css' | asset_url | stylesheet_tag }}
+
+<section id="cwc_review-summary-{{ section.id }}" class="cwc_review-summary">
+  <div class="cwc_review-summary__container">
+    <div class="cwc_review-summary__content">
+
+      {% if section.settings.heading != blank %}
+        <div class="cwc_review-summary__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.rating_number != blank %}
+        <p class="cwc_review-summary__rating">{{ section.settings.rating_number }}</p>
+      {% endif %}
+
+      {% if section.settings.show_stars %}
+        <div class="cwc_review-summary__stars">
+          {% render 'CWC_stars_block' %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_review-summary__content-subtext cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <div class="cwc_review-summary__button-wrapper">
+          <a href="{{ section.settings.button_link | default: '#' }}" class="cwc_review-summary__button">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Review Summary",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>Discover The <strong>Difference</strong></p>"
+    },
+    {
+      "type": "text",
+      "id": "rating_number",
+      "label": "Rating Number",
+      "default": "4.9"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show Stars",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>Join our satisfied 45K+ happy customers and experience the transformative power of our products.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Load More"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "rating_color",
+      "label": "Rating Number Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Review Summary",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

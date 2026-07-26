@@ -1,0 +1,267 @@
+{% style %}
+  #cwc_formula-cards-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --text-color: {{ section.settings.text_color | default: '#142C70' }};
+    --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
+    --card-bg: {{ section.settings.card_bg_color | default: '#ECF4FF' }};
+    --card-title-color: {{ section.settings.card_title_color | default: '#142C70' }};
+    --icon-color: {{ section.settings.icon_color | default: '#142C70' }};
+    --padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    --padding-top-mobile: {{ section.settings.padding_top | default: 80 | times: 0.5 }}px;
+    --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 80 | times: 0.5 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_formula-cards.css' | asset_url | stylesheet_tag }}
+
+{%- capture check_svg -%}
+  <svg class="cwc_formula-cards__benefit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true">
+    <path d="M12.3654 19.3668L20.5904 11.1418L18.957 9.5085L12.3654 16.1002L9.04036 12.7752L7.40703 14.4085L12.3654 19.3668ZM13.9987 25.6668C12.3848 25.6668 10.8681 25.3606 9.4487 24.7481C8.02925 24.1356 6.79453 23.3043 5.74453 22.2543C4.69453 21.2043 3.86328 19.9696 3.25078 18.5502C2.63828 17.1307 2.33203 15.6141 2.33203 14.0002C2.33203 12.3863 2.63828 10.8696 3.25078 9.45016C3.86328 8.03072 4.69453 6.796 5.74453 5.746C6.79453 4.696 8.02925 3.86475 9.4487 3.25225C10.8681 2.63975 12.3848 2.3335 13.9987 2.3335C15.6126 2.3335 17.1293 2.63975 18.5487 3.25225C19.9681 3.86475 21.2029 4.696 22.2529 5.746C23.3029 6.796 24.1341 8.03072 24.7466 9.45016C25.3591 10.8696 25.6654 12.3863 25.6654 14.0002C25.6654 15.6141 25.3591 17.1307 24.7466 18.5502C24.1341 19.9696 23.3029 21.2043 22.2529 22.2543C21.2029 23.3043 19.9681 24.1356 18.5487 24.7481C17.1293 25.3606 15.6126 25.6668 13.9987 25.6668Z"/>
+  </svg>
+{%- endcapture -%}
+
+<section id="cwc_formula-cards-{{ section.id }}" class="cwc_formula-cards">
+  <div class="cwc_formula-cards__container">
+
+    {% comment %} Section Header {% endcomment %}
+    <div class="cwc_formula-cards__content">
+      {% if section.settings.heading != blank %}
+        <div class="cwc_formula-cards__content-heading cwc-rte">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <div class="cwc_formula-cards__content-subtext cwc-rte">
+          {{ section.settings.subtext }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Cards {% endcomment %}
+    {% if section.blocks.size > 0 %}
+      <div class="cwc_formula-cards__grid">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'card' %}
+              <div class="cwc_formula-cards__card" {{ block.shopify_attributes }}>
+                <div class="cwc_formula-cards__card-image">
+                  {% if block.settings.image != blank %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 700 }}"
+                      alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                      loading="lazy"
+                      width="700"
+                      height="467"
+                    >
+                  {% else %}
+                    <div class="cwc_formula-cards__placeholder">
+                      <span>Add image</span>
+                    </div>
+                  {% endif %}
+                </div>
+
+                {% if block.settings.title != blank %}
+                  <h3 class="cwc_formula-cards__card-title">{{ block.settings.title }}</h3>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="cwc_formula-cards__card-text cwc-rte">
+                    {{ block.settings.text }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.benefits_label != blank %}
+                  <p class="cwc_formula-cards__benefits-label">{{ block.settings.benefits_label }}</p>
+                {% endif %}
+
+                <ul class="cwc_formula-cards__benefits">
+                  {% for i in (1..5) %}
+                    {% assign benefit_key = 'benefit_' | append: i %}
+                    {% assign benefit_value = block.settings[benefit_key] %}
+                    {% if benefit_value != blank %}
+                      <li class="cwc_formula-cards__benefit">
+                        {{ check_svg }}
+                        <span class="cwc_formula-cards__benefit-text">{{ benefit_value }}</span>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CWC Formula Cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "<p>The Therapeutic <strong>Botanical Formula</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "<p>Not water. A clinical formula for healthier skin and coat.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "bold_color",
+      "label": "Heading Bold Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Card Colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#ECF4FF"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Benefit Icon Color",
+      "default": "#142C70"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Ingredient Name"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Describe what this ingredient does for skin and coat health.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Key Benefits"
+        },
+        {
+          "type": "text",
+          "id": "benefits_label",
+          "label": "Benefits Label",
+          "default": "Key Benefits"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "First key benefit"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Second key benefit"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "Third key benefit"
+        },
+        {
+          "type": "text",
+          "id": "benefit_4",
+          "label": "Benefit 4",
+          "default": "Fourth key benefit"
+        },
+        {
+          "type": "text",
+          "id": "benefit_5",
+          "label": "Benefit 5",
+          "info": "Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "CWC Formula Cards",
+      "category": "CWC Custom",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

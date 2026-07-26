@@ -1,0 +1,831 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "none",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 0,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 28,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_header": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_title": {
+                  "type": "text",
+                  "name": "Product title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-primary--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price_main": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "color": "var(--color-foreground)",
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_title",
+                "price_main"
+              ]
+            },
+            "divider_main": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_main": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_main": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            }
+          },
+          "block_order": [
+            "group_header",
+            "divider_main",
+            "variant_picker_main",
+            "buy_buttons_main"
+          ]
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 48,
+        "enable_sticky_add_to_cart": true,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "cwc_trust_bar": {
+      "type": "CWC_trust-bar",
+      "blocks": {
+        "trust_1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "365 DAY MONEY BACK GUARANTEE"
+          }
+        },
+        "trust_2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "FREE SHIPPING FOR A LIMITED TIME"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "LOVED BY 50,000+ PET PARENTS"
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3"
+      ],
+      "settings": {
+        "bg_color": "#142c70",
+        "text_color": "#ffffff",
+        "font_size": 14,
+        "show_separator": true,
+        "separator_character": "✦",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "cwc_pdp_product": {
+      "type": "CWC_pdp-product",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Healthier coat instantly"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Safe for sensitive skin"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Loosens shedding fur"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "text": "Brushing becomes bonding"
+          }
+        },
+        "bundle_1": {
+          "type": "bundle_option",
+          "settings": {
+            "subtitle": "Includes 1 FREE Bottle",
+            "badge_text": "Free Shipping",
+            "best_value": false
+          }
+        },
+        "bundle_2": {
+          "type": "bundle_option",
+          "settings": {
+            "subtitle": "Includes 2 FREE Bottles",
+            "badge_text": "Free Shipping",
+            "best_value": false
+          }
+        },
+        "bundle_3": {
+          "type": "bundle_option",
+          "settings": {
+            "subtitle": "Includes 3 FREE Bottles",
+            "badge_text": "Best Value + Free Shipping",
+            "best_value": true
+          }
+        },
+        "trust_icon_1": {
+          "type": "trust_icon",
+          "settings": {
+            "text": "Free Worldwide Shipping"
+          }
+        },
+        "trust_icon_2": {
+          "type": "trust_icon",
+          "settings": {
+            "text": "365 Day Money Back Guarantee"
+          }
+        },
+        "trust_icon_3": {
+          "type": "trust_icon",
+          "settings": {
+            "text": "Trusted by 50k+ Pet Parents"
+          }
+        },
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Can this replace regular pet shampoo?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is it safe for cats too?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How does it actually work?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Can my pet lick it after use?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Can I use the brush on sensitive areas like the belly or behind the ears?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Do I need to rinse my pet after using this?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Full Ingredient List — (Safe for Dogs & Cats)",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "bundle_1",
+        "bundle_2",
+        "bundle_3",
+        "trust_icon_1",
+        "trust_icon_2",
+        "trust_icon_3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7"
+      ],
+      "settings": {
+        "product": "test",
+        "show_rating": true,
+        "rating_text": "4.7/5 | 55,578 Verified Reviews",
+        "bundle_label": "BUNDLE & SAVE",
+        "save_label": "SAVE",
+        "trustpilot_text": "\"EXCELLENT\"",
+        "stock_text": "Low stock available",
+        "delivery_text": "<p>Free & Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>",
+        "atc_label": "ADD TO CART",
+        "show_dynamic_checkout": true,
+        "show_atc_icon": false,
+        "buy_button_height": 52,
+        "buy_button_radius": 6,
+        "buy_button_font_size": 20,
+        "buy_button_gap": 10,
+        "warning_title": "Watch Out For Cheap Replicas.",
+        "warning_text": "<p>Only our brand guarantees the authentic formula you can trust for odor control between baths.</p>",
+        "warning_ps": "<p>PS: This product is only available here — don't buy fakes elsewhere.</p>",
+        "review_quote": "<p>\"My golden retriever used to hate baths, but this brush changed everything. The mist calms her down, and the bristles actually get deep into her coat without pulling.\"</p>",
+        "review_author": "Taylor M.",
+        "review_verified_text": "Verified Purchase",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "price_color": "#142c70",
+        "badge_bg_color": "#142c70",
+        "badge_text_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "border_color": "#e3e3e3",
+        "selected_border_color": "#142c70",
+        "button_bg_color": "#142c70",
+        "button_text_color": "#ffffff",
+        "warning_bg_color": "#a31212",
+        "warning_text_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "cwc_featured_logos": {
+      "type": "CWC_featured-logos",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5"
+      ],
+      "settings": {
+        "heading": "<p>Proudly Featured in:</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "bold_color": "#142c70",
+        "logo_height": 40,
+        "logo_gap": 64,
+        "scroll_speed": 30,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "cwc_before_after": {
+      "type": "CWC_before-after",
+      "blocks": {
+        "pair_1": {
+          "type": "pair",
+          "settings": {
+            "image_before": "shopify://shop_images/image_15.png",
+            "label_before": "from this",
+            "label_after": "to this",
+            "stars": 5,
+            "quote": "<p>\"I've been a vet for 9 years and this is one of the most practical grooming tools I've seen. It's perfect for pets with allergies or sensitive skin, the gentle mist and bristles really do make a difference.\"</p>",
+            "author": "– Marissa L., Licensed Veterinarian"
+          }
+        },
+        "pair_2": {
+          "type": "pair",
+          "settings": {
+            "label_before": "from this",
+            "image_after": "shopify://shop_images/image_17.png",
+            "label_after": "to this",
+            "stars": 5,
+            "quote": "<p>\"Add the second customer quote here.\"</p>",
+            "author": "– Customer Name, Title"
+          }
+        },
+        "pair_3": {
+          "type": "pair",
+          "settings": {
+            "image_before": "shopify://shop_images/image_16.png",
+            "label_before": "from this",
+            "label_after": "to this",
+            "stars": 5,
+            "quote": "<p>\"Add the third customer quote here.\"</p>",
+            "author": "– Customer Name, Title"
+          }
+        }
+      },
+      "block_order": [
+        "pair_1",
+        "pair_2",
+        "pair_3"
+      ],
+      "settings": {
+        "heading": "",
+        "subtext": "",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "bold_color": "#142c70",
+        "star_color": "#142c70",
+        "accent_color": "#142c70",
+        "label_color": "#111111",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cwc_benefits_list": {
+      "type": "CWC_benefits-list",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Bathe Your Dog Without Water",
+            "text": "<p>Replaces traditional baths by using a fine cleansing mist that refreshes your dog's coat without soaking, scrubbing, or rinsing.</p>"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Gentle on Skin, Tough on Odors",
+            "text": "<p>The pH-balanced cleansing mist neutralizes odors at the source while soothing sensitive skin without stripping natural oils.</p>"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Safe for All Pets & Coat Types",
+            "text": "<p>Designed for dogs and cats of all breeds, ages, and coat types. From short fur to thick coats, it works gently and effectively.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3"
+      ],
+      "settings": {
+        "heading": "<p>Why Thousands of Dog Owners <strong>Trust Our Brush</strong></p>",
+        "subtext": "<p>It's the easiest waterless way to bathe your pet without tubs, rinsing, or stress.</p>",
+        "image_position": "right",
+        "alt_text": "",
+        "image_radius": 12,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "icon_color": "#142c70",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cwc_ingredients": {
+      "type": "CWC_ingredients",
+      "blocks": {
+        "ingredient_1": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Aloe Vera",
+            "text": "<p>Helps soothe sensitive skin and keep the coat hydrated during waterless baths.</p>"
+          }
+        },
+        "ingredient_2": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Ingredient Two",
+            "text": "<p>Add the description for this ingredient here.</p>"
+          }
+        },
+        "ingredient_3": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Ingredient Three",
+            "text": "<p>Add the description for this ingredient here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_1",
+        "ingredient_2",
+        "ingredient_3"
+      ],
+      "settings": {
+        "heading": "<p>Vet-Approved Ingredients for <strong>Waterless Wash</strong></p>",
+        "subtext": "",
+        "media_height": 520,
+        "card_radius": 10,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "card_bg_color": "#ffffff",
+        "card_title_color": "#111111",
+        "arrow_bg_color": "#ffffff",
+        "arrow_color": "#111111",
+        "padding_top": 60,
+        "padding_bottom": 0
+      }
+    },
+    "cwc_pdp_faq": {
+      "type": "CWC_pdp-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How does the waterless bath work?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is it safe to use on sensitive skin?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Will it leave my pet's coat wet or sticky?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Does it work on thick or long fur?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is this good for pets that hate baths?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Can I use this on puppies or senior pets?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Does it help with shedding?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How often should I use it?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_9": {
+          "type": "faq_item",
+          "settings": {
+            "title": "What's included with my order?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        },
+        "faq_10": {
+          "type": "faq_item",
+          "settings": {
+            "title": "What if it doesn't work for my pet?",
+            "text": "<p>Add the answer to this question here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10"
+      ],
+      "settings": {
+        "caption": "GOT QUESTIONS? WE HAVE ANSWERS!",
+        "heading": "<p>FAQs</p>",
+        "subtext": "",
+        "list_width": 640,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "caption_color": "#b99a5b",
+        "border_color": "#e3e3e3",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "cwc_stats_split": {
+      "type": "CWC_stats-split",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "percent": 92,
+            "text": "<p>Said their pet seemed noticeably calmer and more relaxed during bath time after just one use.</p>"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "percent": 86,
+            "text": "<p>Reported faster grooming sessions with less mess and fewer tangles.</p>"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "percent": 93,
+            "text": "<p>Noticed a softer, shinier coat and reduced shedding within the first week.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "settings": {
+        "heading": "<p>What Pet Owners Notice After <strong>Switching to Waterless</strong></p>",
+        "subtext": "",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "ring_color": "#142c70",
+        "ring_track_color": "#e3e8f5",
+        "percent_color": "#142c70",
+        "border_color": "#e3e3e3",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "cwc_review_summary": {
+      "type": "CWC_review-summary",
+      "settings": {
+        "heading": "<p>Discover The <strong>Difference</strong></p>",
+        "rating_number": "4.9",
+        "show_stars": true,
+        "subtext": "<p>Join our satisfied 45K+ happy customers and experience the transformative power of our products.</p>",
+        "button_label": "Load More",
+        "button_link": "",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#111111",
+        "bold_color": "#142c70",
+        "rating_color": "#111111",
+        "button_bg_color": "#142c70",
+        "button_text_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cwc_trust_bar",
+    "cwc_pdp_product",
+    "cwc_featured_logos",
+    "cwc_before_after",
+    "cwc_benefits_list",
+    "cwc_ingredients",
+    "cwc_pdp_faq",
+    "cwc_stats_split",
+    "cwc_review_summary"
+  ]
+}

@@ -2,6 +2,8 @@
   #cwc_trust-bar-{{ section.id }} {
     --section-bg: {{ section.settings.bg_color | default: '#142c70' }};
     --text-color: {{ section.settings.text_color | default: '#ffffff' }};
+    --font-size: {{ section.settings.font_size | default: 16 }}px;
+    --font-size-mobile: {{ section.settings.font_size | default: 16 | times: 0.9375 }}px;
     --padding-top: {{ section.settings.padding_top | default: 12 }}px;
     --padding-bottom: {{ section.settings.padding_bottom | default: 12 }}px;
     --padding-top-mobile: {{ section.settings.padding_top | default: 12 | times: 0.5 }}px;
@@ -10,6 +12,14 @@
 {% endstyle %}
 
 {{ 'CWC_trust-bar.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign separator_character = section.settings.separator_character | strip
+  assign show_separator = false
+  if section.settings.show_separator and separator_character != blank
+    assign show_separator = true
+  endif
+-%}
 
 <section id="cwc_trust-bar-{{ section.id }}" class="cwc_trust-bar">
   <div class="cwc_trust-bar__container">
@@ -32,6 +42,10 @@
               <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
             {% endif %}
           </div>
+          {% comment %} Rendered after every item — including the last — so the loop seam gets one too {% endcomment %}
+          {% if show_separator %}
+            <span class="cwc_trust-bar__separator" aria-hidden="true">{{ separator_character }}</span>
+          {% endif %}
         {% endfor %}
       </div>
 
@@ -54,6 +68,9 @@
               <span class="cwc_trust-bar__text">{{ block.settings.text }}</span>
             {% endif %}
           </div>
+          {% if show_separator %}
+            <span class="cwc_trust-bar__separator">{{ separator_character }}</span>
+          {% endif %}
         {% endfor %}
       </div>
     </div>
@@ -79,6 +96,38 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Text Font Size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "info": "Mobile scales to ~94% of this value."
+    },
+    {
+      "type": "header",
+      "content": "Separator"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show Separator Between Items",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "separator_character",
+      "label": "Separator Character",
+      "default": "✦",
+      "info": "Only shown when the separator is turned on."
     },
     {
       "type": "header",

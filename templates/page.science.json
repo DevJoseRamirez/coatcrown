@@ -92,6 +92,7 @@
         "card_oatmeal": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/image_3.png",
             "title": "Colloidal Oatmeal (Avena Sativa)",
             "text": "<p>Colloidal Oatmeal is rich in bioactive lipids, saponins, and avenanthramides. It reduces inflammation, forms a protective skin barrier, locks in hydration, and supports an acidic pH to defend against bacteria.</p>",
             "benefits_label": "Key Benefits",
@@ -105,6 +106,7 @@
         "card_aloe": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/image_3.png",
             "title": "Aloe Vera Extract",
             "text": "<p>Aloe Vera Extract is a biologically active hydrator that deeply penetrates the skin, provides long-lasting moisture, soothes severe itching, and accelerates skin recovery after irritation or environmental stress.</p>",
             "benefits_label": "Key Benefits",
@@ -118,6 +120,7 @@
         "card_chamomile": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/image_3.png",
             "title": "Chamomile Extract",
             "text": "<p>Naturally rich in apigenin and flavonoids, chamomile provides clinically recognized anti-inflammatory and calming effects. It helps reduce redness, soothe hypersensitive skin, and support long-term dermatological balance.</p>",
             "benefits_label": "Key Benefits",
@@ -158,6 +161,7 @@
         "bullet_1": "Clinically backed veterinary advice",
         "bullet_2": "Medical consequences of neglected grooming",
         "bullet_3": "ReNu = preventative dermatology solution",
+        "video": "shopify://files/videos/Omni-X-ugc-1-min.mp4",
         "bg_color": "#ecf4ff",
         "text_color": "#142c70",
         "bold_color": "#142c70",
@@ -211,6 +215,7 @@
         "button_label": "",
         "button_link": "",
         "image_position": "right",
+        "image": "shopify://shop_images/image_8.png",
         "bg_color": "#ffffff",
         "text_color": "#142c70",
         "bold_color": "#142c70",
@@ -266,6 +271,7 @@
         "button_label": "Download Lab Results PDF",
         "button_link": "#",
         "image_position": "left",
+        "image": "shopify://shop_images/image_8.png",
         "bg_color": "#ecf4ff",
         "text_color": "#142c70",
         "bold_color": "#142c70",

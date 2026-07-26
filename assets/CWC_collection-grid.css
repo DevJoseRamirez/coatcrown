@@ -1,0 +1,330 @@
+/* ==============================
+   CWC Collection Grid
+   ============================== */
+
+/* Two variable layers, deliberately kept separate:
+   - schema-backed colors/padding come from the {% style %} block on #cwc_collection-grid-<id>
+   - layout/type vars are declared once here and overridden once in the mobile query
+   The name sets are disjoint, so they never collide. */
+.cwc_collection-grid {
+  --grid-gap: 30px;
+  --card-radius: 12px;
+  --card-pad: 1rem 1.25rem 1.5rem;
+  --heading-size: 2.25rem;
+  --title-size: 1rem;
+  --price-size: 1.125rem;
+  --meta-size: 0.8125rem;
+  --badge-size: 0.75rem;
+  --header-gap: 40px;
+
+  background-color: var(--section-bg);
+  color: var(--text-color);
+  padding-top: var(--padding-top);
+  padding-bottom: var(--padding-bottom);
+}
+
+.cwc_collection-grid__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* === Section Header === */
+.cwc_collection-grid__content {
+  max-width: 900px;
+  margin: 0 auto var(--header-gap);
+  width: 100%;
+  text-align: center;
+}
+
+/* Styled on both the wrapper and its <p> — the heading can be richtext
+   (<p>…</p>) or the bare string from collection.title */
+.cwc_collection-grid__content-heading,
+.cwc_collection-grid__content-heading p {
+  font-size: var(--heading-size);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  color: inherit;
+}
+
+.cwc_collection-grid__content-heading > * strong {
+  color: var(--highlight-color);
+}
+
+.cwc_collection-grid__content-subtext p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+  color: #343434;
+}
+
+.cwc_collection-grid__top-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: var(--meta-size);
+  color: #4a4a4a;
+}
+
+.cwc_collection-grid__top-stars .cwc_stars_block {
+  display: block;
+  width: 68px;
+  height: auto;
+}
+
+.cwc_collection-grid__top-rating-text p {
+  margin: 0;
+}
+
+/* === Track — 4-up grid on desktop === */
+.cwc_collection-grid__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap);
+  align-items: start;
+}
+
+/* === Card === */
+.cwc_collection-grid__card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+}
+
+.cwc_collection-grid__card-image {
+  display: block;
+}
+
+.cwc_collection-grid__card-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.cwc_collection-grid__placeholder {
+  aspect-ratio: 1 / 1;
+  background: #f5f5f5;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.cwc_collection-grid__card-content {
+  flex: 1;
+  padding: var(--card-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cwc_collection-grid__card-title {
+  text-align: center;
+  font-size: var(--title-size);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+
+.cwc_collection-grid__card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* === Reviews row (stars + count + savings) === */
+.cwc_collection-grid__card-reviews {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: var(--meta-size);
+  color: #1d1d1d;
+}
+
+.cwc_collection-grid__stars .cwc_stars_block {
+  display: block;
+  width: 72px;
+  height: auto;
+}
+
+.cwc_collection-grid__badge-save {
+  font-size: var(--badge-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--badge-color);
+}
+
+/* === Price === */
+.cwc_collection-grid__card-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cwc_collection-grid__price-final {
+  font-size: var(--price-size);
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.cwc_collection-grid__price-compare {
+  font-size: var(--price-size);
+  color: rgba(17, 17, 17, 0.55);
+  text-decoration: line-through;
+}
+
+/* === Add to Cart (native theme button restyled) === */
+.cwc_collection-grid__form {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+}
+
+.cwc_collection-grid__atc.button,
+.cwc_collection-grid__atc {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-radius: 6px;
+  border: 1px solid var(--accent-color) !important;
+  background-color: #ffffff !important;
+  color: var(--accent-color) !important;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cwc_collection-grid__atc:hover {
+  background-color: var(--accent-color) !important;
+  color: #ffffff !important;
+}
+
+.cwc_collection-grid__atc .add-to-cart-icon {
+  display: none;
+}
+
+/* === Carousel arrows — mobile only === */
+.cwc_collection-grid__nav {
+  display: none;
+}
+
+.cwc_collection-grid__nav-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.cwc_collection-grid__nav-btn:hover {
+  transform: scale(1.08);
+}
+
+.cwc_collection-grid__nav-btn[disabled] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.cwc_collection-grid__nav-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==============================
+   Tablet Responsive
+   ============================== */
+@media screen and (max-width: 991px) {
+  .cwc_collection-grid__container {
+    padding: 0 1.25rem;
+  }
+
+  .cwc_collection-grid__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==============================
+   Mobile Responsive — the same track becomes a scroll-snap carousel
+   ============================== */
+@media screen and (max-width: 768px) {
+  .cwc_collection-grid {
+    --grid-gap: 16px;
+    --heading-size: 1.75rem;
+    --title-size: 1.0625rem;
+    --meta-size: 0.875rem;
+    --header-gap: 24px;
+
+    padding-top: var(--padding-top-mobile);
+    padding-bottom: var(--padding-bottom-mobile);
+  }
+
+  .cwc_collection-grid__container {
+    padding: 0 1rem;
+  }
+
+  /* display:flex makes grid-template-columns inert — no reset needed */
+  .cwc_collection-grid__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .cwc_collection-grid__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cwc_collection-grid__card {
+    flex: 0 0 100%;
+    max-width: 100%;
+    scroll-snap-align: start;
+  }
+
+  /* Badge to the left edge, stars + count stay adjacent on the right */
+  .cwc_collection-grid__card-reviews {
+    flex-wrap: nowrap;
+  }
+
+  .cwc_collection-grid__badge-save {
+    order: -1;
+    margin-right: auto;
+  }
+
+  .cwc_collection-grid__card-price {
+    justify-content: center;
+  }
+
+  .cwc_collection-grid__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+}

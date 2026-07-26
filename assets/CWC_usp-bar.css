@@ -41,12 +41,14 @@
   /* testing  */
   border: #142c70 solid 1px;
   border-radius: 100%;
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 
+/* Image is sized as a share of the circle so it sits inset from the border,
+   same as the mobile treatment below. */
 .cwc_usp-bar__icon img {
-  width: 100%;
-  height: 100%;
+  width: var(--desktop-icon-img-scale, 60%);
+  height: var(--desktop-icon-img-scale, 60%);
   object-fit: contain;
 }
 
@@ -67,9 +69,16 @@
 }
 
 /* ==============================
-   Mobile Responsive — 2 columns
+   Mobile Responsive — column count set per section
    ============================== */
 @media screen and (max-width: 768px) {
+  /* Image is sized as a share of the circle, so it tracks the column count
+     automatically — bigger at 1-2 columns, tighter at 3-4. */
+  .cwc_usp-bar__icon img {
+    width: var(--mobile-icon-img-scale, 60%);
+    height: var(--mobile-icon-img-scale, 60%);
+  }
+
   .cwc_usp-bar {
     padding-top: var(--padding-top-mobile);
     padding-bottom: var(--padding-bottom-mobile);
@@ -77,8 +86,8 @@
 
   .cwc_usp-bar__container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(var(--mobile-columns, 2), minmax(0, 1fr));
+    gap: var(--mobile-gap, 24px);
     padding: 0 1rem;
   }
 
@@ -87,11 +96,12 @@
   }
 
   .cwc_usp-bar__icon {
-    width: 64px;
-    height: 64px;
+    width: var(--mobile-icon-size, 64px);
+    height: var(--mobile-icon-size, 64px);
+    /* padding: 0.75rem; */
   }
 
   .cwc_usp-bar__text {
-    font-size: 1rem;
+    font-size: var(--mobile-text-size, 1rem);
   }
 }

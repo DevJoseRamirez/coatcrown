@@ -12,9 +12,10 @@
     "cwc_hero_banner_a1B2c3": {
       "type": "CWC_hero-banner",
       "settings": {
+        "caption": "",
         "rating_stars": 5,
         "rating_text": "<p><strong>4.8/5</strong> from <strong>45,000+</strong> of satisfied customers</p>",
-        "heading": "<p>The Grooming Upgrade Your Pet <strong>Actually Enjoys</strong></p>",
+        "heading": "<h1>The Grooming Upgrade Your Pet <strong>Actually Enjoys</strong></h1>",
         "subtext": "<p>No more stress, shedding battles, or messy routines. Our calming pet-care system turns grooming into a soothing, bonding experience.</p>",
         "usp_1": "<p><strong>Deep cleaning action</strong> without irritating skin</p>",
         "usp_2": "<p>Creates calming, <strong>stress-free grooming moments</strong></p>",
@@ -318,6 +319,7 @@
         "testimonial_card_FrPhLy": {
           "type": "testimonial_card",
           "settings": {
+            "review_image": "shopify://shop_images/Screenshotfrom2026-07-1308-44-23.png",
             "quote": "<p>My golden sheds constantly, and this is the first tool that actually keeps the fur off my couch. Grooming is finally calm.</p>",
             "author_name": "Sarah M.",
             "verified_text": "Verified Buyer",
@@ -327,6 +329,7 @@
         "testimonial_card_AnRq7E": {
           "type": "testimonial_card",
           "settings": {
+            "review_image": "shopify://shop_images/image_17.png",
             "quote": "<p>Bath time used to be a battle. Now my pup actually relaxes while I brush. The mist makes such a difference.</p>",
             "author_name": "James T.",
             "verified_text": "Verified Buyer",
@@ -336,6 +339,7 @@
         "testimonial_card_UpLgPc": {
           "type": "testimonial_card",
           "settings": {
+            "review_image": "shopify://shop_images/image_19_1.png",
             "quote": "<p>Worth every penny. Two sessions in and his coat is noticeably softer and shinier. Highly recommend.</p>",
             "author_name": "Priya K.",
             "verified_text": "Verified Buyer",
@@ -345,6 +349,7 @@
         "testimonial_card_UEgA3k": {
           "type": "testimonial_card",
           "settings": {
+            "review_image": "shopify://shop_images/image_16.png",
             "quote": "<p>I have two cats and a dog and this works on all of them. Less shedding, less stress, less mess everywhere.</p>",
             "author_name": "Marcus L.",
             "verified_text": "Verified Buyer",
@@ -354,6 +359,7 @@
         "testimonial_card_jnVKyk": {
           "type": "testimonial_card",
           "settings": {
+            "review_image": "shopify://shop_images/grooming_owner_dog_hero_square-2-min.png",
             "quote": "<p>The number of loose hairs it pulls in one session is unreal. My vacuum finally gets a break.</p>",
             "author_name": "Emily R.",
             "verified_text": "Verified Buyer",
@@ -461,6 +467,9 @@
       "settings": {
         "bg_color": "#ecf4ff",
         "text_color": "#142c70",
+        "font_size": 16,
+        "show_separator": false,
+        "separator_character": "✦",
         "padding_top": 12,
         "padding_bottom": 12
       }

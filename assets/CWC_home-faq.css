@@ -52,11 +52,12 @@
 }
 
 .cwc_home-faq__item {
-  border: 1px solid rgba(17, 17, 17, 0.2);
+  border: 1px solid rgb(0 0 0 / 9%);
   border-radius: 18px;
   margin-bottom: 24px;
   overflow: hidden;
-  border: 1px solid rgb(0 0 0 / 9%);
+  background: transparent;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
 }
 
 .cwc_home-faq__item:last-child {
@@ -83,7 +84,23 @@
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.3;
-  transition: padding 0.3s ease;
+  transition: padding 0.35s ease;
+  /* Kill the mobile tap flash and the mouse-click focus ring */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+.cwc_home-faq__question::-moz-focus-inner {
+  border: 0;
+}
+
+/* Keyboard users still get a visible ring */
+.cwc_home-faq__question:focus-visible {
+  outline: 2px solid var(--heading-color);
+  outline-offset: -2px;
+  border-radius: 18px;
 }
 
 .cwc_home-faq__item.is-active .cwc_home-faq__question {
@@ -103,6 +120,8 @@
   flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid var(--heading-color);
+  background: transparent;
+  transition: background-color 0.35s ease;
 }
 
 .cwc_home-faq__icon::before,
@@ -111,18 +130,20 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   background: var(--heading-color);
+  transition: background-color 0.35s ease, transform 0.35s ease, opacity 0.35s ease;
 }
 
 .cwc_home-faq__icon::before {
   width: 11px;
   height: 2px;
+  transform: translate(-50%, -50%);
 }
 
 .cwc_home-faq__icon::after {
   width: 2px;
   height: 11px;
+  transform: translate(-50%, -50%) rotate(0deg);
 }
 
 .cwc_home-faq__item.is-active .cwc_home-faq__icon {
@@ -134,21 +155,35 @@
   background: #ffffff;
 }
 
+/* Rotate the vertical bar into the horizontal one so + becomes − smoothly */
 .cwc_home-faq__item.is-active .cwc_home-faq__icon::after {
-  display: none;
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
 }
 
-/* === Answer === */
+/* === Answer ===
+   Collapsed/expanded via grid-template-rows so the height animates from the
+   answer's natural size — no fixed max-height, no measuring in JS. */
 .cwc_home-faq__answer {
-  display: none;
-  padding: 0 20px 24px 28px;
+  display: grid;
+  grid-template-rows: 0fr;
   color: var(--text-color);
   font-size: 1rem;
   line-height: 1.4;
+  visibility: hidden;
+  transition: grid-template-rows 0.35s ease, visibility 0s linear 0.35s;
 }
 
 .cwc_home-faq__item.is-active .cwc_home-faq__answer {
-  display: block;
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.35s ease, visibility 0s linear 0s;
+}
+
+.cwc_home-faq__answer-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 20px 24px 28px;
 }
 
 .cwc_home-faq__answer p {
@@ -163,6 +198,19 @@
 .cwc_home-faq__answer ul {
   margin: 10px 0;
   padding-left: 20px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+  .cwc_home-faq__item,
+  .cwc_home-faq__question,
+  .cwc_home-faq__answer,
+  .cwc_home-faq__icon,
+  .cwc_home-faq__icon::before,
+  .cwc_home-faq__icon::after {
+    transition-duration: 0.01ms;
+  }
 }
 
 /* ==============================
@@ -208,7 +256,7 @@
     padding-left: 20px;
   }
 
-  .cwc_home-faq__answer {
+  .cwc_home-faq__answer-inner {
     padding-left: 20px;
   }
 }

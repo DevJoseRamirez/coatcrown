@@ -98,6 +98,12 @@
 }
 
 /* === Heading === */
+.cwc_hero-banner__heading h1,
+.cwc_hero-banner__heading h2,
+.cwc_hero-banner__heading h3,
+.cwc_hero-banner__heading h4,
+.cwc_hero-banner__heading h5,
+.cwc_hero-banner__heading h6,
 .cwc_hero-banner__heading p {
   margin: 0;
   font-size: 3rem;
@@ -273,6 +279,7 @@
     padding: 6px 10px;
     font-size: 0.5625rem;
     letter-spacing: 0.9px;
+    font-size: .65rem;
   }
 
   .cwc_hero-banner__rating-text p {
@@ -285,12 +292,22 @@
 
   .cwc_hero-banner__content {
     max-width: 100%;
-    gap: 14Fpx;
+    gap: 14px;
     padding: 0px;
+  }
+
+  .cwc_hero-banner__heading h1,
+  .cwc_hero-banner__heading h2,
+  .cwc_hero-banner__heading h3,
+  .cwc_hero-banner__heading h4,
+  .cwc_hero-banner__heading h5,
+  .cwc_hero-banner__heading h6 {
+    font-size: 2.1rem;
   }
 
   .cwc_hero-banner__heading p {
     font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .cwc_hero-banner__description p {
@@ -328,10 +345,11 @@
   .cwc_hero-banner__btn {
     width: 100%;
     min-width: 0;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
     /*  */
     padding: 20px 26px;
+    font-size: .9rem;
   }
 
   .cwc_hero-banner__testimonial {

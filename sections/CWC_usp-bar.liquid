@@ -1,3 +1,30 @@
+{%- liquid
+  assign mobile_columns = section.settings.mobile_columns | default: 2
+
+  case mobile_columns
+    when 1
+      assign mobile_icon_size = '72px'
+      assign mobile_icon_img_scale = '62%'
+      assign mobile_text_size = '1rem'
+      assign mobile_gap = '24px'
+    when 3
+      assign mobile_icon_size = '52px'
+      assign mobile_icon_img_scale = '58%'
+      assign mobile_text_size = '0.9375rem'
+      assign mobile_gap = '16px'
+    when 4
+      assign mobile_icon_size = '44px'
+      assign mobile_icon_img_scale = '56%'
+      assign mobile_text_size = '0.875rem'
+      assign mobile_gap = '12px'
+    else
+      assign mobile_icon_size = '64px'
+      assign mobile_icon_img_scale = '60%'
+      assign mobile_text_size = '1rem'
+      assign mobile_gap = '24px'
+  endcase
+-%}
+
 {% style %}
   #cwc_usp-bar-{{ section.id }} {
     --section-bg: {{ section.settings.bg_color | default: '#ECF4FF' }};
@@ -6,6 +33,12 @@
     --padding-bottom: {{ section.settings.padding_bottom | default: 20 }}px;
     --padding-top-mobile: {{ section.settings.padding_top | default: 20 | times: 0.5 }}px;
     --padding-bottom-mobile: {{ section.settings.padding_bottom | default: 20 | times: 0.5 }}px;
+    --desktop-icon-img-scale: 60%;
+    --mobile-columns: {{ mobile_columns }};
+    --mobile-gap: {{ mobile_gap }};
+    --mobile-icon-size: {{ mobile_icon_size }};
+    --mobile-icon-img-scale: {{ mobile_icon_img_scale }};
+    --mobile-text-size: {{ mobile_text_size }};
   }
 {% endstyle %}
 
@@ -53,6 +86,20 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Columns Per Row (Mobile)",
+      "info": "Applies on screens 768px and below. Icon and text sizes scale down automatically at 3 and 4 columns.",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
     },
     {
       "type": "header",

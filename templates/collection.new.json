@@ -1,0 +1,344 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_4nY4eT": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_EzJzMm": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title_4nY4eT",
+            "price_EzJzMm"
+          ]
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 0,
+        "padding-block-end": 32
+      }
+    },
+    "collection_grid": {
+      "type": "CWC_collection-grid",
+      "settings": {
+        "heading": "",
+        "subtext": "<p>Join over 15,000+ happy owners upgrading their grooming routine.</p>",
+        "top_rating_stars": 5,
+        "top_rating_text": "<p>4.8/5 from thousands of satisfied customers</p>",
+        "collection": "",
+        "products_limit": 24,
+        "default_review_text": "412 reviews",
+        "bg_color": "#ffffff",
+        "text_color": "#1f3d6e",
+        "bold_color": "#142c70",
+        "card_bg_color": "#ffffff",
+        "accent_color": "#1f3d6e",
+        "badge_color": "#1d1d1d",
+        "star_color": "#f7cd33",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "reviews": {
+      "type": "CWC_home-reviews",
+      "blocks": {
+        "review_lourdes": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>“I’ve been a veterinarian for 9 years and I recommend this to any pet parent dealing with itchy skin or grooming anxiety. It’s gentle, smartly designed, and the results speak for themselves.”</p>",
+            "author_name": "Lourdes",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "review_gus": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>“The ReNu grooming kit is a must-have! Our Bernese Mountain Dog, Gus, used to run from the brush, but now he sits and enjoys it. His coat is so soft and tangle-free!”</p>",
+            "author_name": "Kirstin Kassa",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "review_buddy": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>“Finally, a grooming product that actually works! Our Black Lab, Buddy, sheds like crazy, but the FreshFur brush has made a huge difference. Plus, he loves the massage!”</p>",
+            "author_name": "Kirstin Kassa",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        },
+        "review_anjolie": {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>“We were struggling with my dog’s coat until we tried the spray and brush combo — he finally shines and our groomer noticed the difference.”</p>",
+            "author_name": "Anjolie F.",
+            "verified_text": "Verified Buyer",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "review_lourdes",
+        "review_gus",
+        "review_buddy",
+        "review_anjolie"
+      ],
+      "settings": {
+        "top_rating_stars": 5,
+        "top_rating_text": "<p>4.8/5 from thousands of satisfied customers</p>",
+        "heading": "<p>People Everywhere Are Loving It</p>",
+        "subtext": "<p>See why users are loving ReNu products</p>",
+        "bg_color": "#ecf4ff",
+        "text_color": "#333333",
+        "heading_color": "#1f3d6e",
+        "bold_color": "#1f3d6e",
+        "card_bg_color": "#ffffff",
+        "star_color": "#f7cd33",
+        "nav_color": "#1f3d6e",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "trust_bar": {
+      "type": "CWC_trust-bar",
+      "blocks": {
+        "trust_shipping": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Shipping On Orders Above $55"
+          }
+        },
+        "trust_checkout": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Safe & Secure Checkout"
+          }
+        },
+        "trust_guarantee": {
+          "type": "trust_item",
+          "settings": {
+            "text": "365 Day Money Back Guarantee"
+          }
+        },
+        "trust_loved": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Loved By 45,576+ Pet Parents"
+          }
+        }
+      },
+      "block_order": [
+        "trust_shipping",
+        "trust_checkout",
+        "trust_guarantee",
+        "trust_loved"
+      ],
+      "settings": {
+        "bg_color": "#142c70",
+        "text_color": "#ffffff",
+        "font_size": 14,
+        "show_separator": false,
+        "separator_character": "✦",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "faq": {
+      "type": "CWC_home-faq",
+      "blocks": {
+        "faq_shedding": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Will this help with my pet's shedding or coat issues?",
+            "text": "<p>Our grooming products are proudly crafted in Denver, Colorado, in a GMP-certified facility that adheres to the highest safety and quality standards.</p>"
+          }
+        },
+        "faq_sensitive": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Is it safe to use on sensitive skin?",
+            "text": "<p>FreshFur is designed to be gentle for everyday use. Most pets tolerate it well, but every pet is different. If your pet has known sensitivities, we recommend starting with a small area first and adjusting use based on your pet's comfort.</p>"
+          }
+        },
+        "faq_results": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How quickly will I see results?",
+            "text": "<p>You'll notice results right away as you brush — loose fur, dirt, and debris lift away instantly. Results may vary depending on coat type and how dirty your pet is, but most customers see a difference during the first use.</p>"
+          }
+        },
+        "faq_usage": {
+          "type": "faq_item",
+          "settings": {
+            "title": "How do I use the brush and solution?",
+            "text": "<p>Add FreshFur Cleansing Mist and water to the brush reservoir, turn on the brush and gently mist while brushing through the coat, then remove collected hair as needed — no rinsing required. Detailed instructions are included on the packaging.</p>"
+          }
+        },
+        "faq_bathing": {
+          "type": "faq_item",
+          "settings": {
+            "title": "Do I need to use it every time I bathe my pet?",
+            "text": "<p>No. FreshFur is designed for everyday cleanups between baths. It helps keep your pet fresh without the hassle of frequent bathing.</p>"
+          }
+        },
+        "faq_dislike": {
+          "type": "faq_item",
+          "settings": {
+            "title": "What if my pet doesn't like it at first?",
+            "text": "<p>Many pets actually relax — and even fall asleep — while being brushed with FreshFur. The gentle misting combined with slow brushing helps create a calmer experience. As with anything new, start slowly and let your pet get comfortable over a few sessions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_shedding",
+        "faq_sensitive",
+        "faq_results",
+        "faq_usage",
+        "faq_bathing",
+        "faq_dislike"
+      ],
+      "settings": {
+        "heading": "<p>Frequently Asked Questions</p>",
+        "subtext": "<p>Need more information? You can find it here.</p>",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "heading_color": "#142c70",
+        "bold_color": "#142c70",
+        "active_bg_color": "#ecf4ff",
+        "padding_top": 100,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collection_grid",
+    "reviews",
+    "trust_bar",
+    "faq"
+  ]
+}

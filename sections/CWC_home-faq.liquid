@@ -50,8 +50,10 @@
                   </button>
 
                   {% if block.settings.text != blank %}
-                    <div class="cwc_home-faq__answer cwc-rte">
-                      {{ block.settings.text }}
+                    <div class="cwc_home-faq__answer">
+                      <div class="cwc_home-faq__answer-inner cwc-rte">
+                        {{ block.settings.text }}
+                      </div>
                     </div>
                   {% endif %}
                 </div>

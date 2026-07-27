@@ -5,7 +5,7 @@
     --highlight-color: {{ section.settings.bold_color | default: '#142C70' }};
     --card-bg: {{ section.settings.card_bg_color | default: '#ffffff' }};
     --accent-color: {{ section.settings.accent_color | default: '#1F3D6E' }};
-    --badge-color: {{ section.settings.badge_color | default: '#1D1D1D' }};
+    --badge-bg: {{ section.settings.badge_color | default: '#E38A0A' }};
     --star-color: {{ section.settings.star_color | default: '#F7CD33' }};
     --padding-top: {{ section.settings.padding_top | default: 60 }}px;
     --padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
@@ -23,7 +23,6 @@
 
 <section id="cwc_collection-grid-{{ section.id }}" class="cwc_collection-grid">
   <div class="cwc_collection-grid__container">
-
     {% comment %} Section Header {% endcomment %}
     <div class="cwc_collection-grid__content">
       {% if section_heading != blank %}
@@ -42,7 +41,7 @@
         <div class="cwc_collection-grid__top-rating">
           {% if section.settings.top_rating_stars > 0 %}
             <span class="cwc_collection-grid__top-stars">
-              {% render 'CWC_stars_block', fill_color: section.settings.star_color %}
+              {% render 'CWC_stars__block', fill_color: section.settings.star_color %}
             </span>
           {% endif %}
 
@@ -61,7 +60,6 @@
         {% for card_product in grid_collection.products limit: section.settings.products_limit %}
           {% liquid
             assign card_image = card_product.featured_image
-            assign card_variant = card_product.selected_or_first_available_variant
             assign final_price = card_product.price
             assign compare_price = card_product.compare_at_price
 
@@ -71,10 +69,10 @@
             endif
           %}
 
-          <div class="cwc_collection-grid__card">
-
+          {% comment %} Whole card is the link — no nested interactive elements inside {% endcomment %}
+          <a href="{{ card_product.url }}" class="cwc_collection-grid__card">
             {% comment %} Image {% endcomment %}
-            <a href="{{ card_product.url }}" class="cwc_collection-grid__card-image">
+            <div class="cwc_collection-grid__card-image">
               {% if card_image != blank %}
                 <img
                   class="cwc_collection-grid__card-img"
@@ -89,75 +87,44 @@
                   <span>No image</span>
                 </div>
               {% endif %}
-            </a>
+            </div>
 
             {% comment %} Content {% endcomment %}
             <div class="cwc_collection-grid__card-content">
-
-              <div class="cwc_collection-grid__card-title">
-                <a href="{{ card_product.url }}">{{ card_product.title }}</a>
-              </div>
+              <div class="cwc_collection-grid__card-title">{{ card_product.title }}</div>
 
               <div class="cwc_collection-grid__card-reviews">
                 <span class="cwc_collection-grid__stars">
-                  {% render 'CWC_stars_block', fill_color: section.settings.star_color %}
+                  {% render 'CWC_stars__block', fill_color: section.settings.star_color %}
                 </span>
 
                 {% if review_text != blank %}
                   <span class="cwc_collection-grid__review-count">{{ review_text }}</span>
                 {% endif %}
-
-                {% if compare_price > final_price %}
-                  <span class="cwc_collection-grid__badge-save">
-                    SAVE {{ compare_price | minus: final_price | money_without_trailing_zeros }}
-                  </span>
-                {% endif %}
               </div>
 
               <div class="cwc_collection-grid__card-price">
-                <span class="cwc_collection-grid__price-final">
-                  {%- if card_product.price_varies %}From {% endif -%}
-                  {{- final_price | money -}}
-                </span>
-
                 {% if compare_price > final_price %}
-                  <span class="cwc_collection-grid__price-compare">{{ compare_price | money }}</span>
+                  {% assign save_amount = compare_price | minus: final_price %}
+                  <span class="cwc_collection-grid__badge-save"
+                    >SAVE <strong>{{ save_amount | money_without_trailing_zeros }}</strong></span
+                  >
                 {% endif %}
+
+                <div class="cwc_collection-grid__card-price-wrap">
+                  {% if compare_price > final_price %}
+                    <span class="cwc_collection-grid__price-compare">{{ compare_price | money }}</span>
+                  {% endif %}
+
+                  <span class="cwc_collection-grid__price-final">
+                    {%- if card_product.price_varies %}From {% endif -%}
+                    {{- final_price | money -}}
+                  </span>
+                </div>
+
               </div>
-
-              {% comment %} Native add-to-cart — triggers the theme cart drawer {% endcomment %}
-              {% assign form_id = 'CWC-CollectionGrid-' | append: section.id | append: '-' | append: card_product.id %}
-              <product-form-component
-                data-section-id="{{ section.id }}"
-                data-product-id="{{ card_product.id }}"
-                on:submit="/handleSubmit"
-                class="cwc_collection-grid__form"
-              >
-                <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
-                {%- form 'product', card_product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                  <input
-                    type="hidden"
-                    name="id"
-                    ref="variantId"
-                    value="{{ card_variant.id }}"
-                    {% if card_variant.available == false %}disabled{% endif %}
-                  >
-                  <input
-                    type="hidden"
-                    name="quantity"
-                    value="{% if card_variant.quantity_rule.min %}{{ card_variant.quantity_rule.min }}{% else %}1{% endif %}"
-                  >
-                  {% render 'add-to-cart-button',
-                    add_to_cart_text: 'Add to Cart',
-                    class: 'cwc_collection-grid__atc',
-                    can_add_to_cart: card_variant.available,
-                    product: card_product
-                  %}
-                {%- endform -%}
-              </product-form-component>
-
             </div>
-          </div>
+          </a>
         {% endfor %}
       </div>
 
@@ -169,10 +136,21 @@
           data-cwc-prev
           aria-label="Previous"
         >
-          <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            width="16"
+            height="15"
+            viewBox="0 0 16 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path d="M14.5 7.375L1 7.375M1 7.375L7.375 1M1 7.375L7.375 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </button>
+
+        {% comment %} Progress dots — built by JS from the track's real scroll
+        width, so the count follows however many cards fit in view {% endcomment %}
+        <div class="cwc_collection-grid__dots" data-cwc-dots aria-label="Carousel position" hidden></div>
 
         <button
           type="button"
@@ -180,13 +158,19 @@
           data-cwc-next
           aria-label="Next"
         >
-          <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            width="16"
+            height="15"
+            viewBox="0 0 16 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path d="M1 7.375L14.5 7.375M14.5 7.375L8.125 1M14.5 7.375L8.125 13.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </button>
       </div>
     {% endif %}
-
   </div>
 </section>
 
@@ -290,14 +274,14 @@
       "type": "color",
       "id": "accent_color",
       "label": "Accent Color",
-      "info": "Price, Add to Cart button, and carousel arrows.",
+      "info": "Sale price and carousel arrows.",
       "default": "#1F3D6E"
     },
     {
       "type": "color",
       "id": "badge_color",
-      "label": "Save Badge Color",
-      "default": "#1D1D1D"
+      "label": "Save Badge Background",
+      "default": "#E38A0A"
     },
     {
       "type": "color",

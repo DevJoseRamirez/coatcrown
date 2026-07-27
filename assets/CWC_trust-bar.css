@@ -24,18 +24,25 @@
 }
 
 /* Each group is at least as wide as the bar so the row never has a gap,
-   even with only a few short items. Two identical groups scroll as one. */
+   even with only a few short items. Two identical groups scroll as one.
+
+   Static is the base state — the scroll animation is opted into per breakpoint
+   by the --autoscroll-desktop / --autoscroll-mobile modifiers further down.
+   Static wraps instead of clipping, since nothing is moving to reveal the
+   overflow. */
 .cwc_trust-bar__group {
   flex-shrink: 0;
   min-width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  animation: cwc-trust-bar-scroll 30s linear infinite;
+  flex-wrap: wrap;
+  row-gap: 8px;
 }
 
-.cwc_trust-bar__marquee:hover .cwc_trust-bar__group {
-  animation-play-state: paused;
+/* Second copy only earns its place while the row is moving */
+.cwc_trust-bar__group--duplicate {
+  display: none;
 }
 
 .cwc_trust-bar__item {
@@ -56,6 +63,12 @@
   line-height: 1;
   opacity: 0.6;
   user-select: none;
+}
+
+/* The trailing separator only exists to cover the marquee loop seam — on a
+   static bar it would just dangle off the last item. */
+.cwc_trust-bar__group>.cwc_trust-bar__separator:last-child {
+  display: none;
 }
 
 .cwc_trust-bar__icon {
@@ -83,9 +96,65 @@
   }
 }
 
+/* ==============================
+   Auto Scroll — opted in per breakpoint from the section settings
+   ============================== */
+
+/* Desktop and tablet: everything above the mobile breakpoint */
+@media screen and (min-width: 769px) {
+  .cwc_trust-bar--autoscroll-desktop .cwc_trust-bar__group {
+    flex-wrap: nowrap;
+    animation: cwc-trust-bar-scroll 30s linear infinite;
+  }
+
+  .cwc_trust-bar--autoscroll-desktop .cwc_trust-bar__group--duplicate {
+    display: flex;
+  }
+
+  .cwc_trust-bar--autoscroll-desktop .cwc_trust-bar__group>.cwc_trust-bar__separator:last-child {
+    display: inline;
+  }
+
+  .cwc_trust-bar--autoscroll-desktop .cwc_trust-bar__marquee:hover .cwc_trust-bar__group {
+    animation-play-state: paused;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cwc_trust-bar--autoscroll-mobile .cwc_trust-bar__group {
+    flex-wrap: nowrap;
+    animation: cwc-trust-bar-scroll 30s linear infinite;
+  }
+
+  .cwc_trust-bar--autoscroll-mobile .cwc_trust-bar__group--duplicate {
+    display: flex;
+  }
+
+  .cwc_trust-bar--autoscroll-mobile .cwc_trust-bar__group>.cwc_trust-bar__separator:last-child {
+    display: inline;
+  }
+
+  .cwc_trust-bar--autoscroll-mobile .cwc_trust-bar__marquee:hover .cwc_trust-bar__group {
+    animation-play-state: paused;
+  }
+}
+
+/* Holds the row still, but keeps the duplicate group hidden and the items
+   wrapping — i.e. the same layout as auto-scroll switched off. Selectors are
+   written one level deeper so they match the specificity of the modifier rules
+   above and win on source order. */
 @media (prefers-reduced-motion: reduce) {
-  .cwc_trust-bar__group {
+  .cwc_trust-bar .cwc_trust-bar__group {
     animation: none;
+    flex-wrap: wrap;
+  }
+
+  .cwc_trust-bar .cwc_trust-bar__group--duplicate {
+    display: none;
+  }
+
+  .cwc_trust-bar .cwc_trust-bar__group>.cwc_trust-bar__separator:last-child {
+    display: none;
   }
 }
 
@@ -105,5 +174,9 @@
   .cwc_trust-bar__icon {
     width: 20px;
     height: 20px;
+  }
+
+  .cwc_trust-bar__container {
+    padding: 0rem;
   }
 }

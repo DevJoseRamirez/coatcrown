@@ -12,6 +12,7 @@
 
 .cwc_usp-bar__container {
   max-width: 1280px;
+  max-width: 1480px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -47,8 +48,8 @@
 /* Image is sized as a share of the circle so it sits inset from the border,
    same as the mobile treatment below. */
 .cwc_usp-bar__icon img {
-  width: var(--desktop-icon-img-scale, 60%);
-  height: var(--desktop-icon-img-scale, 60%);
+  width: var(--desktop-icon-img-scale, 56%);
+  height: var(--desktop-icon-img-scale, 56%);
   object-fit: contain;
 }
 
@@ -72,6 +73,7 @@
    Mobile Responsive — column count set per section
    ============================== */
 @media screen and (max-width: 768px) {
+
   /* Image is sized as a share of the circle, so it tracks the column count
      automatically — bigger at 1-2 columns, tighter at 3-4. */
   .cwc_usp-bar__icon img {

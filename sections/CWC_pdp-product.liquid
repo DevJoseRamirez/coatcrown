@@ -39,9 +39,10 @@
   endif
 
   assign bundle_blocks = section.blocks | where: 'type', 'bundle_option'
-  assign benefit_blocks = section.blocks | where: 'type', 'benefit'
+  assign benefit_blocks = section.blocks | where: 'type', 'key_benefits'
   assign trust_blocks = section.blocks | where: 'type', 'trust_icon'
   assign faq_blocks = section.blocks | where: 'type', 'faq_item'
+  assign stock_delivery_blocks = section.blocks | where: 'type', 'stock_delivery'
 -%}
 
 <section id="cwc_pdp-product-{{ section.id }}" class="cwc_pdp-product">
@@ -144,7 +145,7 @@
       {% comment %} Rating {% endcomment %}
       {% if section.settings.show_rating %}
         <div class="cwc_pdp-product__rating">
-          <span class="cwc_pdp-product__stars">{% render 'CWC_stars_block', fill_color: '#142c70' %}</span>
+          <span class="cwc_pdp-product__stars">{% render 'CWC_stars__block', fill_color: '#142c70' %}</span>
           {% if section.settings.rating_text != blank %}
             <span class="cwc_pdp-product__rating-text">{{ section.settings.rating_text }}</span>
           {% endif %}
@@ -169,30 +170,10 @@
         {% endif %}
       </div>
 
-      {% comment %} Key benefits {% endcomment %}
-      {% if benefit_blocks.size > 0 %}
-        <ul class="cwc_pdp-product__benefits">
-          {% for block in benefit_blocks %}
-            {% if block.settings.text != blank %}
-              <li class="cwc_pdp-product__benefit" {{ block.shopify_attributes }}>
-                <svg
-                  class="cwc_pdp-product__check"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10.25" stroke="currentColor" stroke-width="1.5"></circle>
-                  <path d="M7.5 12.25L10.5 15.25L16.5 9.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-                <span>{{ block.settings.text }}</span>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      {% endif %}
+      {% comment %} Key benefits — one block holding every bullet {% endcomment %}
+      {% for block in benefit_blocks %}
+        {% render 'CWC_pdp-key-benefits__block', block: block %}
+      {% endfor %}
 
       {% comment %} Buy form: bundle options + ATC {% endcomment %}
       <product-form-component
@@ -292,39 +273,28 @@
                 <span class="cwc_pdp-product__trustpilot-text">{{ section.settings.trustpilot_text }}</span>
               {% endif %}
               {% if section.settings.trustpilot_image != blank %}
-                <img
-                  src="{{ section.settings.trustpilot_image | image_url: width: 320 }}"
-                  alt="{{ section.settings.trustpilot_image.alt | default: 'Trustpilot rating' | escape }}"
-                  loading="lazy"
-                  width="160"
-                  height="20"
-                >
+                <span class="cwc_pdp-product__trustpilot-image">
+                  <img
+                    src="{{ section.settings.trustpilot_image | image_url: width: 320 }}"
+                    alt="{{ section.settings.trustpilot_image.alt | default: 'Trustpilot rating' | escape }}"
+                    loading="lazy"
+                    width="160"
+                    height="20"
+                  >
+              {% else %}
+                {% render 'CWC_trust_stars__block' %}
+                </span>
               {% endif %}
+              <span class="cwc_pdp-product__trustpilot-logo">
+                {% render 'CWC_trust_piolet_logo__block' %}
+              </span>
             </div>
           {% endif %}
 
-          {% comment %} Stock + delivery {% endcomment %}
-          {% if section.settings.stock_text != blank or section.settings.delivery_text != blank %}
-            <div class="cwc_pdp-product__meta">
-              {% if section.settings.stock_text != blank %}
-                <span class="cwc_pdp-product__stock">{{ section.settings.stock_text }}</span>
-              {% endif %}
-              {% if section.settings.delivery_text != blank %}
-                <span class="cwc_pdp-product__delivery">
-                  {% if section.settings.delivery_icon != blank %}
-                    <img
-                      src="{{ section.settings.delivery_icon | image_url: width: 48 }}"
-                      alt="{{ section.settings.delivery_icon.alt | default: '' | escape }}"
-                      loading="lazy"
-                      width="24"
-                      height="16"
-                    >
-                  {% endif %}
-                  <span class="cwc-rte">{{ section.settings.delivery_text }}</span>
-                </span>
-              {% endif %}
-            </div>
-          {% endif %}
+          {% comment %} Stock + delivery — one or more blocks, rendered in block order {% endcomment %}
+          {% for block in stock_delivery_blocks %}
+            {% render 'CWC_pdp-stock-delivery__block', block: block %}
+          {% endfor %}
 
           {% comment %} Add to cart {% endcomment %}
           {%- liquid
@@ -510,27 +480,6 @@
       "type": "image_picker",
       "id": "trustpilot_image",
       "label": "Trust Strip Logo"
-    },
-    {
-      "type": "header",
-      "content": "Stock & Delivery"
-    },
-    {
-      "type": "text",
-      "id": "stock_text",
-      "label": "Stock Text",
-      "default": "Low stock available"
-    },
-    {
-      "type": "image_picker",
-      "id": "delivery_icon",
-      "label": "Delivery Icon"
-    },
-    {
-      "type": "richtext",
-      "id": "delivery_text",
-      "label": "Delivery Text",
-      "default": "<p>Free &amp; Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>"
     },
     {
       "type": "header",
@@ -759,14 +708,47 @@
   ],
   "blocks": [
     {
-      "type": "benefit",
-      "name": "Key Benefit",
+      "type": "key_benefits",
+      "name": "Key Benefits",
+      "limit": 1,
       "settings": [
         {
+          "type": "paragraph",
+          "content": "Up to six bullets, shown two per row above the buy form. Leave a field blank to skip that bullet."
+        },
+        {
           "type": "text",
-          "id": "text",
-          "label": "Benefit Text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
           "default": "Healthier coat instantly"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Safe for sensitive skin"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "Loosens shedding fur"
+        },
+        {
+          "type": "text",
+          "id": "benefit_4",
+          "label": "Benefit 4",
+          "default": "Brushing becomes bonding"
+        },
+        {
+          "type": "text",
+          "id": "benefit_5",
+          "label": "Benefit 5"
+        },
+        {
+          "type": "text",
+          "id": "benefit_6",
+          "label": "Benefit 6"
         }
       ]
     },
@@ -795,6 +777,33 @@
           "id": "best_value",
           "label": "Style As Best Value",
           "default": false
+        }
+      ]
+    },
+    {
+      "type": "stock_delivery",
+      "name": "Stock & Delivery",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Renders between the trust strip and the Add To Cart button."
+        },
+        {
+          "type": "text",
+          "id": "stock_text",
+          "label": "Stock Text",
+          "default": "Low stock available"
+        },
+        {
+          "type": "image_picker",
+          "id": "delivery_icon",
+          "label": "Delivery Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "delivery_text",
+          "label": "Delivery Text",
+          "default": "<p>Free &amp; Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>"
         }
       ]
     },
@@ -840,10 +849,15 @@
       "name": "CWC PDP Product",
       "category": "CWC Custom",
       "blocks": [
-        { "type": "benefit", "settings": { "text": "Healthier coat instantly" } },
-        { "type": "benefit", "settings": { "text": "Safe for sensitive skin" } },
-        { "type": "benefit", "settings": { "text": "Loosens shedding fur" } },
-        { "type": "benefit", "settings": { "text": "Brushing becomes bonding" } },
+        {
+          "type": "key_benefits",
+          "settings": {
+            "benefit_1": "Healthier coat instantly",
+            "benefit_2": "Safe for sensitive skin",
+            "benefit_3": "Loosens shedding fur",
+            "benefit_4": "Brushing becomes bonding"
+          }
+        },
         {
           "type": "bundle_option",
           "settings": { "subtitle": "Includes 1 FREE Bottle", "badge_text": "Free Shipping" }
@@ -858,6 +872,13 @@
             "subtitle": "Includes 3 FREE Bottles",
             "badge_text": "Best Value + Free Shipping",
             "best_value": true
+          }
+        },
+        {
+          "type": "stock_delivery",
+          "settings": {
+            "stock_text": "Low stock available",
+            "delivery_text": "<p>Free &amp; Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>"
           }
         },
         { "type": "trust_icon", "settings": { "text": "Free Worldwide Shipping" } },

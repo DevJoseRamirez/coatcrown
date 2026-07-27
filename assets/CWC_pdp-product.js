@@ -21,11 +21,41 @@
       });
     }
 
+    function slideStart(slide) {
+      return slide.offsetLeft - stage.offsetLeft;
+    }
+
+    /* Slides are centred in the scrollport, not flush left — on mobile they are
+       narrower than the stage so the neighbours peek in at both edges. On
+       desktop a slide fills the stage and this reduces to its left edge. */
     function goTo(index) {
       const slide = slides[index];
       if (!slide) return;
-      stage.scrollTo({ left: slide.offsetLeft - stage.offsetLeft, behavior: 'smooth' });
+      const maxScroll = stage.scrollWidth - stage.clientWidth;
+      const centered = slideStart(slide) - (stage.clientWidth - slide.offsetWidth) / 2;
+      stage.scrollTo({
+        left: Math.max(0, Math.min(maxScroll, centered)),
+        behavior: 'smooth',
+      });
       setActive(index);
+    }
+
+    // Whichever slide's centre sits nearest the middle of the scrollport is the
+    // one being looked at — works for a peek layout and a full-width one alike.
+    function currentIndex() {
+      const viewCenter = stage.scrollLeft + stage.clientWidth / 2;
+      let closest = 0;
+      let shortest = Infinity;
+
+      slides.forEach(function (slide, i) {
+        const distance = Math.abs(slideStart(slide) + slide.offsetWidth / 2 - viewCenter);
+        if (distance < shortest) {
+          shortest = distance;
+          closest = i;
+        }
+      });
+
+      return closest;
     }
 
     thumbs.forEach(function (thumb) {
@@ -38,8 +68,7 @@
     stage.addEventListener(
       'scroll',
       function () {
-        const index = Math.round(stage.scrollLeft / stage.clientWidth);
-        setActive(Math.min(Math.max(index, 0), slides.length - 1));
+        setActive(currentIndex());
       },
       { passive: true }
     );

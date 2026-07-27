@@ -272,6 +272,8 @@
         "trust_3"
       ],
       "settings": {
+        "autoscroll_desktop": false,
+        "autoscroll_mobile": true,
         "bg_color": "#142c70",
         "text_color": "#ffffff",
         "font_size": 14,
@@ -284,52 +286,37 @@
     "cwc_pdp_product": {
       "type": "CWC_pdp-product",
       "blocks": {
-        "benefit_1": {
-          "type": "benefit",
+        "key_benefits": {
+          "type": "key_benefits",
           "settings": {
-            "text": "Healthier coat instantly"
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "text": "Safe for sensitive skin"
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "text": "Loosens shedding fur"
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "text": "Brushing becomes bonding"
+            "benefit_1": "Healthier coat instantly",
+            "benefit_2": "Safe for sensitive skin",
+            "benefit_3": "Loosens shedding fur",
+            "benefit_4": "Brushing becomes bonding"
           }
         },
         "bundle_1": {
           "type": "bundle_option",
           "settings": {
-            "subtitle": "Includes 1 FREE Bottle",
-            "badge_text": "Free Shipping",
+            "subtitle": "30 Day Supply",
+            "badge_text": "",
             "best_value": false
           }
         },
         "bundle_2": {
           "type": "bundle_option",
           "settings": {
-            "subtitle": "Includes 2 FREE Bottles",
-            "badge_text": "Free Shipping",
+            "subtitle": "60 Day Supply",
+            "badge_text": "77% of Customer Choose this",
             "best_value": false
           }
         },
         "bundle_3": {
           "type": "bundle_option",
           "settings": {
-            "subtitle": "Includes 3 FREE Bottles",
-            "badge_text": "Best Value + Free Shipping",
-            "best_value": true
+            "subtitle": "90 Day Supply",
+            "badge_text": "",
+            "best_value": false
           }
         },
         "trust_icon_1": {
@@ -398,13 +385,19 @@
             "title": "Full Ingredient List — (Safe for Dogs & Cats)",
             "text": "<p>Add the answer to this question here.</p>"
           }
+        },
+        "stock_delivery": {
+          "type": "stock_delivery",
+          "settings": {
+            "stock_text": "Low stock available",
+            "delivery_icon": "shopify://shop_images/American_Flag_1.png",
+            "delivery_text": "<p>Free & Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>"
+          }
         }
       },
       "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4",
+        "stock_delivery",
+        "key_benefits",
         "bundle_1",
         "bundle_2",
         "bundle_3",
@@ -423,11 +416,9 @@
         "product": "test",
         "show_rating": true,
         "rating_text": "4.7/5 | 55,578 Verified Reviews",
-        "bundle_label": "BUNDLE & SAVE",
+        "bundle_label": "",
         "save_label": "SAVE",
         "trustpilot_text": "\"EXCELLENT\"",
-        "stock_text": "Low stock available",
-        "delivery_text": "<p>Free & Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>",
         "atc_label": "ADD TO CART",
         "show_dynamic_checkout": true,
         "show_atc_icon": false,

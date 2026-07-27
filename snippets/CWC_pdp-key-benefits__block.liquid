@@ -1,0 +1,53 @@
+{% comment %}
+  Key benefits bullet list for the PDP buy box.
+
+  A single block holds every bullet, so the list moves as one unit rather than
+  as one block per bullet. Blank fields are skipped, which is what lets a
+  merchant use fewer than six without leaving a gap in the grid.
+
+  Accepts:
+  - block {Object} - the key_benefits block. Reads settings.benefit_1 … benefit_6.
+
+  Usage:
+  {% render 'CWC_pdp-key-benefits__block', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign benefit_ids = 'benefit_1,benefit_2,benefit_3,benefit_4,benefit_5,benefit_6' | split: ','
+
+  assign benefit_count = 0
+  for benefit_id in benefit_ids
+    if block.settings[benefit_id] != blank
+      assign benefit_count = benefit_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- comment -%}
+  Counted first so an all-blank block renders nothing at all — an empty <ul>
+  would still take a gap from the buy box's flex column.
+{%- endcomment -%}
+{%- if benefit_count > 0 -%}
+  <ul class="cwc_pdp-product__benefits" {{ block.shopify_attributes }}>
+    {%- for benefit_id in benefit_ids -%}
+      {%- assign benefit_text = block.settings[benefit_id] -%}
+      {%- if benefit_text != blank -%}
+        <li class="cwc_pdp-product__benefit">
+          <svg
+            class="cwc_pdp-product__check"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10.25" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M7.5 12.25L10.5 15.25L16.5 9.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span>{{ benefit_text }}</span>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

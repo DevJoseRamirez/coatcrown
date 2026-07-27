@@ -19,9 +19,17 @@
   if section.settings.show_separator and separator_character != blank
     assign show_separator = true
   endif
+
+  assign scroll_classes = ''
+  if section.settings.autoscroll_desktop
+    assign scroll_classes = scroll_classes | append: ' cwc_trust-bar--autoscroll-desktop'
+  endif
+  if section.settings.autoscroll_mobile
+    assign scroll_classes = scroll_classes | append: ' cwc_trust-bar--autoscroll-mobile'
+  endif
 -%}
 
-<section id="cwc_trust-bar-{{ section.id }}" class="cwc_trust-bar">
+<section id="cwc_trust-bar-{{ section.id }}" class="cwc_trust-bar{{ scroll_classes }}">
   <div class="cwc_trust-bar__container">
     <div class="cwc_trust-bar__marquee">
       <div class="cwc_trust-bar__group">
@@ -49,8 +57,9 @@
         {% endfor %}
       </div>
 
-      {% comment %} Duplicate group for the seamless marquee loop {% endcomment %}
-      <div class="cwc_trust-bar__group" aria-hidden="true">
+      {% comment %} Duplicate group for the seamless marquee loop — hidden at any
+      breakpoint where auto-scroll is off {% endcomment %}
+      <div class="cwc_trust-bar__group cwc_trust-bar__group--duplicate" aria-hidden="true">
         {% for block in section.blocks %}
           <div class="cwc_trust-bar__item">
             {% if block.settings.trust_icon != blank %}
@@ -81,6 +90,24 @@
 {
   "name": "CWC Trust Bar",
   "settings": [
+    {
+      "type": "header",
+      "content": "Auto Scroll"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoscroll_desktop",
+      "label": "Auto Scroll On Desktop",
+      "info": "Off shows a static bar with the items spread evenly across the row.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoscroll_mobile",
+      "label": "Auto Scroll On Mobile",
+      "info": "Applies at 768px and below. Recommended on — a static bar wraps onto several lines when the items do not fit.",
+      "default": true
+    },
     {
       "type": "header",
       "content": "Colors"

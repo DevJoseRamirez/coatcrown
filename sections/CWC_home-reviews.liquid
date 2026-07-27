@@ -30,7 +30,7 @@
         <div class="cwc_home-reviews__top-rating">
           {% if section.settings.top_rating_stars > 0 %}
             <div class="cwc_home-reviews__top-stars">
-              {% render 'CWC_stars_block' %}
+              {% render 'CWC_stars__block' %}
             </div>
           {% endif %}
           {% if section.settings.top_rating_text != blank %}
@@ -121,7 +121,7 @@
 
                       {% if block.settings.rating > 0 %}
                         <div class="cwc_home-reviews__card-stars">
-                          {% render 'CWC_stars_block' %}
+                          {% render 'CWC_stars__block' %}
                         </div>
                       {% endif %}
                     </div>

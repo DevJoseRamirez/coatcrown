@@ -16,6 +16,8 @@
   --meta-size: 0.8125rem;
   --badge-size: 0.75rem;
   --header-gap: 40px;
+  --title-lines: 2;
+  --title-line-height: 1.3;
 
   background-color: var(--section-bg);
   color: var(--text-color);
@@ -25,6 +27,7 @@
 
 .cwc_collection-grid__container {
   max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -48,7 +51,7 @@
   color: inherit;
 }
 
-.cwc_collection-grid__content-heading > * strong {
+.cwc_collection-grid__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -81,14 +84,15 @@
 }
 
 /* === Track — 4-up grid on desktop === */
+/* No align-items override: the default `stretch` is what makes every card in a
+   row share the tallest card's height. */
 .cwc_collection-grid__track {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--grid-gap);
-  align-items: start;
 }
 
-/* === Card === */
+/* === Card — the whole card is the product link === */
 .cwc_collection-grid__card {
   background: var(--card-bg);
   border-radius: var(--card-radius);
@@ -96,6 +100,16 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  height: stretch;
+}
+
+.cwc_collection-grid__card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .cwc_collection-grid__card-image {
@@ -129,20 +143,23 @@
   gap: 10px;
 }
 
+/* Clamped to a fixed two-line box so a long title can never push the price row
+   of one card out of line with its neighbours. */
 .cwc_collection-grid__card-title {
   text-align: center;
   font-size: var(--title-size);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: var(--title-line-height);
   color: var(--text-color);
+  min-height: calc(var(--title-line-height) * var(--title-lines) * 1em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--title-lines);
+  line-clamp: var(--title-lines);
+  overflow: hidden;
 }
 
-.cwc_collection-grid__card-title a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* === Reviews row (stars + count + savings) === */
+/* === Reviews row (stars + count) === */
 .cwc_collection-grid__card-reviews {
   display: flex;
   align-items: center;
@@ -159,20 +176,26 @@
   height: auto;
 }
 
-.cwc_collection-grid__badge-save {
-  font-size: var(--badge-size);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--badge-color);
-}
-
-/* === Price === */
+/* === Price — compare, sale, then the SAVE pill === */
+/* margin-top:auto pins the row to the bottom of the card, so the price line
+   sits at the same height on every card in a row. */
 .cwc_collection-grid__card-price {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+  flex-direction: column;
+}
+
+.cwc_collection-grid__card-price-wrap {}
+
+.cwc_collection-grid__price-compare {
+  font-size: var(--price-size);
+  color: rgba(17, 17, 17, 0.55);
+  text-decoration: line-through;
 }
 
 .cwc_collection-grid__price-final {
@@ -181,44 +204,20 @@
   color: var(--accent-color);
 }
 
-.cwc_collection-grid__price-compare {
-  font-size: var(--price-size);
-  color: rgba(17, 17, 17, 0.55);
-  text-decoration: line-through;
-}
-
-/* === Add to Cart (native theme button restyled) === */
-.cwc_collection-grid__form {
-  display: block;
-  width: 100%;
-  margin-top: auto;
-}
-
-.cwc_collection-grid__atc.button,
-.cwc_collection-grid__atc {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 22px;
+.cwc_collection-grid__badge-save {
+  padding: 7px 12px;
   border-radius: 6px;
-  border: 1px solid var(--accent-color) !important;
-  background-color: #ffffff !important;
-  color: var(--accent-color) !important;
+  background-color: var(--badge-bg);
+  color: #ffffff;
+  font-size: var(--badge-size);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cwc_collection-grid__badge-save strong {
   font-weight: 700;
-  font-size: 0.9375rem;
-  letter-spacing: 0.02em;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.cwc_collection-grid__atc:hover {
-  background-color: var(--accent-color) !important;
-  color: #ffffff !important;
-}
-
-.cwc_collection-grid__atc .add-to-cart-icon {
-  display: none;
 }
 
 /* === Carousel arrows — mobile only === */
@@ -254,6 +253,79 @@
   height: 18px;
 }
 
+/* === Progress dots — sit between the arrows, built by JS === */
+/* JS sets [hidden] when the track fits in one view, so there is nothing to
+   page through. The attribute needs to beat display:flex. */
+.cwc_collection-grid__dots {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px;
+}
+
+.cwc_collection-grid__dots[hidden] {
+  display: none;
+}
+
+.cwc_collection-grid__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  opacity: 0.28;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Widens the tap target well past the 8px visual without moving neighbours */
+.cwc_collection-grid__dot::after {
+  content: '';
+  position: absolute;
+  inset: -8px -3px;
+}
+
+.cwc_collection-grid__dot--active {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* Long collections — keep the strip from crowding the arrows */
+.cwc_collection-grid__dots--many {
+  gap: 4px;
+}
+
+.cwc_collection-grid__dots--many .cwc_collection-grid__dot {
+  width: 6px;
+  height: 6px;
+}
+
+/* ==============================
+   Narrow desktop — still 4-up, so the price row has the least room here
+   ============================== */
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+  .cwc_collection-grid {
+    --card-pad: 1rem 0.875rem 1.25rem;
+    --price-size: 1rem;
+    --badge-size: 0.6875rem;
+  }
+
+  .cwc_collection-grid__card-price {
+    gap: 6px;
+  }
+
+  .cwc_collection-grid__badge-save {
+    padding: 6px 9px;
+  }
+}
+
 /* ==============================
    Tablet Responsive
    ============================== */
@@ -271,11 +343,17 @@
    Mobile Responsive — the same track becomes a scroll-snap carousel
    ============================== */
 @media screen and (max-width: 768px) {
+
+  /* Type steps down here because the cards are half-width at 2-up — the
+     previous values were sized for one full-width card in view. */
   .cwc_collection-grid {
-    --grid-gap: 16px;
+    --grid-gap: 12px;
+    --card-pad: 0.75rem 0.75rem 1rem;
     --heading-size: 1.75rem;
-    --title-size: 1.0625rem;
-    --meta-size: 0.875rem;
+    --title-size: 0.875rem;
+    --price-size: 0.9375rem;
+    --meta-size: 0.6875rem;
+    --badge-size: 0.6875rem;
     --header-gap: 24px;
 
     padding-top: var(--padding-top-mobile);
@@ -301,24 +379,24 @@
     display: none;
   }
 
+  /* 2 cards in view — the gap is subtracted once, since two cards share one. */
   .cwc_collection-grid__card {
-    flex: 0 0 100%;
-    max-width: 100%;
+    flex: 0 0 calc((100% - var(--grid-gap)) / 2);
+    max-width: calc((100% - var(--grid-gap)) / 2);
     scroll-snap-align: start;
   }
 
-  /* Badge to the left edge, stars + count stay adjacent on the right */
   .cwc_collection-grid__card-reviews {
     flex-wrap: nowrap;
+    gap: 4px 6px;
+  }
+
+  .cwc_collection-grid__stars .cwc_stars_block {
+    width: 56px;
   }
 
   .cwc_collection-grid__badge-save {
-    order: -1;
-    margin-right: auto;
-  }
-
-  .cwc_collection-grid__card-price {
-    justify-content: center;
+    padding: 5px 8px;
   }
 
   .cwc_collection-grid__nav {
@@ -326,5 +404,23 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
+  }
+
+  .cwc_collection-grid__top-rating {
+    gap: 4px;
+  }
+
+  .cwc_collection-grid__top-rating-text p {
+    font-size: .75rem;
+    font-weight: bold;
+  }
+
+  .cwc_collection-grid__top-stars .cwc_stars_block {
+    width: auto;
+    height: 10px;
+  }
+
+  .cwc_collection-grid__content-subtext p {
+    font-size: .95rem;
   }
 }

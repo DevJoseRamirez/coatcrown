@@ -1,0 +1,33 @@
+{% comment %}
+  Stock + delivery line for the PDP buy box.
+
+  Accepts:
+  - block {Object} - the stock_delivery block. Its settings.stock_text,
+    settings.delivery_icon and settings.delivery_text supply all the copy.
+
+  Usage:
+  {% render 'CWC_pdp-stock-delivery__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.stock_text != blank or block.settings.delivery_text != blank -%}
+  <div class="cwc_pdp-product__meta" {{ block.shopify_attributes }}>
+    {%- if block.settings.stock_text != blank -%}
+      <span class="cwc_pdp-product__stock">{{ block.settings.stock_text }}</span>
+    {%- endif -%}
+
+    {%- if block.settings.delivery_text != blank -%}
+      <span class="cwc_pdp-product__delivery">
+        {%- if block.settings.delivery_icon != blank -%}
+          <img
+            src="{{ block.settings.delivery_icon | image_url: width: 48 }}"
+            alt="{{ block.settings.delivery_icon.alt | default: '' | escape }}"
+            loading="lazy"
+            width="24"
+            height="16"
+          >
+        {%- endif -%}
+        <span class="cwc-rte">{{ block.settings.delivery_text }}</span>
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

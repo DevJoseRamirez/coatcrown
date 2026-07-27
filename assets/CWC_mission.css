@@ -12,13 +12,13 @@
 }
 
 .cwc_mission__container {
-  max-width: 1200px;
+  max-width: calc(1300 + 2rem);
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   align-items: flex-start;
-  gap: 64px;
+  gap: 100px;
 }
 
 /* === Image === */

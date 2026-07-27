@@ -51,8 +51,9 @@
 .cwc_pdp-product__dots {
   display: none;
   justify-content: center;
-  gap: 6px;
+  gap: 12px;
   margin-top: 12px;
+  align-items: center;
 }
 
 .cwc_pdp-product__dot {
@@ -60,10 +61,13 @@
   height: 6px;
   border-radius: 50%;
   background: var(--border-color);
+  background: #bbbbbb;
 }
 
 .cwc_pdp-product__dot.is-active {
   background: var(--selected-border);
+  width: 8px;
+  height: 8px;
 }
 
 /* Thumbnails */
@@ -106,6 +110,8 @@
   height: auto;
   display: block;
   object-fit: cover;
+  /*  */
+  aspect-ratio: 1/1;
 }
 
 .cwc_pdp-product__thumb-arrow {
@@ -257,12 +263,13 @@
   border-radius: 6px;
   padding: 14px 14px;
   cursor: pointer;
+  gap: 10px !important;
 }
 
 .cwc_pdp-product__bundle.is-selected {
   border-color: var(--selected-border);
   border-width: 2px;
-  padding: 13px 13px;
+  /* padding: 13px 13px; */
 }
 
 .cwc_pdp-product__bundle-badge {
@@ -290,8 +297,8 @@
 
 .cwc_pdp-product__bundle-radio {
   flex: 0 0 auto;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border: 1px solid var(--border-color);
   border-radius: 50%;
   display: block;
@@ -359,12 +366,19 @@
   margin-top: 12px;
   font-size: 0.75rem;
   font-weight: 700;
+  gap: 16px;
+  background: #E9F8FE;
 }
 
 .cwc_pdp-product__trustpilot img {
   height: 16px;
   width: auto;
   display: block;
+}
+
+.cwc_pdp-product__trustpilot-logo svg {
+  max-height: 18px;
+  width: auto;
 }
 
 /* Stock + delivery */
@@ -432,6 +446,8 @@
   align-items: center;
   justify-content: center;
 }
+
+
 
 .cwc_pdp-product__dynamic button {
   width: 100%;
@@ -664,12 +680,53 @@
   .cwc_pdp-product {
     padding-top: var(--padding-top-mobile);
     padding-bottom: var(--padding-bottom-mobile);
+    padding-top: 10px;
   }
 
   .cwc_pdp-product__container {
     grid-template-columns: minmax(0, 1fr);
     padding: 0 1rem;
     gap: 1.25rem;
+  }
+
+  /* === Peek carousel === */
+  /* Full-bleed past the container padding, so the neighbouring slides are
+     clipped by the screen edge rather than by the container. */
+  .cwc_pdp-product__gallery {
+    --slide-width: 86%;
+    --slide-gap: 8px;
+
+    margin-inline: -1rem;
+  }
+
+  .cwc_pdp-product__stage {
+    gap: var(--slide-gap);
+    gap: 6px;
+  }
+
+  .cwc_pdp-product__slide {
+    flex: 0 0 var(--slide-width);
+    scroll-snap-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* The end slides can only reach the centre if there is room to scroll past
+     them — without these margins the first and last would sit flush to the
+     edge with no peek on one side. Percentages here resolve against the same
+     width as the flex-basis above, so the two stay in step. */
+  .cwc_pdp-product__slide:first-child {
+    /* margin-left: calc((100% - var(--slide-width)) / 2); */
+  }
+
+  .cwc_pdp-product__slide:last-child {
+    /* margin-right: calc((100% - var(--slide-width)) / 2); */
+  }
+
+  /* Uniform box so every slide in view lines up, whatever the media's ratio */
+  .cwc_pdp-product__slide img {
+    aspect-ratio: 1 / 1;
+    height: 100%;
   }
 
   .cwc_pdp-product__dots {
@@ -695,4 +752,12 @@
   .cwc_pdp-product__meta {
     font-size: 0.6875rem;
   }
+
+  .cwc_pdp-product__price-row,
+  .cwc_pdp-product__dynamic {
+    display: none;
+  }
+
+
+
 }

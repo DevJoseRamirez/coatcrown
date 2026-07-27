@@ -46,7 +46,7 @@
         <div class="cwc_hero-product__rating">
           {% if section.settings.rating_stars > 0 %}
             <div class="cwc_hero-product__stars">
-              {% render 'CWC_stars_block' %}
+              {% render 'CWC_stars__block' %}
             </div>
           {% endif %}
           {% if section.settings.rating_text != blank %}
@@ -131,7 +131,7 @@
             <div class="cwc_hero-product__testimonial-meta">
               {% if section.settings.testimonial_stars > 0 %}
                 <div class="cwc_hero-product__t-stars">
-                  {% render 'CWC_stars_block' %}
+                  {% render 'CWC_stars__block' %}
                 </div>
               {% endif %}
               {% if section.settings.testimonial_author != blank %}

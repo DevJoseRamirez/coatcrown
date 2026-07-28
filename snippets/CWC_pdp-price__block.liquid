@@ -1,0 +1,34 @@
+{% comment %}
+  Price row for the PDP buy box — price, struck compare-at price and a save
+  badge.
+
+  The compare and save elements are always rendered, hidden by a modifier when
+  the current variant is not on sale, because the bundle script swaps their text
+  in place when another variant is picked.
+
+  Accepts:
+  - block {Object} - the price block. Used only for shopify_attributes.
+  - current_variant {Object} - the variant whose price is shown.
+  - save_percent {Number} - discount off the compare-at price, already rounded.
+  - save_label {String} - prefix for the save badge, e.g. "SAVE".
+
+  Usage:
+  {% render 'CWC_pdp-price__block',
+    block: block,
+    current_variant: current_variant,
+    save_percent: save_percent,
+    save_label: section.settings.save_label
+  %}
+{% endcomment %}
+
+<div class="cwc_pdp-product__price-row" data-cwc-price-row {{ block.shopify_attributes }}>
+  <span class="cwc_pdp-product__price" data-cwc-price>{{ current_variant.price | money }}</span>
+
+  {%- if current_variant.compare_at_price > current_variant.price -%}
+    <s class="cwc_pdp-product__compare" data-cwc-compare>{{ current_variant.compare_at_price | money }}</s>
+    <span class="cwc_pdp-product__save" data-cwc-save>{{ save_label }} {{ save_percent }}%</span>
+  {%- else -%}
+    <s class="cwc_pdp-product__compare cwc_pdp-product__compare--hidden" data-cwc-compare></s>
+    <span class="cwc_pdp-product__save cwc_pdp-product__save--hidden" data-cwc-save></span>
+  {%- endif -%}
+</div>

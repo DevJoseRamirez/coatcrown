@@ -1,0 +1,42 @@
+{% comment %}
+  Warning card for the PDP buy box — a filled callout warning against copycat
+  listings.
+
+  Card colors stay on the section palette (--warning-bg / --warning-text) rather
+  than moving to the block, so the card keeps matching the rest of the section.
+
+  Accepts:
+  - block {Object} - the warning block. Reads settings.title, settings.text and
+    settings.ps.
+
+  Usage:
+  {% render 'CWC_pdp-warning__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.title != blank or block.settings.text != blank or block.settings.ps != blank -%}
+  <div class="cwc_pdp-product__warning" {{ block.shopify_attributes }}>
+    <svg
+      class="cwc_pdp-product__warning-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 4.75a1.1 1.1 0 0 1 1.1 1.1v5a1.1 1.1 0 1 1-2.2 0v-5a1.1 1.1 0 0 1 1.1-1.1Zm0 9.15a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"></path>
+    </svg>
+
+    <div class="cwc_pdp-product__warning-body">
+      {%- if block.settings.title != blank -%}
+        <p class="cwc_pdp-product__warning-title">{{ block.settings.title }}</p>
+      {%- endif -%}
+      {%- if block.settings.text != blank -%}
+        <div class="cwc_pdp-product__warning-text cwc-rte">{{ block.settings.text }}</div>
+      {%- endif -%}
+      {%- if block.settings.ps != blank -%}
+        <div class="cwc_pdp-product__warning-ps cwc-rte">{{ block.settings.ps }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

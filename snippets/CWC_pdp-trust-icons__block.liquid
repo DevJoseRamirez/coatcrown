@@ -1,0 +1,62 @@
+{% comment %}
+  Trust icon row for the PDP buy box.
+
+  A single block holds all three icon + text pairs, so the row moves as one unit
+  rather than as one block per icon. Blank pairs are skipped, and the grid
+  narrows to match how many survive so a partly filled block stays centred.
+
+  Accepts:
+  - block {Object} - the trust_icons block. Reads settings.icon_1/text_1 … icon_3/text_3.
+
+  Usage:
+  {% render 'CWC_pdp-trust-icons__block', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign trust_ids = '1,2,3' | split: ','
+
+  assign trust_count = 0
+  for trust_id in trust_ids
+    assign icon_key = 'icon_' | append: trust_id
+    assign text_key = 'text_' | append: trust_id
+    if block.settings[icon_key] != blank or block.settings[text_key] != blank
+      assign trust_count = trust_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- comment -%}
+  Counted first so an all-blank block renders nothing at all — an empty grid
+  would still take a gap from the buy box's flex column.
+{%- endcomment -%}
+{%- if trust_count > 0 -%}
+  <div
+    class="cwc_pdp-product__trust cwc_pdp-product__trust--{{ trust_count }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- for trust_id in trust_ids -%}
+      {%- liquid
+        assign icon_key = 'icon_' | append: trust_id
+        assign text_key = 'text_' | append: trust_id
+        assign trust_icon = block.settings[icon_key]
+        assign trust_text = block.settings[text_key]
+      -%}
+      {%- if trust_icon != blank or trust_text != blank -%}
+        <div class="cwc_pdp-product__trust-item">
+          {%- if trust_icon != blank -%}
+            <img
+              src="{{ trust_icon | image_url: width: 100 }}"
+              alt="{{ trust_icon.alt | default: trust_text | escape }}"
+              loading="lazy"
+              width="48"
+              height="48"
+            >
+          {%- endif -%}
+          {%- if trust_text != blank -%}
+            <span class="cwc_pdp-product__trust-text">{{ trust_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

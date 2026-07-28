@@ -1,0 +1,18 @@
+{% comment %}
+  Product title for the PDP buy box.
+
+  The heading always comes from the product itself, so the block carries no copy
+  settings — it exists so the title can be dragged around the buy box like every
+  other element.
+
+  Accepts:
+  - block {Object} - the title block. Used only for shopify_attributes.
+  - product {Object} - the product whose title is shown.
+
+  Usage:
+  {% render 'CWC_pdp-title__block', block: block, product: cwc_product %}
+{% endcomment %}
+
+<h1 class="cwc_pdp-product__title" {{ block.shopify_attributes }}>
+  {{- product.title | default: 'Product title' -}}
+</h1>

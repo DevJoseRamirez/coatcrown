@@ -1,0 +1,172 @@
+{% comment %}
+  Purchase type toggle for the PDP buy box — one-time purchase against the
+  product's subscription plan, as two selectable cards.
+
+  The block only draws when the product really is on a selling plan. With no
+  plan there is nothing to choose, so the storefront renders nothing at all and
+  only the theme editor gets a notice explaining why the block looks empty.
+
+  The first plan of the first group is the one offered; extra plans on the same
+  group are ignored. Selecting the subscription enables the hidden selling_plan
+  input, which is what makes the line item a subscription on submit, and hands
+  the per-variant plan pricing to the section script so the price row and the
+  bundle cards can follow the toggle.
+
+  Accepts:
+  - block {Object} - the selling_plan block. Reads settings.onetime_title,
+    settings.onetime_subtitle, settings.plan_title, settings.plan_subtitle,
+    settings.default_selection and settings.selected_bg.
+  - product {Object} - the product whose selling plan is offered.
+  - section_id {String} - used to namespace the radio group.
+  - save_label {String} - prefix for the save badge, e.g. "SAVE".
+
+  Usage:
+  {% render 'CWC_pdp-selling-plan__block',
+    block: block,
+    product: product,
+    section_id: section.id,
+    save_label: section.settings.save_label
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign plan_group = product.selling_plan_groups | first
+  assign selling_plan = plan_group.selling_plans | first
+-%}
+
+{%- if selling_plan == blank -%}
+  {%- if request.design_mode -%}
+    <div class="cwc_pdp-product__plan-empty" {{ block.shopify_attributes }}>
+      No selling plan found for this product. Add it to a subscription plan in
+      Shopify and this toggle will appear — shoppers never see this notice.
+    </div>
+  {%- endif -%}
+{%- else -%}
+  {%- liquid
+    assign plan_selected = false
+    if block.settings.default_selection == 'subscription'
+      assign plan_selected = true
+    endif
+
+    comment
+      Every variant's plan price is published up front so the script can follow
+      a bundle switch without another round trip. Variants the plan does not
+      cover are left out of the map, and the script falls back to their
+      one-time price.
+    endcomment
+    assign price_rows = ''
+    for variant in product.variants
+      assign allocation = blank
+      for variant_allocation in variant.selling_plan_allocations
+        if variant_allocation.selling_plan.id == selling_plan.id
+          assign allocation = variant_allocation
+          break
+        endif
+      endfor
+
+      if allocation != blank
+        assign base_price = variant.price
+        if variant.compare_at_price > variant.price
+          assign base_price = variant.compare_at_price
+        endif
+
+        assign plan_compare = ''
+        assign plan_save = ''
+        if base_price > allocation.price
+          assign plan_compare = base_price | money
+          assign saved = base_price | minus: allocation.price | times: 100.0
+          assign saved_percent = saved | divided_by: base_price | round
+          if saved_percent > 0
+            assign plan_save = save_label | append: ' ' | append: saved_percent | append: '%'
+          endif
+        endif
+
+        capture price_row
+          echo '"'
+          echo variant.id
+          echo '":{"price":"'
+          echo allocation.price | money
+          echo '","compare":"'
+          echo plan_compare
+          echo '","save":"'
+          echo plan_save
+          echo '"}'
+        endcapture
+
+        if price_rows != blank
+          assign price_rows = price_rows | append: ','
+        endif
+        assign price_rows = price_rows | append: price_row
+      endif
+    endfor
+  -%}
+
+  <div
+    class="cwc_pdp-product__plans"
+    role="radiogroup"
+    aria-label="Purchase type"
+    data-cwc-plan-group
+    style="--cwc-plan-selected-bg: {{ block.settings.selected_bg | default: '#F4F6FA' }};"
+    {{ block.shopify_attributes }}
+  >
+    <label class="cwc_pdp-product__plan{% unless plan_selected %} is-selected{% endunless %}">
+      <input
+        class="cwc_pdp-product__plan-input"
+        type="radio"
+        name="cwc-plan-{{ section_id }}"
+        value="one-time"
+        data-cwc-plan
+        data-plan-id=""
+        {% unless plan_selected %}
+          checked
+        {% endunless %}
+      >
+      <span class="cwc_pdp-product__plan-copy">
+        <span class="cwc_pdp-product__plan-title">
+          {{- block.settings.onetime_title | default: 'One-time purchase' -}}
+        </span>
+        {%- if block.settings.onetime_subtitle != blank -%}
+          <span class="cwc_pdp-product__plan-sub">{{ block.settings.onetime_subtitle }}</span>
+        {%- endif -%}
+      </span>
+    </label>
+
+    <label class="cwc_pdp-product__plan{% if plan_selected %} is-selected{% endif %}">
+      <input
+        class="cwc_pdp-product__plan-input"
+        type="radio"
+        name="cwc-plan-{{ section_id }}"
+        value="{{ selling_plan.id }}"
+        data-cwc-plan
+        data-plan-id="{{ selling_plan.id }}"
+        {% if plan_selected %}
+          checked
+        {% endif %}
+      >
+      <span class="cwc_pdp-product__plan-copy">
+        <span class="cwc_pdp-product__plan-title">
+          {{- block.settings.plan_title | default: selling_plan.name -}}
+        </span>
+        {%- if block.settings.plan_subtitle != blank -%}
+          <span class="cwc_pdp-product__plan-sub">{{ block.settings.plan_subtitle }}</span>
+        {%- endif -%}
+      </span>
+    </label>
+
+    {%- comment -%}
+      The only input the cart reads. Disabled for a one-time purchase so the
+      parameter is left out of the submission entirely.
+    {%- endcomment -%}
+    <input
+      type="hidden"
+      name="selling_plan"
+      value="{% if plan_selected %}{{ selling_plan.id }}{% endif %}"
+      data-cwc-plan-input
+      {% unless plan_selected %}
+        disabled
+      {% endunless %}
+    >
+
+    <script type="application/json" data-cwc-plan-prices>{ {{- price_rows -}} }</script>
+  </div>
+{%- endif -%}

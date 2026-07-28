@@ -1,0 +1,78 @@
+{% comment %}
+  Guarantee card for the PDP buy box — icon on the left, title and copy on the
+  right, on a filled card.
+
+  Colors are set per block rather than from the section palette, so the card can
+  stay navy while the surrounding buy box is restyled.
+
+  Accepts:
+  - block {Object} - the guarantee block. Reads settings.icon, settings.title,
+    settings.text, settings.bg_color and settings.text_color.
+
+  Usage:
+  {% render 'CWC_pdp-guarantee__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.title != blank or block.settings.text != blank -%}
+  <div
+    class="cwc_pdp-product__guarantee"
+    style="--cwc-guarantee-bg: {{ block.settings.bg_color | default: '#142C70' }}; --cwc-guarantee-text: {{ block.settings.text_color | default: '#ffffff' }};"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.icon != blank -%}
+      <span class="cwc_pdp-product__guarantee-icon">
+        <img
+          src="{{ block.settings.icon | image_url: width: 200 }}"
+          alt=""
+          loading="lazy"
+          width="64"
+          height="64"
+        >
+      </span>
+    {%- else -%}
+      {%- comment -%}
+        Shield-and-stars fallback so the card looks finished before a merchant
+        uploads a badge. Drawn in line art at 48x48 and tinted by the card's
+        text color.
+      {%- endcomment -%}
+      <svg
+        class="cwc_pdp-product__guarantee-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="64"
+        height="64"
+        viewBox="0 0 48 48"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M24 5 L38 9.8 V22.5 C38 30.9 32.4 37.1 24 40.1 C15.6 37.1 10 30.9 10 22.5 V9.8 Z"></path>
+        <circle cx="24" cy="20" r="6.5"></circle>
+        <path d="M20.8 20.2 L23.2 22.6 L27.6 17.8"></path>
+        <path
+          d="M0,-6 L1.41,-1.94 L5.71,-1.85 L2.28,0.74 L3.53,4.85 L0,2.4 L-3.53,4.85 L-2.28,0.74 L-5.71,-1.85 L-1.41,-1.94 Z"
+          transform="translate(13 39.5) scale(0.9)"
+        ></path>
+        <path
+          d="M0,-6 L1.41,-1.94 L5.71,-1.85 L2.28,0.74 L3.53,4.85 L0,2.4 L-3.53,4.85 L-2.28,0.74 L-5.71,-1.85 L-1.41,-1.94 Z"
+          transform="translate(24 41)"
+        ></path>
+        <path
+          d="M0,-6 L1.41,-1.94 L5.71,-1.85 L2.28,0.74 L3.53,4.85 L0,2.4 L-3.53,4.85 L-2.28,0.74 L-5.71,-1.85 L-1.41,-1.94 Z"
+          transform="translate(35 39.5) scale(0.9)"
+        ></path>
+      </svg>
+    {%- endif -%}
+
+    <div class="cwc_pdp-product__guarantee-body">
+      {%- if block.settings.title != blank -%}
+        <p class="cwc_pdp-product__guarantee-title">{{ block.settings.title }}</p>
+      {%- endif -%}
+      {%- if block.settings.text != blank -%}
+        <div class="cwc_pdp-product__guarantee-text cwc-rte">{{ block.settings.text }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,40 @@
+{% comment %}
+  Dashed Trustpilot trust strip for the PDP buy box — a short shout line, the
+  star tiles (or an uploaded badge in their place) and the Trustpilot wordmark.
+
+  The louder sibling of the Trustpilot rating badge: this one is meant to sit
+  tight to the bundle cards or the buy button as an offer reassurance, which is
+  why it is dashed and tinted rather than a quiet outlined pill.
+
+  Accepts:
+  - block {Object} - the trust_strip block. Reads settings.text and settings.image.
+
+  Usage:
+  {% render 'CWC_pdp-trust-strip__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.text != blank or block.settings.image != blank -%}
+  <div class="cwc_pdp-product__trustpilot" {{ block.shopify_attributes }}>
+    {%- if block.settings.text != blank -%}
+      <span class="cwc_pdp-product__trustpilot-text">{{ block.settings.text }}</span>
+    {%- endif -%}
+
+    <span class="cwc_pdp-product__trustpilot-image">
+      {%- if block.settings.image != blank -%}
+        <img
+          src="{{ block.settings.image | image_url: width: 320 }}"
+          alt="{{ block.settings.image.alt | default: 'Trustpilot rating' | escape }}"
+          loading="lazy"
+          width="160"
+          height="20"
+        >
+      {%- else -%}
+        {% render 'CWC_trust_stars__block' %}
+      {%- endif -%}
+    </span>
+
+    <span class="cwc_pdp-product__trustpilot-logo">
+      {% render 'CWC_trust_piolet_logo__block' %}
+    </span>
+  </div>
+{%- endif -%}

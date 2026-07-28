@@ -15,7 +15,7 @@
   --price-size: 1.125rem;
   --meta-size: 0.8125rem;
   --badge-size: 0.75rem;
-  --header-gap: 40px;
+  --header-gap: 50px;
   --title-lines: 2;
   --title-line-height: 1.3;
 
@@ -157,7 +157,8 @@
   -webkit-line-clamp: var(--title-lines);
   line-clamp: var(--title-lines);
   overflow: hidden;
-}
+  font-size: 1.2rem;
+} 
 
 /* === Reviews row (stars + count) === */
 .cwc_collection-grid__card-reviews {

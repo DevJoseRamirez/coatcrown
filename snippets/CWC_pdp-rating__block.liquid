@@ -1,0 +1,21 @@
+{% comment %}
+  Star rating row for the PDP buy box — five filled stars followed by a short
+  review count line.
+
+  Accepts:
+  - block {Object} - the rating block. Reads settings.text and settings.star_color.
+
+  Usage:
+  {% render 'CWC_pdp-rating__block', block: block %}
+{% endcomment %}
+
+{%- assign star_color = block.settings.star_color | default: '#142C70' -%}
+
+<div class="cwc_pdp-product__rating" {{ block.shopify_attributes }}>
+  <span class="cwc_pdp-product__stars">
+    {% render 'CWC_stars__block', fill_color: star_color %}
+  </span>
+  {%- if block.settings.text != blank -%}
+    <span class="cwc_pdp-product__rating-text">{{ block.settings.text }}</span>
+  {%- endif -%}
+</div>

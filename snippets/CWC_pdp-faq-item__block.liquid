@@ -1,0 +1,25 @@
+{% comment %}
+  One FAQ row for the PDP buy box — a question that toggles its answer open.
+
+  Each question is its own block so it can be dragged anywhere in the buy box.
+  Consecutive FAQ blocks close the column gap between them in CSS, so a run of
+  them still reads as one accordion.
+
+  Accepts:
+  - block {Object} - the faq_item block. Reads settings.title and settings.text.
+
+  Usage:
+  {% render 'CWC_pdp-faq-item__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.title != blank or block.settings.text != blank -%}
+  <div class="cwc_pdp-product__faq-item" {{ block.shopify_attributes }}>
+    <button class="cwc_pdp-product__faq-question" type="button" aria-expanded="false" data-cwc-faq-toggle>
+      <span>{{ block.settings.title }}</span>
+      <span class="cwc_pdp-product__faq-icon" aria-hidden="true"></span>
+    </button>
+    {%- if block.settings.text != blank -%}
+      <div class="cwc_pdp-product__faq-answer cwc-rte">{{ block.settings.text }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

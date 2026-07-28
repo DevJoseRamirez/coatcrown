@@ -1,0 +1,79 @@
+{% comment %}
+  Scarcity card for the PDP buy box — title, supporting line, and a "% sold"
+  progress bar.
+
+  The percentage is a merchant-set number, not live inventory, so the bar reads
+  the same for every visitor.
+
+  Accepts:
+  - block {Object} - the stock_bar block. Reads settings.icon, settings.title,
+    settings.text, settings.percent and settings.percent_label.
+
+  Usage:
+  {% render 'CWC_pdp-stock-bar__block', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign percent = block.settings.percent | default: 0
+  if percent > 100
+    assign percent = 100
+  endif
+  if percent < 0
+    assign percent = 0
+  endif
+-%}
+
+{%- if block.settings.title != blank or block.settings.text != blank -%}
+  <div class="cwc_pdp-product__stock-bar" {{ block.shopify_attributes }}>
+    {%- if block.settings.title != blank -%}
+      <div class="cwc_pdp-product__stock-bar-head">
+        {%- if block.settings.icon != blank -%}
+          <span class="cwc_pdp-product__stock-bar-icon">
+            <img
+              src="{{ block.settings.icon | image_url: width: 60 }}"
+              alt=""
+              loading="lazy"
+              width="20"
+              height="20"
+            >
+          </span>
+        {%- else -%}
+          {%- comment -%} Flame fallback so the card looks finished before a merchant picks an icon {%- endcomment -%}
+          <svg
+            class="cwc_pdp-product__stock-bar-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M13.4 1.6a.75.75 0 0 0-1.24.35c-.42 1.7-1.3 3.05-2.4 4.3-.3-.5-.68-.95-1.16-1.32a.75.75 0 0 0-1.2.5c-.16 1.3-.7 2.2-1.4 3.16C5.2 9.7 4.25 11.1 4.25 13.4A7.75 7.75 0 0 0 12 21.15a7.75 7.75 0 0 0 7.75-7.75c0-4.9-3.2-8.4-6.35-11.8Zm-1.3 18.05a3.6 3.6 0 0 1-3.6-3.6c0-1.2.5-2 1.13-2.83.3-.4.62-.8.88-1.26.5.5 1.13.87 1.93 1.1a.75.75 0 0 0 .93-.9c-.16-.7-.1-1.28.06-1.85 1.2 1.28 2.27 2.75 2.27 4.5a3.6 3.6 0 0 1-3.6 3.84Z"></path>
+          </svg>
+        {%- endif -%}
+        <p class="cwc_pdp-product__stock-bar-title">{{ block.settings.title }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.text != blank -%}
+      <p class="cwc_pdp-product__stock-bar-text">{{ block.settings.text }}</p>
+    {%- endif -%}
+
+    <div
+      class="cwc_pdp-product__stock-bar-track"
+      role="progressbar"
+      aria-valuenow="{{ percent }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="{{ percent }}% {{ block.settings.percent_label | default: 'sold' | escape }}"
+    >
+      <div class="cwc_pdp-product__stock-bar-fill" style="width: {{ percent }}%;">
+        {%- if block.settings.percent_label != blank -%}
+          <span class="cwc_pdp-product__stock-bar-label" aria-hidden="true">
+            {{- percent }}% {{ block.settings.percent_label -}}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

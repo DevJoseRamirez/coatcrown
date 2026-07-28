@@ -38,7 +38,7 @@
   color: inherit;
 }
 
-.cwc_before-after__content-heading > * strong {
+.cwc_before-after__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -68,7 +68,7 @@
 }
 
 .cwc_before-after__viewport {
-  min-width: 0;
+  min-width: 100%;
 }
 
 /* Quote track slides horizontally */
@@ -316,5 +316,27 @@
 
   .cwc_before-after__quote p {
     font-size: 0.9375rem;
+  }
+
+  .cwc_before-after__figure--before {
+    top: 2%;
+    left: 4%;
+  }
+
+  .cwc_before-after__figure--after {
+    bottom: 0;
+    right: 4%;
+    left: auto;
+  }
+
+  .cwc_before-after__label--after {
+    bottom: 24%;
+    right: 65%;
+    left: auto;
+  }
+
+  .cwc_before-after__label--before {
+    top: 14%;
+    left: 59%;
   }
 }

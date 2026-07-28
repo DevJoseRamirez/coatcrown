@@ -1,0 +1,148 @@
+{% comment %}
+  Bundle & Save option cards for the PDP buy box.
+
+  One card is rendered per product variant — titles and prices always come from
+  the variant itself. A single block carries the merchant copy for up to four
+  options, so the whole group moves as one unit rather than as one block per
+  variant.
+
+  Each copy slot picks its variant by title. When "Applies To Variant" is left
+  blank the slot falls back to its position (slot 1 -> first variant, and so on),
+  which is how the copy behaved before the slots were selectable.
+
+  Accepts:
+  - block {Object} - the bundle_options block. Reads settings.variant_title_1 …
+    variant_title_4 plus subtitle_N / badge_text_N / best_value_N.
+  - product {Object} - the product whose variants become the cards.
+  - current_variant {Object} - the variant that starts selected.
+  - section_id {String} - used to namespace the radio group.
+  - bundle_label {String} - optional heading above the cards.
+  - save_label {String} - prefix for the save badge, e.g. "SAVE".
+
+  Usage:
+  {% render 'CWC_pdp-bundle-options__block',
+    block: block,
+    product: cwc_product,
+    current_variant: current_variant,
+    section_id: section.id,
+    bundle_label: section.settings.bundle_label,
+    save_label: section.settings.save_label
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign option_ids = '1,2,3,4' | split: ','
+  assign option_count = option_ids.size
+-%}
+
+{%- comment -%}
+  Label and cards share one wrapper so the whole group is a single item in the
+  buy box column — and a single target in the editor.
+{%- endcomment -%}
+{%- if product.variants.size > 0 -%}
+  <div class="cwc_pdp-product__bundle-group" {{ block.shopify_attributes }}>
+    {%- if bundle_label != blank -%}
+      <p class="cwc_pdp-product__bundle-label">{{ bundle_label }}</p>
+    {%- endif -%}
+
+    <div
+      class="cwc_pdp-product__bundles"
+      role="radiogroup"
+      aria-label="{{ bundle_label | default: 'Bundle options' | escape }}"
+    >
+      {%- for variant in product.variants -%}
+        {%- liquid
+          # Captured before the inner loop so the slot lookup cannot clobber it.
+          assign position = forloop.index
+          assign variant_key = variant.title | strip | downcase
+
+          assign copy_id = ''
+          for option_id in option_ids
+            assign title_key = 'variant_title_' | append: option_id
+            assign option_title = block.settings[title_key] | strip | downcase
+            if option_title != blank and option_title == variant_key
+              assign copy_id = option_id
+              break
+            endif
+          endfor
+
+          # Positional fallback, but only into a slot that names no variant of its
+          # own — a named slot belongs to its variant even when that variant sits
+          # somewhere else in the list.
+          if copy_id == blank and position <= option_count
+            assign fallback_title_key = 'variant_title_' | append: position
+            assign fallback_title = block.settings[fallback_title_key] | strip
+            if fallback_title == blank
+              assign copy_id = position
+            endif
+          endif
+
+          assign subtitle = ''
+          assign badge_text = ''
+          assign best_value = false
+          if copy_id != blank
+            assign subtitle_key = 'subtitle_' | append: copy_id
+            assign badge_key = 'badge_text_' | append: copy_id
+            assign best_key = 'best_value_' | append: copy_id
+            assign subtitle = block.settings[subtitle_key]
+            assign badge_text = block.settings[badge_key]
+            assign best_value = block.settings[best_key]
+          endif
+
+          assign v_save = 0
+          if variant.compare_at_price > variant.price
+            assign v_amount = variant.compare_at_price | minus: variant.price | times: 100.0
+            assign v_save = v_amount | divided_by: variant.compare_at_price | round
+          endif
+        -%}
+        <label class="cwc_pdp-product__bundle{% if variant.id == current_variant.id %} is-selected{% endif %}">
+          {%- if badge_text != blank -%}
+            <span class="cwc_pdp-product__bundle-badge{% if best_value %} cwc_pdp-product__bundle-badge--best{% endif %}">
+              {{ badge_text }}
+            </span>
+          {%- endif -%}
+
+          <input
+            class="cwc_pdp-product__bundle-input"
+            type="radio"
+            name="cwc-bundle-{{ section_id }}"
+            value="{{ variant.id }}"
+            data-cwc-bundle
+            data-variant-id="{{ variant.id }}"
+            data-price="{{ variant.price | money }}"
+            data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
+            data-save="{% if v_save > 0 %}{{ save_label }} {{ v_save }}%{% endif %}"
+            {% if variant.id == current_variant.id %}
+              checked
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+          >
+          <span class="cwc_pdp-product__bundle-radio" aria-hidden="true"></span>
+
+          <span class="cwc_pdp-product__bundle-copy">
+            <span class="cwc_pdp-product__bundle-title">{{ variant.title }}</span>
+            {%- if subtitle != blank -%}
+              <span class="cwc_pdp-product__bundle-sub">{{ subtitle }}</span>
+            {%- endif -%}
+          </span>
+
+          {%- comment -%}
+            The struck price is always in the markup, hidden when there is
+            nothing to strike, because the purchase type toggle swaps both
+            figures in place when a subscription is picked.
+          {%- endcomment -%}
+          <span class="cwc_pdp-product__bundle-pricing">
+            <span class="cwc_pdp-product__bundle-price">{{ variant.price | money }}</span>
+            {%- if variant.compare_at_price > variant.price -%}
+              <s class="cwc_pdp-product__bundle-compare">{{ variant.compare_at_price | money }}</s>
+            {%- else -%}
+              <s class="cwc_pdp-product__bundle-compare cwc_pdp-product__bundle-compare--hidden"></s>
+            {%- endif -%}
+          </span>
+        </label>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

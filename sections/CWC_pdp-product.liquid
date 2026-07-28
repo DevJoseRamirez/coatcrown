@@ -29,20 +29,30 @@
 
 {%- liquid
   assign cwc_product = section.settings.product | default: product
-  assign current_variant = cwc_product.selected_or_first_available_variant
   assign form_id = 'CWC-PdpProduct-' | append: section.id
+
+  comment
+    A ?variant= link always wins. Otherwise the option chosen in the editor
+    starts selected, falling back to the first available variant when that
+    option does not exist or is sold out.
+  endcomment
+  assign current_variant = cwc_product.selected_variant
+  if current_variant == blank
+    assign default_index = section.settings.default_option | default: 2 | minus: 1
+    assign default_variant = cwc_product.variants[default_index]
+    if default_variant != blank and default_variant.available
+      assign current_variant = default_variant
+    endif
+  endif
+  if current_variant == blank
+    assign current_variant = cwc_product.selected_or_first_available_variant
+  endif
 
   assign save_percent = 0
   if current_variant.compare_at_price > current_variant.price
     assign save_amount = current_variant.compare_at_price | minus: current_variant.price | times: 100.0
     assign save_percent = save_amount | divided_by: current_variant.compare_at_price | round
   endif
-
-  assign bundle_blocks = section.blocks | where: 'type', 'bundle_option'
-  assign benefit_blocks = section.blocks | where: 'type', 'key_benefits'
-  assign trust_blocks = section.blocks | where: 'type', 'trust_icon'
-  assign faq_blocks = section.blocks | where: 'type', 'faq_item'
-  assign stock_delivery_blocks = section.blocks | where: 'type', 'stock_delivery'
 -%}
 
 <section id="cwc_pdp-product-{{ section.id }}" class="cwc_pdp-product">
@@ -140,42 +150,16 @@
       {% endif %}
     </div>
 
-    {% comment %} ===== Buy Box ===== {% endcomment %}
+    {% comment %}
+      ===== Buy Box =====
+
+      Every element in this column is a block, rendered in the order the
+      merchant set in the editor — there are no hardcoded positions left. The
+      product form wraps the whole column (and is laid out with display:contents
+      so it adds no box of its own), which is what lets a block sit either side
+      of the Add To Cart button.
+    {% endcomment %}
     <div class="cwc_pdp-product__details">
-      {% comment %} Rating {% endcomment %}
-      {% if section.settings.show_rating %}
-        <div class="cwc_pdp-product__rating">
-          <span class="cwc_pdp-product__stars">{% render 'CWC_stars__block', fill_color: '#142c70' %}</span>
-          {% if section.settings.rating_text != blank %}
-            <span class="cwc_pdp-product__rating-text">{{ section.settings.rating_text }}</span>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      {% comment %} Title {% endcomment %}
-      <h1 class="cwc_pdp-product__title">{{ cwc_product.title | default: 'Product title' }}</h1>
-
-      {% comment %} Price {% endcomment %}
-      <div class="cwc_pdp-product__price-row" data-cwc-price-row>
-        <span class="cwc_pdp-product__price" data-cwc-price>{{ current_variant.price | money }}</span>
-        {% if current_variant.compare_at_price > current_variant.price %}
-          <s class="cwc_pdp-product__compare" data-cwc-compare>{{ current_variant.compare_at_price | money }}</s>
-          <span class="cwc_pdp-product__save" data-cwc-save>
-            {{- section.settings.save_label }}
-            {{ save_percent }}%</span
-          >
-        {% else %}
-          <s class="cwc_pdp-product__compare cwc_pdp-product__compare--hidden" data-cwc-compare></s>
-          <span class="cwc_pdp-product__save cwc_pdp-product__save--hidden" data-cwc-save></span>
-        {% endif %}
-      </div>
-
-      {% comment %} Key benefits — one block holding every bullet {% endcomment %}
-      {% for block in benefit_blocks %}
-        {% render 'CWC_pdp-key-benefits__block', block: block %}
-      {% endfor %}
-
-      {% comment %} Buy form: bundle options + ATC {% endcomment %}
       <product-form-component
         data-section-id="{{ section.id }}"
         data-product-id="{{ cwc_product.id }}"
@@ -184,7 +168,13 @@
       >
         <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
 
-        {%- form 'product', cwc_product, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        {%- form 'product',
+          cwc_product,
+          id: form_id,
+          class: 'cwc_pdp-product__form-inner',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        -%}
           <input
             type="hidden"
             name="id"
@@ -197,222 +187,84 @@
           >
           <input type="hidden" name="quantity" value="1">
 
-          {% comment %} Bundle & Save — one card per variant, copy from matching block {% endcomment %}
-          {% if cwc_product.variants.size > 0 %}
-            {% if section.settings.bundle_label != blank %}
-              <p class="cwc_pdp-product__bundle-label">{{ section.settings.bundle_label }}</p>
-            {% endif %}
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'rating' %}
+                {% render 'CWC_pdp-rating__block', block: block %}
 
-            <div
-              class="cwc_pdp-product__bundles"
-              role="radiogroup"
-              aria-label="{{ section.settings.bundle_label | default: 'Bundle options' | escape }}"
-            >
-              {% for variant in cwc_product.variants %}
-                {%- liquid
-                  assign copy = bundle_blocks[forloop.index0]
-                  assign v_save = 0
-                  if variant.compare_at_price > variant.price
-                    assign v_amount = variant.compare_at_price | minus: variant.price | times: 100.0
-                    assign v_save = v_amount | divided_by: variant.compare_at_price | round
-                  endif
-                -%}
-                <label
-                  class="cwc_pdp-product__bundle{% if variant.id == current_variant.id %} is-selected{% endif %}"
-                  {% if copy %}
-                    {{- copy.shopify_attributes -}}
-                  {% endif %}
-                >
-                  {% if copy.settings.badge_text != blank %}
-                    <span class="cwc_pdp-product__bundle-badge{% if copy.settings.best_value %} cwc_pdp-product__bundle-badge--best{% endif %}">
-                      {{ copy.settings.badge_text }}
-                    </span>
-                  {% endif %}
+              {% when 'title' %}
+                {% render 'CWC_pdp-title__block', block: block, product: cwc_product %}
 
-                  <input
-                    class="cwc_pdp-product__bundle-input"
-                    type="radio"
-                    name="cwc-bundle-{{ section.id }}"
-                    value="{{ variant.id }}"
-                    data-cwc-bundle
-                    data-variant-id="{{ variant.id }}"
-                    data-price="{{ variant.price | money }}"
-                    data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
-                    data-save="{% if v_save > 0 %}{{ section.settings.save_label }} {{ v_save }}%{% endif %}"
-                    {% if variant.id == current_variant.id %}
-                      checked
-                    {% endif %}
-                    {% if variant.available == false %}
-                      disabled
-                    {% endif %}
-                  >
-                  <span class="cwc_pdp-product__bundle-radio" aria-hidden="true"></span>
+              {% when 'price' %}
+                {% render 'CWC_pdp-price__block',
+                  block: block,
+                  current_variant: current_variant,
+                  save_percent: save_percent,
+                  save_label: section.settings.save_label
+                %}
 
-                  <span class="cwc_pdp-product__bundle-copy">
-                    <span class="cwc_pdp-product__bundle-title">{{ variant.title }}</span>
-                    {% if copy.settings.subtitle != blank %}
-                      <span class="cwc_pdp-product__bundle-sub">{{ copy.settings.subtitle }}</span>
-                    {% endif %}
-                  </span>
+              {% when 'trustpilot_rating' %}
+                {% render 'CWC_pdp-trustpilot-rating__block', block: block %}
 
-                  <span class="cwc_pdp-product__bundle-pricing">
-                    <span class="cwc_pdp-product__bundle-price">{{ variant.price | money }}</span>
-                    {% if variant.compare_at_price > variant.price %}
-                      <s class="cwc_pdp-product__bundle-compare">{{ variant.compare_at_price | money }}</s>
-                    {% endif %}
-                  </span>
-                </label>
-              {% endfor %}
-            </div>
-          {% endif %}
+              {% when 'key_benefits' %}
+                {% render 'CWC_pdp-key-benefits__block', block: block %}
 
-          {% comment %} Trustpilot strip {% endcomment %}
-          {% if section.settings.trustpilot_image != blank or section.settings.trustpilot_text != blank %}
-            <div class="cwc_pdp-product__trustpilot">
-              {% if section.settings.trustpilot_text != blank %}
-                <span class="cwc_pdp-product__trustpilot-text">{{ section.settings.trustpilot_text }}</span>
-              {% endif %}
-              {% if section.settings.trustpilot_image != blank %}
-                <span class="cwc_pdp-product__trustpilot-image">
-                  <img
-                    src="{{ section.settings.trustpilot_image | image_url: width: 320 }}"
-                    alt="{{ section.settings.trustpilot_image.alt | default: 'Trustpilot rating' | escape }}"
-                    loading="lazy"
-                    width="160"
-                    height="20"
-                  >
-              {% else %}
-                {% render 'CWC_trust_stars__block' %}
-                </span>
-              {% endif %}
-              <span class="cwc_pdp-product__trustpilot-logo">
-                {% render 'CWC_trust_piolet_logo__block' %}
-              </span>
-            </div>
-          {% endif %}
+              {% when 'key_features' %}
+                {% render 'CWC_pdp-key-features__block', block: block %}
 
-          {% comment %} Stock + delivery — one or more blocks, rendered in block order {% endcomment %}
-          {% for block in stock_delivery_blocks %}
-            {% render 'CWC_pdp-stock-delivery__block', block: block %}
+              {% when 'selling_plan' %}
+                {% render 'CWC_pdp-selling-plan__block',
+                  block: block,
+                  product: cwc_product,
+                  section_id: section.id,
+                  save_label: section.settings.save_label
+                %}
+
+              {% when 'bundle_options' %}
+                {% render 'CWC_pdp-bundle-options__block',
+                  block: block,
+                  product: cwc_product,
+                  current_variant: current_variant,
+                  section_id: section.id,
+                  bundle_label: section.settings.bundle_label,
+                  save_label: section.settings.save_label
+                %}
+
+              {% when 'trust_strip' %}
+                {% render 'CWC_pdp-trust-strip__block', block: block %}
+
+              {% when 'stock_delivery' %}
+                {% render 'CWC_pdp-stock-delivery__block', block: block %}
+
+              {% when 'add_to_cart' %}
+                {% render 'CWC_pdp-atc__block',
+                  block: block,
+                  product: cwc_product,
+                  current_variant: current_variant,
+                  form_obj: form
+                %}
+
+              {% when 'trust_icons' %}
+                {% render 'CWC_pdp-trust-icons__block', block: block %}
+
+              {% when 'stock_bar' %}
+                {% render 'CWC_pdp-stock-bar__block', block: block %}
+
+              {% when 'guarantee' %}
+                {% render 'CWC_pdp-guarantee__block', block: block %}
+
+              {% when 'warning' %}
+                {% render 'CWC_pdp-warning__block', block: block %}
+
+              {% when 'mini_review' %}
+                {% render 'CWC_pdp-mini-review__block', block: block %}
+
+              {% when 'faq_item' %}
+                {% render 'CWC_pdp-faq-item__block', block: block %}
+            {% endcase %}
           {% endfor %}
-
-          {% comment %} Add to cart {% endcomment %}
-          {%- liquid
-            assign atc_class = 'cwc_pdp-product__atc'
-            unless section.settings.show_atc_icon
-              assign atc_class = atc_class | append: ' cwc_pdp-product__atc--no-icon'
-            endunless
-          -%}
-          {% render 'add-to-cart-button',
-            add_to_cart_text: section.settings.atc_label,
-            class: atc_class,
-            can_add_to_cart: current_variant.available,
-            product: cwc_product
-          %}
-
-          {% if section.settings.show_dynamic_checkout %}
-            <div class="cwc_pdp-product__dynamic">{{ form | payment_button }}</div>
-          {% endif %}
         {%- endform -%}
       </product-form-component>
-
-      {% comment %} Trust icons {% endcomment %}
-      {% if trust_blocks.size > 0 %}
-        <div class="cwc_pdp-product__trust">
-          {% for block in trust_blocks %}
-            <div class="cwc_pdp-product__trust-item" {{ block.shopify_attributes }}>
-              {% if block.settings.icon != blank %}
-                <img
-                  src="{{ block.settings.icon | image_url: width: 96 }}"
-                  alt="{{ block.settings.icon.alt | default: block.settings.text | escape }}"
-                  loading="lazy"
-                  width="48"
-                  height="48"
-                >
-              {% endif %}
-              {% if block.settings.text != blank %}
-                <span class="cwc_pdp-product__trust-text">{{ block.settings.text }}</span>
-              {% endif %}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% comment %} Warning card {% endcomment %}
-      {% if section.settings.warning_title != blank or section.settings.warning_text != blank %}
-        <div class="cwc_pdp-product__warning">
-          <svg
-            class="cwc_pdp-product__warning-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm0 4.75a1.1 1.1 0 0 1 1.1 1.1v5a1.1 1.1 0 1 1-2.2 0v-5a1.1 1.1 0 0 1 1.1-1.1Zm0 9.15a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"></path>
-          </svg>
-          <div class="cwc_pdp-product__warning-body">
-            {% if section.settings.warning_title != blank %}
-              <p class="cwc_pdp-product__warning-title">{{ section.settings.warning_title }}</p>
-            {% endif %}
-            {% if section.settings.warning_text != blank %}
-              <div class="cwc_pdp-product__warning-text cwc-rte">{{ section.settings.warning_text }}</div>
-            {% endif %}
-            {% if section.settings.warning_ps != blank %}
-              <div class="cwc_pdp-product__warning-ps cwc-rte">{{ section.settings.warning_ps }}</div>
-            {% endif %}
-          </div>
-        </div>
-      {% endif %}
-
-      {% comment %} Mini review {% endcomment %}
-      {% if section.settings.review_quote != blank or section.settings.review_author != blank %}
-        <div class="cwc_pdp-product__review">
-          {% if section.settings.review_image != blank %}
-            <img
-              class="cwc_pdp-product__review-avatar"
-              src="{{ section.settings.review_image | image_url: width: 128 }}"
-              alt="{{ section.settings.review_author | default: 'Customer' | escape }}"
-              loading="lazy"
-              width="64"
-              height="64"
-            >
-          {% endif %}
-          <div class="cwc_pdp-product__review-body">
-            {% if section.settings.review_quote != blank %}
-              <div class="cwc_pdp-product__review-quote cwc-rte">{{ section.settings.review_quote }}</div>
-            {% endif %}
-            <p class="cwc_pdp-product__review-meta">
-              {% if section.settings.review_author != blank %}
-                <span class="cwc_pdp-product__review-author">{{ section.settings.review_author }}</span>
-              {% endif %}
-              {% if section.settings.review_verified_text != blank %}
-                <span class="cwc_pdp-product__review-verified">{{ section.settings.review_verified_text }}</span>
-              {% endif %}
-            </p>
-          </div>
-        </div>
-      {% endif %}
-
-      {% comment %} FAQ accordion {% endcomment %}
-      {% if faq_blocks.size > 0 %}
-        <div class="cwc_pdp-product__faq">
-          {% for block in faq_blocks %}
-            {% if block.settings.title != blank or block.settings.text != blank %}
-              <div class="cwc_pdp-product__faq-item" {{ block.shopify_attributes }}>
-                <button class="cwc_pdp-product__faq-question" type="button" aria-expanded="false" data-cwc-faq-toggle>
-                  <span>{{ block.settings.title }}</span>
-                  <span class="cwc_pdp-product__faq-icon" aria-hidden="true"></span>
-                </button>
-                {% if block.settings.text != blank %}
-                  <div class="cwc_pdp-product__faq-answer cwc-rte">{{ block.settings.text }}</div>
-                {% endif %}
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
     </div>
   </div>
 </section>
@@ -435,22 +287,6 @@
     },
     {
       "type": "header",
-      "content": "Rating"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "label": "Show Rating Row",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "rating_text",
-      "label": "Rating Text",
-      "default": "4.7/5 | 55,578 Verified Reviews"
-    },
-    {
-      "type": "header",
       "content": "Bundle & Save"
     },
     {
@@ -467,41 +303,22 @@
       "info": "The percentage is calculated from the compare-at price."
     },
     {
-      "type": "header",
-      "content": "Trust Strip"
-    },
-    {
-      "type": "text",
-      "id": "trustpilot_text",
-      "label": "Trust Strip Text",
-      "default": "\"EXCELLENT\""
-    },
-    {
-      "type": "image_picker",
-      "id": "trustpilot_image",
-      "label": "Trust Strip Logo"
+      "type": "range",
+      "id": "default_option",
+      "label": "Default Selected Option",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2,
+      "info": "Which option starts selected. Falls back to the first available variant when that option is missing or sold out."
     },
     {
       "type": "header",
       "content": "Buy Buttons"
     },
     {
-      "type": "text",
-      "id": "atc_label",
-      "label": "Add To Cart Label",
-      "default": "ADD TO CART"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_dynamic_checkout",
-      "label": "Show Dynamic Checkout Button",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_atc_icon",
-      "label": "Show Cart Icon On Add To Cart",
-      "default": false
+      "type": "paragraph",
+      "content": "Button copy lives on the Add To Cart block. These control the size of both buy buttons."
     },
     {
       "type": "range",
@@ -543,55 +360,6 @@
       "step": 2,
       "unit": "px",
       "default": 10
-    },
-    {
-      "type": "header",
-      "content": "Warning Card"
-    },
-    {
-      "type": "text",
-      "id": "warning_title",
-      "label": "Warning Title",
-      "default": "Watch Out For Cheap Replicas."
-    },
-    {
-      "type": "richtext",
-      "id": "warning_text",
-      "label": "Warning Text",
-      "default": "<p>Only our brand guarantees the authentic formula you can trust for odor control between baths.</p>"
-    },
-    {
-      "type": "richtext",
-      "id": "warning_ps",
-      "label": "Warning PS Line",
-      "default": "<p>PS: This product is only available here — don't buy fakes elsewhere.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Mini Review"
-    },
-    {
-      "type": "image_picker",
-      "id": "review_image",
-      "label": "Reviewer Photo"
-    },
-    {
-      "type": "richtext",
-      "id": "review_quote",
-      "label": "Review Quote",
-      "default": "<p>\"My golden retriever used to hate baths, but this brush changed everything. The mist calms her down, and the bristles actually get deep into her coat without pulling.\"</p>"
-    },
-    {
-      "type": "text",
-      "id": "review_author",
-      "label": "Reviewer Name",
-      "default": "Taylor M."
-    },
-    {
-      "type": "text",
-      "id": "review_verified_text",
-      "label": "Verified Label",
-      "default": "Verified Purchase"
     },
     {
       "type": "header",
@@ -708,13 +476,130 @@
   ],
   "blocks": [
     {
+      "type": "rating",
+      "name": "Rating Row",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Rating Text",
+          "default": "4.7/5 | 55,578 Verified Reviews"
+        },
+        {
+          "type": "color",
+          "id": "star_color",
+          "label": "Star Color",
+          "default": "#142C70"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Product Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows the product's own title. Drag it to change where the heading sits in the column."
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows the selected variant's price, compare-at price and savings. The save badge prefix is under Bundle & Save in the section settings."
+        }
+      ]
+    },
+    {
+      "type": "add_to_cart",
+      "name": "Add To Cart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Add To Cart Label",
+          "default": "ADD TO CART"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show Dynamic Checkout Button",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Cart Icon On Add To Cart",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "trust_strip",
+      "name": "Trust Strip",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "The dashed green strip. Leave the logo empty to use the built-in Trustpilot stars."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Trust Strip Text",
+          "default": "\"EXCELLENT\""
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Trust Strip Logo"
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "name": "Warning Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Card colors are under Colors in the section settings."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Warning Title",
+          "default": "Watch Out For Cheap Replicas."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Warning Text",
+          "default": "<p>Only our brand guarantees the authentic formula you can trust for odor control between baths.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "ps",
+          "label": "Warning PS Line",
+          "default": "<p>PS: This product is only available here — don't buy fakes elsewhere.</p>"
+        }
+      ]
+    },
+    {
       "type": "key_benefits",
       "name": "Key Benefits",
       "limit": 1,
       "settings": [
         {
           "type": "paragraph",
-          "content": "Up to six bullets, shown two per row above the buy form. Leave a field blank to skip that bullet."
+          "content": "Up to six bullets, shown two per row. Leave a field blank to skip that bullet."
         },
         {
           "type": "text",
@@ -753,28 +638,234 @@
       ]
     },
     {
-      "type": "bundle_option",
-      "name": "Bundle Option Copy",
+      "type": "key_features",
+      "name": "Key Features",
+      "limit": 1,
       "settings": [
         {
           "type": "paragraph",
-          "content": "One block per product variant, in the same order as the variants. Titles and prices come from the variant itself."
+          "content": "Three bordered cards in one row. Leave a pair blank to drop that card — the remaining cards stretch to fill the row."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_1",
+          "label": "Feature 1 Icon"
         },
         {
           "type": "text",
-          "id": "subtitle",
+          "id": "text_1",
+          "label": "Feature 1 Text",
+          "default": "Sensitive skin safe"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_2",
+          "label": "Feature 2 Icon"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Feature 2 Text",
+          "default": "Harsh Chemical Free"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_3",
+          "label": "Feature 3 Icon"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Feature 3 Text",
+          "default": "Hypoallergenic"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Card Background",
+          "default": "#ECF4FF"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Card Border",
+          "default": "#142C70"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Card Text",
+          "default": "#142C70"
+        }
+      ]
+    },
+    {
+      "type": "selling_plan",
+      "name": "Purchase Type Toggle",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "One-time purchase against the product's subscription plan. Only draws when the product is on a selling plan — otherwise shoppers see nothing and you get a notice here in the editor. Picking the subscription updates the price row and the bundle card prices."
+        },
+        {
+          "type": "text",
+          "id": "onetime_title",
+          "label": "One-Time Title",
+          "default": "One-time purchase"
+        },
+        {
+          "type": "text",
+          "id": "onetime_subtitle",
+          "label": "One-Time Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "plan_title",
+          "label": "Subscription Title",
+          "default": "Subscribe & Save 20% on Solution Refills",
+          "info": "Leave blank to use the plan's own name from Shopify."
+        },
+        {
+          "type": "text",
+          "id": "plan_subtitle",
+          "label": "Subscription Subtitle",
+          "default": "Pause, Skip, or Cancel at Anytime"
+        },
+        {
+          "type": "select",
+          "id": "default_selection",
+          "label": "Starts Selected",
+          "options": [
+            { "value": "subscription", "label": "Subscription" },
+            { "value": "one_time", "label": "One-time purchase" }
+          ],
+          "default": "subscription"
+        },
+        {
+          "type": "color",
+          "id": "selected_bg",
+          "label": "Selected Card Background",
+          "default": "#F4F6FA"
+        }
+      ]
+    },
+    {
+      "type": "bundle_options",
+      "name": "Bundle Option Copy",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Copy for up to four bundle options. One card is always rendered per product variant — titles and prices come from the variant itself, this block only supplies the extra copy."
+        },
+        {
+          "type": "header",
+          "content": "Option 1"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_1",
+          "label": "Applies To Variant",
+          "info": "Exact variant title, e.g. \"2 Bottles\". Leave blank to apply this copy to the first variant."
+        },
+        {
+          "type": "text",
+          "id": "subtitle_1",
           "label": "Subtitle",
           "default": "Includes 1 FREE Bottle"
         },
         {
           "type": "text",
-          "id": "badge_text",
+          "id": "badge_text_1",
           "label": "Ribbon Badge",
           "default": "Free Shipping"
         },
         {
           "type": "checkbox",
-          "id": "best_value",
+          "id": "best_value_1",
+          "label": "Style As Best Value",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Option 2"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_2",
+          "label": "Applies To Variant",
+          "info": "Leave blank to apply this copy to the second variant."
+        },
+        {
+          "type": "text",
+          "id": "subtitle_2",
+          "label": "Subtitle",
+          "default": "Includes 2 FREE Bottles"
+        },
+        {
+          "type": "text",
+          "id": "badge_text_2",
+          "label": "Ribbon Badge",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "checkbox",
+          "id": "best_value_2",
+          "label": "Style As Best Value",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Option 3"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_3",
+          "label": "Applies To Variant",
+          "info": "Leave blank to apply this copy to the third variant."
+        },
+        {
+          "type": "text",
+          "id": "subtitle_3",
+          "label": "Subtitle",
+          "default": "Includes 3 FREE Bottles"
+        },
+        {
+          "type": "text",
+          "id": "badge_text_3",
+          "label": "Ribbon Badge",
+          "default": "Best Value + Free Shipping"
+        },
+        {
+          "type": "checkbox",
+          "id": "best_value_3",
+          "label": "Style As Best Value",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Option 4"
+        },
+        {
+          "type": "text",
+          "id": "variant_title_4",
+          "label": "Applies To Variant",
+          "info": "Leave blank to apply this copy to the fourth variant."
+        },
+        {
+          "type": "text",
+          "id": "subtitle_4",
+          "label": "Subtitle"
+        },
+        {
+          "type": "text",
+          "id": "badge_text_4",
+          "label": "Ribbon Badge"
+        },
+        {
+          "type": "checkbox",
+          "id": "best_value_4",
           "label": "Style As Best Value",
           "default": false
         }
@@ -786,7 +877,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Renders between the trust strip and the Add To Cart button."
+          "content": "Stock status on the left, delivery estimate on the right."
         },
         {
           "type": "text",
@@ -808,9 +899,58 @@
       ]
     },
     {
-      "type": "trust_icon",
-      "name": "Trust Icon",
+      "type": "trust_icons",
+      "name": "Trust Icons",
+      "limit": 1,
       "settings": [
+        {
+          "type": "paragraph",
+          "content": "Up to three icon and text pairs, shown in one row below the buy form. Leave a pair blank to skip it."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_1",
+          "label": "Icon 1"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Text 1",
+          "default": "Free Worldwide Shipping"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_2",
+          "label": "Icon 2"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text 2",
+          "default": "365 Day Money Back Guarantee"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_3",
+          "label": "Icon 3"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text 3",
+          "default": "Trusted by 50k+ Pet Parents"
+        }
+      ]
+    },
+    {
+      "type": "guarantee",
+      "name": "Guarantee Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Leave the icon empty to use the built-in shield badge."
+        },
         {
           "type": "image_picker",
           "id": "icon",
@@ -818,9 +958,207 @@
         },
         {
           "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "90-Day Money-Back Guarantee"
+        },
+        {
+          "type": "richtext",
           "id": "text",
           "label": "Text",
-          "default": "Free Worldwide Shipping"
+          "default": "<p>Try it for 90 days, love it or get a full refund. No questions asked.</p>"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Card Background",
+          "default": "#142C70"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Card Text",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    {
+      "type": "trustpilot_rating",
+      "name": "Trustpilot Rating Badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "The stars and the Trustpilot wordmark are built in — bold the grade word in the text below, e.g. \"Rated Excellent 4.8 out of 5\"."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Rating Text",
+          "default": "<p>Rated <strong>Excellent</strong> 4.8 out of 5</p>"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Badge Background",
+          "default": "#F2FBF5"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Badge Border",
+          "default": "#9FD4B4"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Badge Text",
+          "default": "#111111"
+        }
+      ]
+    },
+    {
+      "type": "mini_review",
+      "name": "Mini Reviews",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Up to three quote sets. Leave a set blank to skip it. Two or more quotes cross-fade one after another on a loop; a single quote just sits still."
+        },
+        {
+          "type": "range",
+          "id": "rotate_seconds",
+          "label": "Seconds Per Quote",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "unit": "s",
+          "default": 5,
+          "info": "Rotation pauses while the shopper's cursor is over the quote."
+        },
+        {
+          "type": "header",
+          "content": "Quote 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Reviewer Photo"
+        },
+        {
+          "type": "richtext",
+          "id": "quote_1",
+          "label": "Review Quote",
+          "default": "<p>\"My golden retriever used to hate baths, but this brush changed everything. The mist calms her down, and the bristles actually get deep into her coat without pulling.\"</p>"
+        },
+        {
+          "type": "text",
+          "id": "author_1",
+          "label": "Reviewer Name",
+          "default": "Taylor M."
+        },
+        {
+          "type": "text",
+          "id": "verified_1",
+          "label": "Verified Label",
+          "default": "Verified Purchase"
+        },
+        {
+          "type": "header",
+          "content": "Quote 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Reviewer Photo"
+        },
+        {
+          "type": "richtext",
+          "id": "quote_2",
+          "label": "Review Quote"
+        },
+        {
+          "type": "text",
+          "id": "author_2",
+          "label": "Reviewer Name"
+        },
+        {
+          "type": "text",
+          "id": "verified_2",
+          "label": "Verified Label",
+          "default": "Verified Purchase"
+        },
+        {
+          "type": "header",
+          "content": "Quote 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Reviewer Photo"
+        },
+        {
+          "type": "richtext",
+          "id": "quote_3",
+          "label": "Review Quote"
+        },
+        {
+          "type": "text",
+          "id": "author_3",
+          "label": "Reviewer Name"
+        },
+        {
+          "type": "text",
+          "id": "verified_3",
+          "label": "Verified Label",
+          "default": "Verified Purchase"
+        }
+      ]
+    },
+    {
+      "type": "stock_bar",
+      "name": "Stock Scarcity Bar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "The percentage is a fixed number you set here — it does not read live inventory."
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Leave empty to use the built-in flame icon."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Summer Sale Stock Is Low"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Supporting Text",
+          "default": "Due to high demand, limited quantities available"
+        },
+        {
+          "type": "range",
+          "id": "percent",
+          "label": "Percent Sold",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 83
+        },
+        {
+          "type": "text",
+          "id": "percent_label",
+          "label": "Bar Label",
+          "default": "SOLD",
+          "info": "Shown after the percentage, e.g. \"83% SOLD\". Leave blank to hide the label."
         }
       ]
     },
@@ -843,12 +1181,26 @@
       ]
     }
   ],
-  "max_blocks": 24,
+  "max_blocks": 40,
   "presets": [
     {
       "name": "CWC PDP Product",
       "category": "CWC Custom",
       "blocks": [
+        {
+          "type": "rating",
+          "settings": {
+            "text": "4.7/5 | 55,578 Verified Reviews"
+          }
+        },
+        { "type": "title" },
+        {
+          "type": "trustpilot_rating",
+          "settings": {
+            "text": "<p>Rated <strong>Excellent</strong> 4.8 out of 5</p>"
+          }
+        },
+        { "type": "price" },
         {
           "type": "key_benefits",
           "settings": {
@@ -859,19 +1211,38 @@
           }
         },
         {
-          "type": "bundle_option",
-          "settings": { "subtitle": "Includes 1 FREE Bottle", "badge_text": "Free Shipping" }
-        },
-        {
-          "type": "bundle_option",
-          "settings": { "subtitle": "Includes 2 FREE Bottles", "badge_text": "Free Shipping" }
-        },
-        {
-          "type": "bundle_option",
+          "type": "key_features",
           "settings": {
-            "subtitle": "Includes 3 FREE Bottles",
-            "badge_text": "Best Value + Free Shipping",
-            "best_value": true
+            "text_1": "Sensitive skin safe",
+            "text_2": "Harsh Chemical Free",
+            "text_3": "Hypoallergenic"
+          }
+        },
+        {
+          "type": "selling_plan",
+          "settings": {
+            "onetime_title": "One-time purchase",
+            "plan_title": "Subscribe & Save 20% on Solution Refills",
+            "plan_subtitle": "Pause, Skip, or Cancel at Anytime",
+            "default_selection": "subscription"
+          }
+        },
+        {
+          "type": "bundle_options",
+          "settings": {
+            "subtitle_1": "Includes 1 FREE Bottle",
+            "badge_text_1": "Free Shipping",
+            "subtitle_2": "Includes 2 FREE Bottles",
+            "badge_text_2": "Free Shipping",
+            "subtitle_3": "Includes 3 FREE Bottles",
+            "badge_text_3": "Best Value + Free Shipping",
+            "best_value_3": true
+          }
+        },
+        {
+          "type": "trust_strip",
+          "settings": {
+            "text": "\"EXCELLENT\""
           }
         },
         {
@@ -881,9 +1252,54 @@
             "delivery_text": "<p>Free &amp; Fast Shipping<br/>Get it by <strong>Mon, Jul 27</strong></p>"
           }
         },
-        { "type": "trust_icon", "settings": { "text": "Free Worldwide Shipping" } },
-        { "type": "trust_icon", "settings": { "text": "365 Day Money Back Guarantee" } },
-        { "type": "trust_icon", "settings": { "text": "Trusted by 50k+ Pet Parents" } },
+        {
+          "type": "add_to_cart",
+          "settings": {
+            "label": "ADD TO CART",
+            "show_dynamic_checkout": true,
+            "show_icon": false
+          }
+        },
+        {
+          "type": "trust_icons",
+          "settings": {
+            "text_1": "Free Worldwide Shipping",
+            "text_2": "365 Day Money Back Guarantee",
+            "text_3": "Trusted by 50k+ Pet Parents"
+          }
+        },
+        {
+          "type": "stock_bar",
+          "settings": {
+            "title": "Summer Sale Stock Is Low",
+            "text": "Due to high demand, limited quantities available",
+            "percent": 83,
+            "percent_label": "SOLD"
+          }
+        },
+        {
+          "type": "guarantee",
+          "settings": {
+            "title": "90-Day Money-Back Guarantee",
+            "text": "<p>Try it for 90 days, love it or get a full refund. No questions asked.</p>"
+          }
+        },
+        {
+          "type": "warning",
+          "settings": {
+            "title": "Watch Out For Cheap Replicas.",
+            "text": "<p>Only our brand guarantees the authentic formula you can trust for odor control between baths.</p>",
+            "ps": "<p>PS: This product is only available here — don't buy fakes elsewhere.</p>"
+          }
+        },
+        {
+          "type": "mini_review",
+          "settings": {
+            "quote_1": "<p>\"My golden retriever used to hate baths, but this brush changed everything. The mist calms her down, and the bristles actually get deep into her coat without pulling.\"</p>",
+            "author_1": "Taylor M.",
+            "verified_1": "Verified Purchase"
+          }
+        },
         { "type": "faq_item", "settings": { "title": "Can this replace regular pet shampoo?" } },
         { "type": "faq_item", "settings": { "title": "Is it safe for cats too?" } },
         { "type": "faq_item", "settings": { "title": "How does it actually work?" } },

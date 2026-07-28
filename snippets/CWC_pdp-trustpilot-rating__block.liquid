@@ -1,0 +1,38 @@
+{% comment %}
+  Trustpilot rating badge for the PDP buy box — green star tiles, a one-line
+  rating sentence, and the Trustpilot wordmark on a soft green pill.
+
+  A lighter sibling of the dashed trust strip inside the buy form: this one sits
+  between the title and the price and reads as a rating, not as an offer badge.
+  The stars and the wordmark always come from the shared SVG snippets, so only
+  the sentence is editable — bold the grade word in the richtext editor to get
+  the "Rated **Excellent** 4.8 out of 5" treatment.
+
+  Colors are set per block rather than from the section palette, so the pill can
+  keep Trustpilot green while the surrounding buy box is restyled.
+
+  Accepts:
+  - block {Object} - the trustpilot_rating block. Reads settings.text,
+    settings.bg_color, settings.border_color and settings.text_color.
+
+  Usage:
+  {% render 'CWC_pdp-trustpilot-rating__block', block: block %}
+{% endcomment %}
+
+{%- if block.settings.text != blank -%}
+  <div
+    class="cwc_pdp-product__tp-rating"
+    style="--cwc-tp-rating-bg: {{ block.settings.bg_color | default: '#F2FBF5' }}; --cwc-tp-rating-border: {{ block.settings.border_color | default: '#9FD4B4' }}; --cwc-tp-rating-text: {{ block.settings.text_color | default: '#111111' }};"
+    {{ block.shopify_attributes }}
+  >
+    <span class="cwc_pdp-product__tp-rating-stars">
+      {% render 'CWC_trust_stars__block' %}
+    </span>
+
+    <div class="cwc_pdp-product__tp-rating-text cwc-rte">{{ block.settings.text }}</div>
+
+    <span class="cwc_pdp-product__tp-rating-logo">
+      {% render 'CWC_trust_piolet_logo__block' %}
+    </span>
+  </div>
+{%- endif -%}

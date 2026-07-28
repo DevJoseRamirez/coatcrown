@@ -1,0 +1,102 @@
+{% comment %}
+  Mini review quotes for the PDP buy box.
+
+  A single block carries up to three quote sets, so the group moves as one unit
+  rather than as one block per quote. Every set with a quote or an author is
+  rendered; blank sets are skipped.
+
+  The quotes are stacked on top of each other rather than listed, and the
+  section script cross-fades between them on a timer, so the block only ever
+  takes the height of its tallest quote. With one quote there is nothing to
+  rotate and it simply sits there.
+
+  Accepts:
+  - block {Object} - the mini_review block. Reads settings.image_1 … image_3,
+    quote_1 … quote_3, author_1 … author_3, verified_1 … verified_3 and
+    settings.rotate_seconds.
+
+  Usage:
+  {% render 'CWC_pdp-mini-review__block', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign review_ids = '1,2,3' | split: ','
+
+  assign review_count = 0
+  for review_id in review_ids
+    assign quote_key = 'quote_' | append: review_id
+    assign author_key = 'author_' | append: review_id
+    if block.settings[quote_key] != blank or block.settings[author_key] != blank
+      assign review_count = review_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- comment -%}
+  Counted first so an all-blank block renders nothing at all — an empty wrapper
+  would still take a gap from the buy box's flex column.
+{%- endcomment -%}
+{%- if review_count > 0 -%}
+  {%- assign rotate_ms = block.settings.rotate_seconds | default: 5 | times: 1000 -%}
+  <div
+    class="cwc_pdp-product__reviews"
+    data-cwc-reviews
+    data-interval="{{ rotate_ms }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- assign shown = 0 -%}
+    {%- for review_id in review_ids -%}
+      {%- liquid
+        assign image_key = 'image_' | append: review_id
+        assign quote_key = 'quote_' | append: review_id
+        assign author_key = 'author_' | append: review_id
+        assign verified_key = 'verified_' | append: review_id
+
+        assign review_image = block.settings[image_key]
+        assign review_quote = block.settings[quote_key]
+        assign review_author = block.settings[author_key]
+        assign review_verified = block.settings[verified_key]
+      -%}
+      {%- if review_quote != blank or review_author != blank -%}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- comment -%}
+          The first filled slot is the one on screen at load — which is not
+          necessarily slot 1, since a merchant can leave the first one blank.
+        {%- endcomment -%}
+        <div
+          class="cwc_pdp-product__review{% if shown == 1 %} is-active{% endif %}"
+          data-cwc-review
+          {% if shown > 1 %}
+            aria-hidden="true"
+          {% endif %}
+        >
+          {%- if review_image != blank -%}
+            <img
+              class="cwc_pdp-product__review-avatar"
+              src="{{ review_image | image_url: width: 128 }}"
+              alt="{{ review_author | default: 'Customer' | escape }}"
+              loading="lazy"
+              width="64"
+              height="64"
+            >
+          {%- endif -%}
+          <div class="cwc_pdp-product__review-body">
+            {%- if review_quote != blank -%}
+              <div class="cwc_pdp-product__review-quote cwc-rte">{{ review_quote }}</div>
+            {%- endif -%}
+            {%- if review_author != blank or review_verified != blank -%}
+              <p class="cwc_pdp-product__review-meta">
+                {%- if review_author != blank -%}
+                  <span class="cwc_pdp-product__review-author">{{ review_author }}</span>
+                {%- endif -%}
+                {%- if review_verified != blank -%}
+                  <span class="cwc_pdp-product__review-verified">{{ review_verified }}</span>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

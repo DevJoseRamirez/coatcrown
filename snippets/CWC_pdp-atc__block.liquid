@@ -1,0 +1,43 @@
+{% comment %}
+  Add to cart button for the PDP buy box, with the accelerated checkout row
+  underneath it.
+
+  Submits through Horizon's product-form-component that wraps the whole buy box,
+  so the native cart drawer opens instead of a redirect to /cart. The form object
+  has to be handed in because payment_button only works on the form it came from.
+
+  Accepts:
+  - block {Object} - the add_to_cart block. Reads settings.label,
+    settings.show_icon and settings.show_dynamic_checkout.
+  - product {Object} - the product being sold.
+  - current_variant {Object} - decides whether the button is buyable.
+  - form_obj {Object} - the enclosing product form, for the payment button.
+
+  Usage:
+  {% render 'CWC_pdp-atc__block',
+    block: block,
+    product: cwc_product,
+    current_variant: current_variant,
+    form_obj: form
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign atc_class = 'cwc_pdp-product__atc'
+  unless block.settings.show_icon
+    assign atc_class = atc_class | append: ' cwc_pdp-product__atc--no-icon'
+  endunless
+-%}
+
+<div class="cwc_pdp-product__buy" {{ block.shopify_attributes }}>
+  {% render 'add-to-cart-button',
+    add_to_cart_text: block.settings.label,
+    class: atc_class,
+    can_add_to_cart: current_variant.available,
+    product: product
+  %}
+
+  {%- if block.settings.show_dynamic_checkout and form_obj != blank -%}
+    <div class="cwc_pdp-product__dynamic">{{ form_obj | payment_button }}</div>
+  {%- endif -%}
+</div>

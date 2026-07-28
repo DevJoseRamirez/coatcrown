@@ -1,0 +1,72 @@
+{% comment %}
+  Key feature cards for the PDP buy box — three bordered cards in one row, each
+  an uploaded icon on the left and a short label on the right.
+
+  A card-based sibling of the key benefits bullet list: the bullets carry the
+  outcome claims, these carry the product's hard attributes. A single block
+  holds all three icon + text pairs, so the row moves as one unit rather than as
+  one block per card. Blank pairs are skipped, and the grid narrows to match how
+  many survive so a partly filled block still fills the width.
+
+  Colors are set per block rather than from the section palette, so the cards can
+  stay navy-on-white while the surrounding buy box is restyled.
+
+  Accepts:
+  - block {Object} - the key_features block. Reads settings.icon_1/text_1 …
+    icon_3/text_3, settings.bg_color, settings.border_color and
+    settings.text_color.
+
+  Usage:
+  {% render 'CWC_pdp-key-features__block', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign feature_ids = '1,2,3' | split: ','
+
+  assign feature_count = 0
+  for feature_id in feature_ids
+    assign icon_key = 'icon_' | append: feature_id
+    assign text_key = 'text_' | append: feature_id
+    if block.settings[icon_key] != blank or block.settings[text_key] != blank
+      assign feature_count = feature_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- comment -%}
+  Counted first so an all-blank block renders nothing at all — an empty grid
+  would still take a gap from the buy box's flex column.
+{%- endcomment -%}
+{%- if feature_count > 0 -%}
+  <div
+    class="cwc_pdp-product__features cwc_pdp-product__features--{{ feature_count }}"
+    style="--cwc-feature-bg: {{ block.settings.bg_color | default: '#ffffff' }}; --cwc-feature-border: {{ block.settings.border_color | default: '#C3CEE8' }}; --cwc-feature-text: {{ block.settings.text_color | default: '#142C70' }};"
+    {{ block.shopify_attributes }}
+  >
+    {%- for feature_id in feature_ids -%}
+      {%- liquid
+        assign icon_key = 'icon_' | append: feature_id
+        assign text_key = 'text_' | append: feature_id
+        assign feature_icon = block.settings[icon_key]
+        assign feature_text = block.settings[text_key]
+      -%}
+      {%- if feature_icon != blank or feature_text != blank -%}
+        <div class="cwc_pdp-product__feature">
+          {%- if feature_icon != blank -%}
+            <img
+              class="cwc_pdp-product__feature-icon"
+              src="{{ feature_icon | image_url: width: 120 }}"
+              alt="{{ feature_icon.alt | default: feature_text | escape }}"
+              loading="lazy"
+              width="60"
+              height="60"
+            >
+          {%- endif -%}
+          {%- if feature_text != blank -%}
+            <span class="cwc_pdp-product__feature-text">{{ feature_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

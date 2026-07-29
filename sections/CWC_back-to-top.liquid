@@ -1,0 +1,105 @@
+{% style %}
+  #cwc_back-to-top-{{ section.id }} {
+    --button-bg: {{ section.settings.bg_color | default: '#142c70' }};
+    --icon-color: {{ section.settings.icon_color | default: '#ffffff' }};
+    --button-size: {{ section.settings.button_size | default: 48 }}px;
+    --button-size-mobile: {{ section.settings.button_size | default: 48 | times: 0.85 }}px;
+    --edge-offset: {{ section.settings.edge_offset | default: 24 }}px;
+    --edge-offset-mobile: {{ section.settings.edge_offset | default: 24 | times: 0.75 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_back-to-top.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="cwc_back-to-top-{{ section.id }}"
+  class="cwc_back-to-top cwc_back-to-top--{{ section.settings.position }}"
+  data-show-after="{{ section.settings.show_after | default: 400 }}"
+>
+  <button type="button" class="cwc_back-to-top__button" aria-label="Back to top">
+    <svg class="cwc_back-to-top__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M5 15L12 8L19 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+</section>
+
+<script src="{{ 'CWC_back-to-top.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "CWC Back To Top",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Circle Color",
+      "default": "#142c70"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Chevron Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        { "value": "right", "label": "Bottom Right" },
+        { "value": "left", "label": "Bottom Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button Size",
+      "min": 36,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "edge_offset",
+      "label": "Distance From Edge",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "range",
+      "id": "show_after",
+      "label": "Show After Scrolling",
+      "min": 0,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 400,
+      "info": "How far down the page the visitor scrolls before the button appears."
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Back To Top",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

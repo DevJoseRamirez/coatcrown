@@ -369,27 +369,22 @@
         "trust_icons": {
           "type": "trust_icons",
           "settings": {
+            "icon_1": "shopify://shop_images/Mask_group-2.png",
             "text_1": "Free Worldwide Shipping",
+            "icon_2": "shopify://shop_images/Mask_group_1_710018d8-b7e1-4ab5-8a0b-20be9b2d7f85.png",
             "text_2": "365 Day Money Back Guarantee",
+            "icon_3": "shopify://shop_images/Mask_group-1.png",
             "text_3": "Trusted by 50k+ Pet Parents"
           }
         },
         "stock_bar": {
           "type": "stock_bar",
+          "disabled": true,
           "settings": {
             "title": "Summer Sale Stock Is Low",
             "text": "Due to high demand, limited quantities available",
             "percent": 83,
             "percent_label": "SOLD"
-          }
-        },
-        "guarantee": {
-          "type": "guarantee",
-          "settings": {
-            "title": "90-Day Money-Back Guarantee",
-            "text": "<p>Try it for 90 days, love it or get a full refund. No questions asked.</p>",
-            "bg_color": "#142c70",
-            "text_color": "#ffffff"
           }
         },
         "warning": {
@@ -403,6 +398,7 @@
         "mini_review": {
           "type": "mini_review",
           "settings": {
+            "rotate_seconds": 5,
             "quote_1": "<p>\"My golden retriever used to hate baths, but this brush changed everything. The mist calms her down, and the bristles actually get deep into her coat without pulling.\"</p>",
             "author_1": "Taylor M.",
             "verified_1": "Verified Purchase",
@@ -411,8 +407,7 @@
             "verified_2": "Verified Purchase",
             "quote_3": "<p>\"Third testimonial goes here — replace this with a real customer quote.\"</p>",
             "author_3": "Customer name",
-            "verified_3": "Verified Purchase",
-            "rotate_seconds": 5
+            "verified_3": "Verified Purchase"
           }
         },
         "faq_1": {
@@ -463,6 +458,10 @@
             "title": "Full Ingredient List — (Safe for Dogs & Cats)",
             "text": "<p>Add the answer to this question here.</p>"
           }
+        },
+        "sticky_atc": {
+          "type": "sticky_atc",
+          "settings": {}
         }
       },
       "block_order": [
@@ -477,7 +476,6 @@
         "add_to_cart",
         "trust_icons",
         "stock_bar",
-        "guarantee",
         "warning",
         "mini_review",
         "faq_1",
@@ -486,7 +484,8 @@
         "faq_4",
         "faq_5",
         "faq_6",
-        "faq_7"
+        "faq_7",
+        "sticky_atc"
       ],
       "settings": {
         "product": "test",

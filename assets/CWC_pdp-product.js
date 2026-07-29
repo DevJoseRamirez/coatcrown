@@ -110,6 +110,9 @@
     const saveEl = sectionEl.querySelector('[data-cwc-save]');
     const variantInput = sectionEl.querySelector('[data-cwc-variant-input]');
     const bundleInputs = Array.from(sectionEl.querySelectorAll('[data-cwc-bundle]'));
+    // The sticky bar quotes the same figure as the buy box, so it is driven
+    // from here rather than kept in step by hand.
+    const stickyPriceEl = sectionEl.querySelector('[data-cwc-sticky-price]');
 
     // What Liquid already rendered, so a buy box with no bundle cards still has
     // one-time figures to fall back to.
@@ -132,6 +135,7 @@
     function render() {
       const shown = (planActive && planPrices[variantId]) || oneTime;
       if (shown.price) setText(priceEl, shown.price);
+      if (shown.price) setText(stickyPriceEl, shown.price);
       setText(compareEl, shown.compare, 'cwc_pdp-product__compare--hidden');
       setText(saveEl, shown.save, 'cwc_pdp-product__save--hidden');
 
@@ -162,6 +166,9 @@
       setPlanActive: function (active) {
         planActive = active;
         render();
+      },
+      isPlanActive: function () {
+        return planActive;
       },
     };
   }
@@ -243,6 +250,89 @@
     if (checked) select(checked);
   }
 
+  /* The sticky bar stands in for the Add To Cart button, so it appears only
+     once that button has scrolled off the top — never while it is still below
+     the fold on first paint. */
+  function initStickyVisibility(sectionEl, bar) {
+    const watched = sectionEl.querySelector('.cwc_pdp-product__buy');
+
+    if (!watched || typeof IntersectionObserver === 'undefined') {
+      // No Add To Cart block on the page (or no observer support) — fall back to
+      // a plain scroll distance so the bar is still reachable.
+      const onScroll = function () {
+        bar.classList.toggle('is-visible', window.scrollY > 600);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      return;
+    }
+
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        bar.classList.toggle('is-visible', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      });
+    }).observe(watched);
+  }
+
+  /* The bar sits inside the same product form as the buy box, so it holds no
+     variant or purchase type of its own — its picker drives the buy box's, and
+     its figures come back through the same pricing controller. */
+  function initSticky(sectionEl, pricing) {
+    const bar = sectionEl.querySelector('[data-cwc-sticky]');
+    if (!bar) return;
+
+    initStickyVisibility(sectionEl, bar);
+
+    const select = bar.querySelector('[data-cwc-sticky-select]');
+    if (!select) return;
+
+    const optionEl = bar.querySelector('[data-cwc-sticky-option]');
+    const unitEl = bar.querySelector('[data-cwc-sticky-unit]');
+    const variantInput = sectionEl.querySelector('[data-cwc-variant-input]');
+
+    function renderPicker() {
+      const option = select.options[select.selectedIndex];
+      if (!option) return;
+      if (optionEl) optionEl.textContent = option.textContent.trim();
+      // A per-unit figure is a one-time price, so it is cleared rather than left
+      // standing against subscription pricing.
+      if (unitEl) unitEl.textContent = pricing.isPlanActive() ? '' : option.dataset.unit || '';
+    }
+
+    select.addEventListener('change', function () {
+      const option = select.options[select.selectedIndex];
+      const bundle = sectionEl.querySelector('[data-cwc-bundle][data-variant-id="' + select.value + '"]');
+
+      if (bundle) {
+        // The bundle cards are the buy box's own picker — letting them handle
+        // the change keeps the cards, the price and the form input in step.
+        bundle.checked = true;
+        bundle.dispatchEvent(new Event('change', { bubbles: true }));
+      } else if (variantInput) {
+        // No cards in the buy box, so this picker is the only one.
+        variantInput.value = select.value;
+        variantInput.disabled = false;
+        pricing.selectVariant(select.value, {
+          price: option.dataset.price || '',
+          compare: option.dataset.compare || '',
+          save: option.dataset.save || '',
+        });
+      }
+
+      renderPicker();
+    });
+
+    // Both the bundle cards and the purchase type toggle bubble their change
+    // up to the section, which is the one place that sees either.
+    sectionEl.addEventListener('change', function (event) {
+      const bundle = event.target.closest('[data-cwc-bundle]');
+      if (bundle) select.value = bundle.dataset.variantId || bundle.value;
+      if (bundle || event.target.closest('[data-cwc-plan]')) renderPicker();
+    });
+
+    renderPicker();
+  }
+
   function initReviews(sectionEl) {
     const group = sectionEl.querySelector('[data-cwc-reviews]');
     if (!group) return;
@@ -310,6 +400,7 @@
     initGallery(sectionEl);
     initBundles(sectionEl, pricing);
     initSellingPlan(sectionEl, pricing);
+    initSticky(sectionEl, pricing);
     initReviews(sectionEl);
     initFaq(sectionEl);
   }
@@ -327,5 +418,12 @@
   document.addEventListener('shopify:section:load', function (event) {
     const section = event.target.querySelector('.cwc_pdp-product');
     if (section) initSection(section);
+  });
+
+  // In the editor the sticky bar is normally scrolled out of its trigger, so
+  // selecting it in the sidebar has to reveal it or there is nothing to style.
+  document.addEventListener('shopify:block:select', function (event) {
+    const bar = event.target.closest('[data-cwc-sticky]');
+    if (bar) bar.classList.add('is-visible');
   });
 })();

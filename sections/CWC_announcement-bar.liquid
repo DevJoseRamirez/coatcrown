@@ -1,0 +1,113 @@
+{% style %}
+  #cwc_announcement-bar-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color | default: '#E8890C' }};
+    --text-color: {{ section.settings.text_color | default: '#ffffff' }};
+    --font-size: {{ section.settings.font_size | default: 13 }}px;
+    --font-size-mobile: {{ section.settings.font_size | default: 13 | times: 0.9231 }}px;
+    --padding-top: {{ section.settings.padding_top | default: 10 }}px;
+    --padding-bottom: {{ section.settings.padding_bottom | default: 10 }}px;
+  }
+{% endstyle %}
+
+{{ 'CWC_announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.text != blank -%}
+  <section id="cwc_announcement-bar-{{ section.id }}" class="cwc_announcement-bar">
+    {%- comment -%}
+      The bar is a link only when there is somewhere to go — otherwise it stays
+      plain text and picks up none of the pointer or focus behaviour.
+    {%- endcomment -%}
+    {%- if section.settings.link != blank -%}
+      <a class="cwc_announcement-bar__text" href="{{ section.settings.link }}">
+        {{- section.settings.text -}}
+      </a>
+    {%- else -%}
+      <p class="cwc_announcement-bar__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CWC Announcement Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement Text",
+      "default": "SUMMER SAVINGS UP TO 50% OFF + FREE SHIPPING"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link",
+      "info": "Optional. Leave empty to show the text on its own."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#E8890C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Text Font Size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13,
+      "info": "Mobile scales to ~92% of this value."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "CWC Announcement Bar",
+      "category": "CWC Custom"
+    }
+  ]
+}
+{% endschema %}

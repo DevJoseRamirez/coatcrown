@@ -11,36 +11,6 @@
   "type": "header",
   "name": "Header",
   "sections": {
-    "header_announcements_9jGBFp": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_BxgCk9": {
-          "type": "_announcement",
-          "settings": {
-            "text": "<strong>SUMMER SAVINGS UP TO 50% OFF + FREE SHIPPING</strong>",
-            "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "1.125rem",
-            "weight": "",
-            "letter_spacing": "normal",
-            "case": "none"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_BxgCk9"
-      ],
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "color_scheme": "scheme-5",
-        "divider_width": 1,
-        "padding-block-start": 15,
-        "padding-block-end": 15
-      }
-    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -94,7 +64,7 @@
         "localization_row": "top",
         "section_width": "page-width",
         "section_height": "standard",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "never",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
@@ -112,10 +82,23 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "cwc_announcement_bar_xkicxq": {
+      "type": "CWC_announcement-bar",
+      "name": "CWC Announcement Bar",
+      "settings": {
+        "text": "SUMMER SAVINGS UP TO 50% OFF + FREE SHIPPING",
+        "link": "",
+        "bg_color": "#E8890C",
+        "text_color": "#ffffff",
+        "font_size": 13,
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
+    "cwc_announcement_bar_xkicxq",
     "header_section"
   ]
 }

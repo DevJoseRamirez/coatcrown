@@ -1,0 +1,124 @@
+{% comment %}
+  Sticky Add To Cart bar for the PDP buy box.
+
+  Rendered inside the buy box's product-form-component, so it shares the one
+  hidden variant input and the one selling_plan input with the main Add To Cart
+  button — there is nothing to keep in sync, and both buttons can only ever add
+  the same thing. It is taken out of flow with position:fixed, so its place in
+  the block order does not affect the column.
+
+  The submit button is deliberately plain rather than the add-to-cart-button
+  snippet: that snippet carries ref="addToCartButtonContainer", and a second one
+  inside the same form would overwrite the buy box's own ref (refs are last-wins)
+  and break its availability handling. A bare submit still routes through
+  ProductFormComponent, so the native cart drawer opens either way.
+
+  Accepts:
+  - block {Object} - the sticky_atc block. Reads settings.subtext,
+    settings.select_label, settings.button_label and settings.position.
+  - product {Object} - the product being sold.
+  - current_variant {Object} - the variant that starts selected.
+  - save_label {String} - prefix for the save badge, e.g. "SAVE". Only used when
+    the buy box has no Bundle & Save cards and this picker is the only one.
+
+  Usage:
+  {% render 'CWC_pdp-sticky-atc__block',
+    block: block,
+    product: product,
+    current_variant: current_variant,
+    save_label: section.settings.save_label
+  %}
+{% endcomment %}
+
+<div
+  class="cwc_pdp-product__sticky cwc_pdp-product__sticky--{{ block.settings.position }}"
+  data-cwc-sticky
+  {{ block.shopify_attributes }}
+>
+  <div class="cwc_pdp-product__sticky-container">
+    <div class="cwc_pdp-product__sticky-info">
+      {% if product.featured_image != blank %}
+        <img
+          class="cwc_pdp-product__sticky-image"
+          src="{{ product.featured_image | image_url: width: 120 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="60"
+          height="60"
+        >
+      {% endif %}
+
+      <div class="cwc_pdp-product__sticky-copy">
+        <span class="cwc_pdp-product__sticky-title">{{ product.title }}</span>
+        {% if block.settings.subtext != blank %}
+          <span class="cwc_pdp-product__sticky-subtext">{{ block.settings.subtext }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if product.variants.size > 1 %}
+      <div class="cwc_pdp-product__sticky-picker">
+        <select
+          class="cwc_pdp-product__sticky-select"
+          data-cwc-sticky-select
+          aria-label="{{ block.settings.select_label | default: 'Choose an option' | escape }}"
+        >
+          {% for variant in product.variants %}
+            {%- liquid
+              assign v_unit = ''
+              if variant.unit_price_measurement != blank
+                capture v_unit
+                  echo variant.unit_price | money
+                  echo ' / '
+                  echo variant.unit_price_measurement.reference_unit
+                endcapture
+              endif
+
+              assign v_save = 0
+              if variant.compare_at_price > variant.price
+                assign v_amount = variant.compare_at_price | minus: variant.price | times: 100.0
+                assign v_save = v_amount | divided_by: variant.compare_at_price | round
+              endif
+            -%}
+            <option
+              value="{{ variant.id }}"
+              data-unit="{{ v_unit | strip }}"
+              data-price="{{ variant.price | money }}"
+              data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
+              data-save="{% if v_save > 0 %}{{ save_label }} {{ v_save }}%{% endif %}"
+              {% if variant.id == current_variant.id %}
+                selected
+              {% endif %}
+              {% if variant.available == false %}
+                disabled
+              {% endif %}
+            >
+              {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <span class="cwc_pdp-product__sticky-option" data-cwc-sticky-option>{{ current_variant.title }}</span>
+        {% comment %}
+          The per-unit figure is a one-time price, so it is emptied while a
+          subscription is selected rather than left showing a stale number.
+        {% endcomment %}
+        <span class="cwc_pdp-product__sticky-unit" data-cwc-sticky-unit></span>
+      </div>
+    {% endif %}
+
+    <button
+      type="submit"
+      name="add"
+      class="cwc_pdp-product__sticky-button"
+      {% if current_variant.available == false %}
+        disabled
+      {% endif %}
+    >
+      {% if block.settings.button_label != blank %}
+        <span class="cwc_pdp-product__sticky-label">{{ block.settings.button_label }} </span>
+      {% endif %}
+      <span class="cwc_pdp-product__sticky-price" data-cwc-sticky-price>{{ current_variant.price | money }}</span>
+    </button>
+  </div>
+</div>

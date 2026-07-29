@@ -39,7 +39,7 @@
   color: inherit;
 }
 
-.cwc_formula-cards__content-heading > * strong {
+.cwc_formula-cards__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -191,7 +191,8 @@
 
   .cwc_formula-cards__content-heading h1,
   .cwc_formula-cards__content-heading h2,
-  .cwc_formula-cards__content-heading h3,
+  .cwc_formula-cards__content-heading h3 {}
+
   .cwc_formula-cards__content-heading p {
     font-size: 1.75rem;
   }

@@ -244,6 +244,14 @@
                   form_obj: form
                 %}
 
+              {% when 'sticky_atc' %}
+                {% render 'CWC_pdp-sticky-atc__block',
+                  block: block,
+                  product: cwc_product,
+                  current_variant: current_variant,
+                  save_label: section.settings.save_label
+                %}
+
               {% when 'trust_icons' %}
                 {% render 'CWC_pdp-trust-icons__block', block: block %}
 
@@ -538,6 +546,47 @@
           "id": "show_icon",
           "label": "Show Cart Icon On Add To Cart",
           "default": false
+        }
+      ]
+    },
+    {
+      "type": "sticky_atc",
+      "name": "Sticky Add To Cart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A fixed bar that appears once the Add To Cart button has scrolled out of view. It shares the buy box's variant and purchase type, so both buttons always add the same thing. Colors come from the section settings."
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Free shipping · 30-day guarantee"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Add to cart",
+          "info": "The price of the selected option is added after this."
+        },
+        {
+          "type": "text",
+          "id": "select_label",
+          "label": "Option Picker Label",
+          "default": "Choose an option",
+          "info": "Read by screen readers only. The picker is hidden when the product has one variant."
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Position",
+          "options": [
+            { "value": "bottom", "label": "Bottom Of Screen" },
+            { "value": "top", "label": "Top Of Screen" }
+          ],
+          "default": "bottom"
         }
       ]
     },

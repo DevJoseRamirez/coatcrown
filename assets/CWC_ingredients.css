@@ -40,7 +40,7 @@
   color: var(--heading-color);
 }
 
-.cwc_ingredients__content-heading > * strong {
+.cwc_ingredients__content-heading>* strong {
   color: var(--highlight-color);
 }
 
@@ -118,7 +118,7 @@
 }
 
 .cwc_ingredients__card-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 0.5rem;
@@ -127,6 +127,7 @@
 
 .cwc_ingredients__card-text p {
   font-size: 0.8125rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin: 0;
   color: #4a4a4a;

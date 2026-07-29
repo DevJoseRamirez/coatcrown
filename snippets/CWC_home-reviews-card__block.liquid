@@ -1,0 +1,79 @@
+{% comment %}
+  One testimonial card for the home reviews carousel.
+
+  Both sources — the section's Testimonial blocks and the selected testimonial
+  metaobject entries — render through here, so the two can never drift apart
+  visually. Callers normalise their own field names into these parameters.
+
+  Accepts:
+  - image {Object} - image object. Falls back to a placeholder when empty.
+  - quote {String} - the quote as HTML. Blocks pass richtext straight through;
+    the metaobject path wraps its plain text in a paragraph first.
+  - author_name {String} - name shown under the quote.
+  - verified_text {String} - badge text next to the name. Hidden when empty.
+  - rating {Number} - anything above 0 shows the five-star row.
+  - attributes {String} - block.shopify_attributes, so the editor can select the
+    card. Empty for metaobject entries, which are not editor blocks.
+
+  Usage:
+  {% render 'CWC_home-reviews-card__block',
+    image: block.settings.review_image,
+    quote: block.settings.quote,
+    author_name: block.settings.author_name,
+    verified_text: block.settings.verified_text,
+    rating: block.settings.rating,
+    attributes: block.shopify_attributes
+  %}
+{% endcomment %}
+
+<div class="cwc_home-reviews__card" {{ attributes }}>
+  <div class="cwc_home-reviews__card-image">
+    {% if image != blank %}
+      <img
+        src="{{ image | image_url: width: 600 }}"
+        alt="{{ image.alt | default: author_name | escape }}"
+        loading="lazy"
+        width="600"
+        height="800"
+      >
+    {% else %}
+      <div class="cwc_home-reviews__placeholder"><span>Add image</span></div>
+    {% endif %}
+  </div>
+
+  <div class="cwc_home-reviews__card-content">
+    {% if quote != blank %}
+      <div class="cwc_home-reviews__quote cwc-rte">{{ quote }}</div>
+    {% endif %}
+
+    <div class="cwc_home-reviews__footer">
+      <div class="cwc_home-reviews__author-info">
+        {% if author_name != blank %}
+          <span class="cwc_home-reviews__author-name">{{ author_name }}</span>
+        {% endif %}
+
+        {% if verified_text != blank %}
+          <span class="cwc_home-reviews__verified">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.70711 4.29289C9.09763 4.68342 9.09763 5.31658 8.70711 5.70711L5.70711 8.70711C5.31658 9.09763 4.68342 9.09763 4.29289 8.70711L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L5 6.58579L7.29289 4.29289C7.68342 3.90237 8.31658 3.90237 8.70711 4.29289Z"/>
+            </svg>
+            {{ verified_text }}
+          </span>
+        {% endif %}
+      </div>
+
+      {% if rating > 0 %}
+        <div class="cwc_home-reviews__card-stars">
+          {% render 'CWC_stars__block' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

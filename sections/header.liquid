@@ -284,6 +284,9 @@
   {% endif %}
 {% endcapture %}
 
+{% comment %} CWC: current-page link styling. Re-add if a theme update replaces this file. {% endcomment %}
+{{ 'CWC_header.css' | asset_url | stylesheet_tag }}
+
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",

@@ -16,6 +16,29 @@
 
 {{ 'CWC_home-reviews.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  comment
+    The chosen list's cards replace the blocks outright — the carousel shows one
+    source or the other, never both. Blocks stay as the fallback so the section
+    keeps working before the list has any cards on it.
+  endcomment
+  assign testimonial_list = section.settings.testimonial_list
+  assign testimonial_cards = testimonial_list.list.value
+  if testimonial_cards == blank
+    assign testimonial_cards = testimonial_list.list
+  endif
+
+  assign use_metaobjects = false
+  if testimonial_cards.size > 0
+    assign use_metaobjects = true
+  endif
+
+  assign has_cards = false
+  if use_metaobjects or section.blocks.size > 0
+    assign has_cards = true
+  endif
+-%}
+
 {%- capture star_svg -%}
   <svg class="cwc_home-reviews__star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
@@ -53,7 +76,7 @@
     </div>
 
     {% comment %} Carousel {% endcomment %}
-    {% if section.blocks.size > 0 %}
+    {% if has_cards %}
       <div class="cwc_home-reviews__slider-wrapper">
         <button
           type="button"
@@ -74,61 +97,47 @@
         </button>
 
         <div class="cwc_home-reviews__track" data-cwc-track>
-          {% for block in section.blocks %}
-            {% case block.type %}
-              {% when 'testimonial_card' %}
-                <div class="cwc_home-reviews__card" {{ block.shopify_attributes }}>
-                  <div class="cwc_home-reviews__card-image">
-                    {% if block.settings.review_image != blank %}
-                      <img
-                        src="{{ block.settings.review_image | image_url: width: 600 }}"
-                        alt="{{ block.settings.review_image.alt | default: block.settings.author_name | escape }}"
-                        loading="lazy"
-                        width="600"
-                        height="800"
-                      >
-                    {% else %}
-                      <div class="cwc_home-reviews__placeholder"><span>Add image</span></div>
-                    {% endif %}
-                  </div>
+          {% if use_metaobjects %}
+            {% for card in testimonial_cards %}
+              {%- liquid
+                assign card_text = card.text.value
 
-                  <div class="cwc_home-reviews__card-content">
-                    {% if block.settings.quote != blank %}
-                      <div class="cwc_home-reviews__quote cwc-rte">{{ block.settings.quote }}</div>
-                    {% endif %}
+                # Rating is a single line text field, so it has to be coerced
+                # before it can be compared against a number.
+                assign card_rating = card.rating.value | plus: 0
+              -%}
 
-                    <div class="cwc_home-reviews__footer">
-                      <div class="cwc_home-reviews__author-info">
-                        {% if block.settings.author_name != blank %}
-                          <span class="cwc_home-reviews__author-name">{{ block.settings.author_name }}</span>
-                        {% endif %}
-                        {% if block.settings.verified_text != blank %}
-                          <span class="cwc_home-reviews__verified">
-                            <svg
-                              width="12"
-                              height="12"
-                              viewBox="0 0 12 12"
-                              fill="currentColor"
-                              xmlns="http://www.w3.org/2000/svg"
-                              aria-hidden="true"
-                            >
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C9.31371 12 12 9.31371 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.31371 2.68629 12 6 12ZM8.70711 4.29289C9.09763 4.68342 9.09763 5.31658 8.70711 5.70711L5.70711 8.70711C5.31658 9.09763 4.68342 9.09763 4.29289 8.70711L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L5 6.58579L7.29289 4.29289C7.68342 3.90237 8.31658 3.90237 8.70711 4.29289Z"/>
-                            </svg>
-                            {{ block.settings.verified_text }}
-                          </span>
-                        {% endif %}
-                      </div>
+              {% comment %}
+                The card's Text field is plain multi-line text, so it is wrapped
+                here — the card expects the same HTML the richtext blocks give it.
+              {% endcomment %}
+              {%- capture card_quote -%}
+                {%- if card_text != blank -%}<p>{{ card_text | newline_to_br }}</p>{%- endif -%}
+              {%- endcapture -%}
 
-                      {% if block.settings.rating > 0 %}
-                        <div class="cwc_home-reviews__card-stars">
-                          {% render 'CWC_stars__block' %}
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-            {% endcase %}
-          {% endfor %}
+              {% render 'CWC_home-reviews-card__block',
+                image: card.image.value,
+                quote: card_quote,
+                author_name: card.author.value,
+                verified_text: section.settings.metaobject_verified_text,
+                rating: card_rating
+              %}
+            {% endfor %}
+          {% else %}
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'testimonial_card' %}
+                  {% render 'CWC_home-reviews-card__block',
+                    image: block.settings.review_image,
+                    quote: block.settings.quote,
+                    author_name: block.settings.author_name,
+                    verified_text: block.settings.verified_text,
+                    rating: block.settings.rating,
+                    attributes: block.shopify_attributes
+                  %}
+              {% endcase %}
+            {% endfor %}
+          {% endif %}
         </div>
 
         <button
@@ -159,6 +168,24 @@
 {
   "name": "CWC Home Reviews",
   "settings": [
+    {
+      "type": "header",
+      "content": "Testimonial Source"
+    },
+    {
+      "type": "metaobject",
+      "id": "testimonial_list",
+      "label": "Testimonial Cards List",
+      "metaobject_type": "testimonial_cards_list",
+      "info": "Optional. Pick a list to fill the carousel from its cards — they replace the Testimonial blocks below. Leave empty to use the blocks."
+    },
+    {
+      "type": "text",
+      "id": "metaobject_verified_text",
+      "label": "Verified Badge Text",
+      "default": "Verified Buyer",
+      "info": "Used on every card from the list above, which has no field of its own for it. Leave empty to hide the badge."
+    },
     {
       "type": "header",
       "content": "Section Header"
@@ -347,8 +374,22 @@
         {
           "type": "testimonial_card",
           "settings": {
+            "quote": "<p>Worth every penny. Two sessions in and his coat is noticeably softer and shinier. Highly recommend.</p>",
+            "author_name": "Priya K."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
             "quote": "<p>Gentle enough for my senior dog and he genuinely enjoys it now. Best grooming purchase I've made.</p>",
             "author_name": "David C."
+          }
+        },
+        {
+          "type": "testimonial_card",
+          "settings": {
+            "quote": "<p>My golden sheds constantly, and this is the first tool that actually keeps the fur off my couch. Grooming is finally calm.</p>",
+            "author_name": "Sarah M."
           }
         }
       ]

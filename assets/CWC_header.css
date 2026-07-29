@@ -1,0 +1,42 @@
+/* ==============================
+   CWC Header Overrides
+
+   Loaded from sections/header.liquid. Re-add that stylesheet_tag line if a
+   Horizon update ever overwrites the section.
+   ============================== */
+
+/* === Current Page Link === */
+/*
+  Keyed off aria-current, which the theme already prints on the link for the
+  page being viewed — no markup change needed. Deliberately not the theme's
+  .menu-list__link--active class: that one is also set on a parent whose child
+  is the current page, which would highlight two links at once.
+*/
+:root {
+  --cwc-active-link-bg: #142c70;
+  --cwc-active-link-text: #ffffff;
+}
+
+/*
+  The colour lands on the title span rather than the <a>. The theme drives the
+  <a>'s colour through several high-specificity :has()/:not() rules for its
+  hover-dimming, and a declaration applied straight to the child beats anything
+  the parent passes down, however specific that parent rule is.
+*/
+.menu-list__link[aria-current='page'] .menu-list__link-title {
+  background-color: var(--cwc-active-link-bg);
+  color: var(--cwc-active-link-text);
+  padding-block: 6px;
+  border-radius: 6px;
+  line-height: normal;
+}
+
+/* === Current Page Link — Mobile Drawer === */
+/* Drawer items are full-width flex rows with no inline padding of their own,
+   so the highlight needs its own to keep the text off the edge. */
+.menu-drawer__menu-item[aria-current='page'] {
+  background-color: var(--cwc-active-link-bg);
+  color: var(--cwc-active-link-text);
+  padding-inline: 10px;
+  border-radius: 6px;
+}

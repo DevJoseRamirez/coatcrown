@@ -1,0 +1,46 @@
+{% comment %}
+  One question/answer row for the CWC PDP FAQ section's accordion.
+
+  Not to be confused with CWC_pdp-faq-item__block, which is the buy box's inline
+  FAQ block and uses the cwc_pdp-product__faq-* classes.
+
+  Both sources — the section's FAQ Item blocks and the selected FAQ metaobject
+  entries — render through here, so the two can never drift apart visually.
+  Callers normalise their own field names into these parameters.
+
+  Every row starts closed, unlike the home FAQ which opens its first one.
+
+  Accepts:
+  - question {String} - the question text.
+  - answer {String} - the answer as HTML. Blocks pass richtext straight through;
+    the metaobject path runs its rich text field through metafield_tag first.
+  - attributes {String} - block.shopify_attributes, so the editor can select the
+    row. Empty for metaobject entries, which are not editor blocks.
+
+  Usage:
+  {% render 'CWC_pdp-faq-row__block',
+    question: block.settings.title,
+    answer: block.settings.text,
+    attributes: block.shopify_attributes
+  %}
+{% endcomment %}
+
+{% if question != blank or answer != blank %}
+  <div class="cwc_pdp-faq__item" {{ attributes }}>
+    <button
+      class="cwc_pdp-faq__question"
+      type="button"
+      aria-expanded="false"
+      data-cwc-faq-toggle
+    >
+      <span class="cwc_pdp-faq__question-text">{{ question }}</span>
+      <span class="cwc_pdp-faq__icon" aria-hidden="true"></span>
+    </button>
+
+    {% if answer != blank %}
+      <div class="cwc_pdp-faq__answer cwc-rte">
+        {{ answer }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

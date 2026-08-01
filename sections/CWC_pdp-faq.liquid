@@ -16,6 +16,24 @@
 
 {{ 'CWC_pdp-faq.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  comment
+    The chosen list's entries replace the blocks outright — the accordion shows
+    one source or the other, never both. Blocks stay as the fallback so the
+    section keeps working before the list has any entries on it.
+  endcomment
+  assign faq_list = section.settings.faq_list
+  assign faq_entries = faq_list.list.value
+  if faq_entries == blank
+    assign faq_entries = faq_list.list
+  endif
+
+  assign use_metaobjects = false
+  if faq_entries.size > 0
+    assign use_metaobjects = true
+  endif
+-%}
+
 <section id="cwc_pdp-faq-{{ section.id }}" class="cwc_pdp-faq">
   <div class="cwc_pdp-faq__container">
 
@@ -39,32 +57,44 @@
     </div>
 
     {% comment %} FAQ List {% endcomment %}
-    {% if section.blocks.size > 0 %}
+    {% if use_metaobjects or section.blocks.size > 0 %}
       <div class="cwc_pdp-faq__list">
-        {% for block in section.blocks %}
-          {% case block.type %}
-            {% when 'faq_item' %}
-              {% if block.settings.title != blank or block.settings.text != blank %}
-                <div class="cwc_pdp-faq__item" {{ block.shopify_attributes }}>
-                  <button
-                    class="cwc_pdp-faq__question"
-                    type="button"
-                    aria-expanded="false"
-                    data-cwc-faq-toggle
-                  >
-                    <span class="cwc_pdp-faq__question-text">{{ block.settings.title }}</span>
-                    <span class="cwc_pdp-faq__icon" aria-hidden="true"></span>
-                  </button>
+        {% if use_metaobjects %}
+          {% for entry in faq_entries %}
+            {%- liquid
+              comment
+                Answer is a rich text field, whose value is a JSON document —
+                echoing it, with or without `.value`, prints that JSON onto the
+                page. metafield_tag is what turns it into HTML, and it only
+                accepts the field drop itself: passing `.value` breaks it. The
+                filter wraps its output in a div of its own, which is harmless
+                here because the answer styles are descendant selectors.
+              endcomment
+              assign answer_html = ''
+              if entry.answer.value != blank
+                capture answer_html
+                  echo entry.answer | metafield_tag
+                endcapture
+              endif
+            -%}
 
-                  {% if block.settings.text != blank %}
-                    <div class="cwc_pdp-faq__answer cwc-rte">
-                      {{ block.settings.text }}
-                    </div>
-                  {% endif %}
-                </div>
-              {% endif %}
-          {% endcase %}
-        {% endfor %}
+            {% render 'CWC_pdp-faq-row__block',
+              question: entry.question.value,
+              answer: answer_html
+            %}
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'faq_item' %}
+                {% render 'CWC_pdp-faq-row__block',
+                  question: block.settings.title,
+                  answer: block.settings.text,
+                  attributes: block.shopify_attributes
+                %}
+            {% endcase %}
+          {% endfor %}
+        {% endif %}
       </div>
     {% else %}
       <div class="cwc_pdp-faq__empty">
@@ -81,6 +111,17 @@
 {
   "name": "CWC PDP FAQ",
   "settings": [
+    {
+      "type": "header",
+      "content": "FAQ Source"
+    },
+    {
+      "type": "metaobject",
+      "id": "faq_list",
+      "label": "FAQ List",
+      "metaobject_type": "faq_list",
+      "info": "Optional. Pick a list to fill the accordion from its questions — they replace the FAQ Item blocks below. Leave empty to use the blocks."
+    },
     {
       "type": "header",
       "content": "Section Header"

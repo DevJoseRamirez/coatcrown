@@ -1,0 +1,44 @@
+{% comment %}
+  One question/answer row for the home FAQ accordion.
+
+  Both sources — the section's FAQ blocks and the selected FAQ metaobject
+  entries — render through here, so the two can never drift apart visually.
+  Callers normalise their own field names into these parameters.
+
+  Accepts:
+  - question {String} - the question text.
+  - answer {String} - the answer as HTML. Blocks pass richtext straight through;
+    the metaobject path runs its rich text field through metafield_tag first.
+  - is_open {Boolean} - true for the row that starts expanded (the first one).
+  - attributes {String} - block.shopify_attributes, so the editor can select the
+    row. Empty for metaobject entries, which are not editor blocks.
+
+  Usage:
+  {% render 'CWC_home-faq-item__block',
+    question: block.settings.title,
+    answer: block.settings.text,
+    is_open: forloop.first,
+    attributes: block.shopify_attributes
+  %}
+{% endcomment %}
+
+{% if question != blank or answer != blank %}
+  <div class="cwc_home-faq__item{% if is_open %} is-active{% endif %}" {{ attributes }}>
+    <button
+      class="cwc_home-faq__question"
+      type="button"
+      aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+    >
+      <span class="cwc_home-faq__question-text">{{ question }}</span>
+      <span class="cwc_home-faq__icon" aria-hidden="true"></span>
+    </button>
+
+    {% if answer != blank %}
+      <div class="cwc_home-faq__answer">
+        <div class="cwc_home-faq__answer-inner cwc-rte">
+          {{ answer }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

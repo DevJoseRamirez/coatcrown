@@ -184,6 +184,16 @@
   min-height: 0;
   overflow: hidden;
   padding: 0 20px 24px 28px;
+  opacity: 0;
+  /* The row collapse alone leaves the text fully opaque until it gets clipped,
+     which reads as the answer lagging behind the panel. Fading it out ahead of
+     the collapse keeps the two in step. */
+  transition: opacity 0.2s ease;
+}
+
+.cwc_home-faq__item.is-active .cwc_home-faq__answer-inner {
+  opacity: 1;
+  transition: opacity 0.3s ease 0.05s;
 }
 
 .cwc_home-faq__answer p {
@@ -206,6 +216,7 @@
   .cwc_home-faq__item,
   .cwc_home-faq__question,
   .cwc_home-faq__answer,
+  .cwc_home-faq__answer-inner,
   .cwc_home-faq__icon,
   .cwc_home-faq__icon::before,
   .cwc_home-faq__icon::after {

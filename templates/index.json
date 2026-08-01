@@ -195,6 +195,7 @@
       "settings": {
         "bg_color": "#ecf4ff",
         "text_color": "#111111",
+        "mobile_columns": 2,
         "padding_top": 20,
         "padding_bottom": 40
       }
@@ -386,6 +387,8 @@
       ],
       "name": "CWC Home Reviews",
       "settings": {
+        "testimonial_list": "",
+        "metaobject_verified_text": "Verified Buyer",
         "top_rating_stars": 5,
         "top_rating_text": "<p>4.8/5 from thousands of satisfied customers</p>",
         "heading": "<p>People Everywhere Are <strong>Loving It</strong></p>",
@@ -465,6 +468,8 @@
         "trust_item_4"
       ],
       "settings": {
+        "autoscroll_desktop": false,
+        "autoscroll_mobile": true,
         "bg_color": "#ecf4ff",
         "text_color": "#142c70",
         "font_size": 16,
@@ -529,6 +534,7 @@
         "faq_item_6"
       ],
       "settings": {
+        "faq_list": "home",
         "heading": "<p>Frequently Asked <strong>Questions</strong></p>",
         "subtext": "<p>Need more information? You can find it here.</p>",
         "bg_color": "#ffffff",
